@@ -3,6 +3,8 @@ import { SplashScreen, Slot, Stack } from 'expo-router';
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react';
 
+SplashScreen.preventAutoHideAsync();
+
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
