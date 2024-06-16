@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const emergency = () => {
+const menu = () => {
   return (
     <View>
-      <Text>Incident Report</Text>
+      <Text>Menu</Text>
     </View>
   )
 }
 
-export default emergency
+export default menu
 
 const styles = StyleSheet.create({})
