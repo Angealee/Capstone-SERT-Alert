@@ -1,14 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { View, Text } from 'react-native'
 import React from 'react'
 
-const emergency = () => {
+const Emergency = () => {
   return (
     <View>
-      <Text>Incident Report</Text>
+      <Text>Emergency</Text>
     </View>
   )
 }
 
-export default emergency
-
-const styles = StyleSheet.create({})
+export default Emergency
