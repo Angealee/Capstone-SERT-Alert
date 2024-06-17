@@ -15,8 +15,21 @@ export default function App() {
             <Link href="/emergency" style={{ color: 'white'}}>Report an Emergency!</Link> */}
           <Image 
             source={images.logo}
+            className="w-[130px] h-[84px]"
+            resizeMode="contain"
+          />
+
+          <Image
+           source={images.siren}
+           className="max-w[390px] max-full h-[300px]"
+          resizeMode="contain"
           /> 
+          <View className="relative mt-7">
+            <Text className="text-3xl text-white font-bold text-center">SERT Alert</Text>
+          </View>
         </View>
+
+        
       </ScrollView>
     </SafeAreaView>
   );
