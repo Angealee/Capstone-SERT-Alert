@@ -4,6 +4,7 @@ import { Image } from 'react-native';
 import { Link } from 'expo-router';
 
 import { images } from '../constants';
+import CustomButton from '../components/CustomButton';
 
 export default function App() {
   return (
@@ -28,7 +29,11 @@ export default function App() {
             <Text className="text-3xl text-white font-bold text-center">SERT Alert</Text>
           </View>
 
-          <CustomButton />
+          <CustomButton 
+            title="Enter"
+            handlePress={() => {}}
+            containerStyles="w-full mt-7"
+          />
           
         </View> 
       </ScrollView>
