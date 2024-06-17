@@ -27,9 +27,10 @@ export default function App() {
           <View className="relative mt-7">
             <Text className="text-3xl text-white font-bold text-center">SERT Alert</Text>
           </View>
-        </View>
 
-        
+          <CustomButton />
+          
+        </View> 
       </ScrollView>
     </SafeAreaView>
   );
