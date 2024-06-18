@@ -35,7 +35,7 @@ const TabsLayout = () => {
             //backgroundColor: '',
               borderTopWidth: 1,
               borderTopColor: '232553',
-              height: 100,
+              height: 78,
             }
           }}
         >
@@ -46,10 +46,11 @@ const TabsLayout = () => {
                   headerShown: false,
                   tabBarIcon: ({ color, focused }) => (
                     <TabIcon
-                      icon={icons.home}
+                      icon={icons.emergency}
                       color={color}
                       name="Emergency"
                       focused={focused}
+                      //style={{ width: 100, height: 100 }}
                     />
                     
                   )
@@ -62,7 +63,7 @@ const TabsLayout = () => {
                   headerShown: false,
                   tabBarIcon: ({ color, focused }) => (
                     <TabIcon
-                      icon={icons.bookmark}
+                      icon={icons.learn}
                       color={color}
                       name="Learn"
                       focused={focused}
@@ -78,7 +79,7 @@ const TabsLayout = () => {
                   headerShown: false,
                   tabBarIcon: ({ color, focused }) => (
                     <TabIcon
-                      icon={icons.profile}
+                      icon={icons.hamburgerMenu}
                       color={color}
                       name="Menu"
                       focused={focused}
