@@ -1,5 +1,5 @@
-Displaying Reports to SERT Members
-SERT members need to authenticate to view the reports. Here's an example of how the SERT dashboard might look:
+//Displaying Reports to SERT Members
+//SERT members need to authenticate to view the reports. Here's an example of how the SERT dashboard might look:
 
 // SERTDashboard.jsx
 import React, { useEffect, useState } from 'react';
