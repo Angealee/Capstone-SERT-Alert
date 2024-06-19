@@ -25,13 +25,15 @@ const Emergency = () => {
           handleChangeText={(e) => setform({...form, email: e})}
           otherStyles="mt-7"
           keyboardType="email-address"
-        />
-        <FormField 
+          />
+          
+          <FormField 
           title="Password"
           value={form.password}
           handleChangeText={(e) => setform({...form, password: e})}
           otherStyles="mt-7"
-        />
+          />
+          
         </View>
       </ScrollView>
     </SafeAreaView>
