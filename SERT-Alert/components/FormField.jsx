@@ -4,7 +4,7 @@ import React from 'react'
 const FormField = () => {
   return (
     <View className="space-y-2">
-      <Text className="text-base text-gray-100 font-pmedium">Form Field</Text>
+      <Text className="text-base text-black-100 font-pmedium">Form Field</Text>
     </View>
   )
 }
