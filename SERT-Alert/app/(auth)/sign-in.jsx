@@ -1,5 +1,6 @@
 import React, { useState } from 'react'; 
 import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
+import { Link } from 'expo-router';
 // import React from 'react'
 
 import { images } from '../../constants';
@@ -42,7 +43,7 @@ const SignIn = () => {
         />
         <FormField 
           title="Year/Course/Section"
-          value={form.year-course-section}
+          value={form.yearCourseSection}
           handleChangeText={(e) => setform({...form, yearCourseSection: e})}
           otherStyles="mt-7"
           keyboardType="year-course-section"
@@ -72,6 +73,9 @@ const SignIn = () => {
           <Text className='text-lg text-gray-100 font-pregular'>
             Don't have an account?
           </Text>
+          <Link href="/sign-up" className="text-lg font-psemibold text-secondary">
+            Sign-up
+          </Link>
         </View>
 
         </View>
