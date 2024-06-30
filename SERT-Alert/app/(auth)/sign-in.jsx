@@ -42,10 +42,10 @@ const SignIn = () => {
         />
         <FormField 
           title="Year/Course/Section"
-          value={form.email}
+          value={form.year-course-section}
           handleChangeText={(e) => setform({...form, yearCourseSection: e})}
           otherStyles="mt-7"
-          keyboardType="yearCourseSection"
+          keyboardType="year-course-section"
         />
         <FormField 
           title="Email"
