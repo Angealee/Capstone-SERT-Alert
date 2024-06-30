@@ -1,8 +1,9 @@
 import React, { useState } from 'react'; 
-import { View, Text, SafeAreaView } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
 // import React from 'react'
 
-import FormField from '../../components/FormField'
+import { images } from '../../constants';
+import FormField from '../../components/FormField';
 
 
 const SignIn = () => {

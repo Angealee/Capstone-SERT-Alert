@@ -20,20 +20,27 @@ const Emergency = () => {
           <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">Report an Emergency!</Text>
 
           <FormField 
-          title="Email"
-          value={form.email}
-          handleChangeText={(e) => setform({...form, email: e})}
+          title="Input location"
+          value={form.location}
+          handleChangeText={(e) => setform({...form, text: e})}
           otherStyles="mt-7"
-          keyboardType="email-address"
+          // keyboardType="email-address"
           />
           
           <FormField 
-          title="Password"
-          value={form.password}
+          title="Input Context"
+          value={form.context}
+          handleChangeText={(e) => setform({...form, text: e})}
+          otherStyles="mt-7"
+          />
+
+<FormField 
+          title="Submit an Image"
+          value={form.image}
           handleChangeText={(e) => setform({...form, password: e})}
           otherStyles="mt-7"
           />
-          
+
         </View>
       </ScrollView>
     </SafeAreaView>
