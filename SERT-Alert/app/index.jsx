@@ -27,7 +27,7 @@ export default function App() {
 
           <CustomButton 
             title="Enter"
-            handlePress={() => router.push('/sign-in')}
+            handlePress={() => router.push('/emergency')}
             containerStyles="w-full mt-7"
           />
           
