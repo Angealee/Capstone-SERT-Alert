@@ -1,7 +1,7 @@
 import React, { useState } from 'react'; 
-import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView } from 'react-native'
 import { Link } from 'expo-router';
-// import React from 'react'
+import { router } from 'expo-router';
 
 import { images } from '../../constants';
 
@@ -25,29 +25,8 @@ const SignIn = () => {
         <View className="w-full justify-center min-h-[85vh] px-4 my-6">
           {/* <Image source={images.logo}
           resizeMode='contain' className="w-[115px] h-[35px]"/> */}
-          <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">Sign-In!</Text>
+          <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">Sign In!</Text>
 
-        <FormField 
-          title="Name"
-          value={form.name}
-          handleChangeText={(e) => setform({...form, name: e})}
-          otherStyles="mt-7"
-          keyboardType="name"
-        />
-        <FormField 
-          title="Department"
-          value={form.department}
-          handleChangeText={(e) => setform({...form, department: e})}
-          otherStyles="mt-7"
-          keyboardType="department"
-        />
-        <FormField 
-          title="Year/Course/Section"
-          value={form.yearCourseSection}
-          handleChangeText={(e) => setform({...form, yearCourseSection: e})}
-          otherStyles="mt-7"
-          keyboardType="year-course-section"
-        />
         <FormField 
           title="Email"
           value={form.email}
@@ -63,20 +42,35 @@ const SignIn = () => {
         />
 
         <CustomButton 
-          title="Request Account"
+          title="Login"
           handlePress={submit}
           containerStyles="mt-7"
           isLoading={isSubmitting}
         />
 
-        <View className='justify-center pt-5 flex-row gap-2'>
+        <CustomButton 
+          title="Request an Account"
+          handlePress={() => router.push('/sign-up')}
+          containerStyles="mt-7"
+          isLoading={isSubmitting}
+        />
+
+        <CustomButton 
+          title="Back"
+          handlePress={() => router.push('/menu')}
+          containerStyles="mt-7"
+          isLoading={isSubmitting}
+        />
+
+
+        {/* <View className='justify-center pt-5 flex-row gap-2'>
           <Text className='text-lg text-gray-100 font-pregular'>
             Don't have an account?
           </Text>
           <Link href="/sign-up" className="text-lg font-psemibold text-secondary">
             Sign-up
           </Link>
-        </View>
+        </View> */}
 
         </View>
       </ScrollView>

@@ -1,15 +1,21 @@
 import React, { useState } from 'react'; 
 import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
-// import React from 'react'
+import { router } from 'expo-router';
 
 import { images } from '../../constants';
 import FormField from '../../components/FormField';
+import CustomButton  from '../../components/CustomButton';
 
 const Emergency = () => {
   const [form, setform] = useState({
     email: '',
     password:''
   })
+  const [isSubmitting, setisSubmitting] = useState(false)
+  const submit = () => {
+
+  }
+  
   return (
     <SafeAreaView className="bg-white h-full">
       <ScrollView>
@@ -34,12 +40,19 @@ const Emergency = () => {
           otherStyles="mt-7"
           />
 
-<FormField 
+          <FormField 
           title="Submit an Image"
           value={form.image}
           handleChangeText={(e) => setform({...form, password: e})}
           otherStyles="mt-7"
           />
+
+         <CustomButton 
+          title="Report Emergency"
+          handlePress={submit}
+          containerStyles="mt-7"
+          isLoading={isSubmitting}
+        />
 
         </View>
       </ScrollView>
