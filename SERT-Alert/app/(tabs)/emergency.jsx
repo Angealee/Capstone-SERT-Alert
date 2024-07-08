@@ -43,7 +43,7 @@ const Emergency = () => {
           <FormField 
           title="Submit an Image"
           value={form.image}
-          handleChangeText={(e) => setform({...form, password: e})}
+          handleChangeText={(e) => setform({...form, text: e})}
           otherStyles="mt-7"
           />
 
