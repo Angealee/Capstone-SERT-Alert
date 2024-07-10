@@ -10,10 +10,10 @@ import { initializeApp } from 'firebase/app';
 // Initialize Firebase
 const firebaseConfig = {
   apiKey: 'api-key',
-  authDomain: 'project-id.firebaseapp.com',
-  databaseURL: 'https://project-id.firebaseio.com',
+  authDomain: 'capstone-sert-alert.firebaseapp.com',
+  databaseURL: 'https://capstone-sert-alert.firebaseio.com',
   projectId: 'com.angeale.sertalert',
-  storageBucket: 'project-id.appspot.com',
+  storageBucket: 'capstone-sert-alert.appspot.com',
   messagingSenderId: 'sender-id',
   appId: 'app-id',
   measurementId: 'G-measurement-id',
