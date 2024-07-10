@@ -1,9 +1,10 @@
 import React, { useState } from 'react'; 
-import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, Image, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { router } from 'expo-router';
 import { images } from '../../constants';
+
 import firebase from '../../firebaseConfig';
 import FormField from '../../components/FormField';
 import CustomButton  from '../../components/CustomButton';
