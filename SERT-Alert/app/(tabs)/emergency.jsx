@@ -102,7 +102,7 @@ const Emergency = () => {
          <CustomButton 
           title="Report Emergency"
           handlePress={submit}
-          containerStyles="mt-7"
+          containerStyles="mt-10"
           isLoading={isSubmitting}
         />
 
