@@ -3,8 +3,8 @@ import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { router } from 'expo-router';
-
 import { images } from '../../constants';
+import firebase from '../../firebaseConfig';
 import FormField from '../../components/FormField';
 import CustomButton  from '../../components/CustomButton';
 
@@ -46,9 +46,9 @@ const Emergency = () => {
     }
 
     try {
-      const db = getDatabase(app);
-      const emergencyRef = ref(db, 'emergencies');
-      await push(emergencyRef, {
+      const db = firebase.database();
+      const emergencyRef = db.ref('emergencies');
+      await emergencyRef.push({
         location: form.location,
         context: form.context,
         image: form.image,
