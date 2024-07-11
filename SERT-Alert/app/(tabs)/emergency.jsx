@@ -5,7 +5,6 @@ import * as ImagePicker from 'expo-image-picker';
 import { router } from 'expo-router';
 import { images } from '../../constants';
 
-import firebase from '../../firebaseConfig';
 import FormField from '../../components/FormField';
 import CustomButton  from '../../components/CustomButton';
 
