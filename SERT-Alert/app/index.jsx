@@ -28,7 +28,7 @@ export default function App() {
           <CustomButton 
             title="Report an Emergency!"
             handlePress={() => router.push('/emergency')}
-            containerStyles="w-full mt-7"
+            containerStyles="w-60 mt-7"
           />
           
         </View> 
