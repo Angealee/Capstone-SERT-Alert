@@ -10,7 +10,7 @@ const SearchInput = ({ title, value, placeholder, handleChangeText, otherStyles,
             <TextInput 
                 className="text-base mt-0.5 text-white flex-1 font-pregular"
                 value={value}
-                placeholder={placeholder}
+                placeholder="Search a learning material"
                 placeholderTextColor="#7b7b8b"
                 onChangeText={handleChangeText}
             />
