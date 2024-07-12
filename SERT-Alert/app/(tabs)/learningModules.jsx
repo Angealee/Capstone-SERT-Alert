@@ -9,7 +9,8 @@ const LearningModules = () => {
   return (
     <SafeAreaView className="bg-red-400">
       <FlatList 
-        data={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]}
+        // data={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]}
+        data={[]}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Text className="text-3xl">{item.id}</Text>
@@ -47,7 +48,11 @@ const LearningModules = () => {
             </View>
           </View>
         )}
-
+        ListEmptyComponent={() => (
+          <Text>
+            Empty
+          </Text>
+        )}
       />
         
     </SafeAreaView>
