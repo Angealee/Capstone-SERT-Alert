@@ -2,6 +2,7 @@ import { View, Text,ScrollView, Image, FlatList } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
+import SearchInput from '../../components/SearchInput';
 
 const LearningModules = () => {
   return (
@@ -34,7 +35,7 @@ const LearningModules = () => {
               </View>
             </View>
 
-            
+            <SearchInput />
           </View>
         )}
 
