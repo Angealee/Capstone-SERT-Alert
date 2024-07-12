@@ -40,10 +40,10 @@ const LearningModules = () => {
 
             <View className="w-full flex-1 pt-5 pb-8">
               <Text className="text-black-100 text-lg font-pregular mb-3">
-                Latest Videos
+                Learning Materials
               </Text>
 
-              <LearningMaterials />
+              <LearningMaterials posts={[{ id: 1}, { id: 2}, { id: 3}, { id: 4}] ?? []} />
             </View>
           </View>
         )}
