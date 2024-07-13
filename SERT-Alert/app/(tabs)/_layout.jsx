@@ -12,7 +12,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
         source={icon}
         resizeMode="contain"
         tintColor={color}
-        className="w-6 h-5"
+        className="w-7 h-10"
       />
 
       {/* to style the text, use this snippet: 
@@ -32,7 +32,7 @@ const TabsLayout = () => {
             tabBarActiveTintColor: '#EF2A39',
             tabBarInactiveTintColor:'#FD9BA2',
             tabBarStyle:{
-            //backgroundColor: '',
+            backgroundColor: '#FFC579',
               borderTopWidth: 1,
               borderTopColor: '232553',
               height: 78,

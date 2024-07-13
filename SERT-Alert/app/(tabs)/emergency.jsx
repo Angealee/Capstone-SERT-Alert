@@ -67,14 +67,17 @@ const Emergency = () => {
   }
   
   return (
-    <SafeAreaView className="bg-white h-full">
+    <SafeAreaView className="bg-red-200 h-full">
       <ScrollView>
-        <View className="w-full justify-center h-full[85vh] px-4 my-6">
-          <Image source={images.logo}
-          resizeMode='contain' className="w-[115px] h-[35px]"/>
+        <View className="w-full justify-center h-full[85vh] px-6 my-10 border border-red-600 rounded-md flex item-center">
+          <Image source={images.SERTlogo}
+           resizeMode='contain' 
+           className="w-[100px] h-[100px] "/>
           
-          <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">Report an Emergency!</Text>
-
+           <Text className="text-2xl text-black text-semibold mt-2 font-psemibold ">
+             Report an Emergency!
+           </Text>
+          
           <FormField 
           title="Input location"
           value={form.location}
