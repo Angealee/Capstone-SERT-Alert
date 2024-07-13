@@ -72,12 +72,6 @@ const SignUp = () => {
               </Picker>
             </View>
         </View>
-        {/* <FormField 
-          title="Department"
-          value={form.department}
-          handleChangeText={(e) => setform({...form, department: e})}
-          otherStyles="mt-7"
-        /> */}
         
         <View className="mt-7">
             <Text className="text-base text-black-100 font-pmedium">Year/Course/Section</Text>
@@ -95,12 +89,7 @@ const SignUp = () => {
               </Picker>
             </View>
           </View>
-        {/* <FormField 
-          title="Year/Course/Section"
-          value={form.yearCourseSection}
-          handleChangeText={(e) => setform({...form, yearCourseSection: e})}
-          otherStyles="mt-7"
-        /> */}
+
         <FormField 
           title="Email"
           value={form.email}
