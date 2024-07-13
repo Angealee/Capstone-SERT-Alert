@@ -13,6 +13,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      "package": "com.angeale.capstoneSERTalert",
       "supportsTablet": true
     },
     "android": {
