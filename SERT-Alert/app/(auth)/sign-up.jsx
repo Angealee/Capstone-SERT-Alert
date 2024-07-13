@@ -1,10 +1,9 @@
 import React, { useState } from 'react'; 
-import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView} from 'react-native'
 import { Link } from 'expo-router';
 import { router } from 'expo-router';
 
-import { images } from '../../constants';
-
+import { Picker } from '@react-native-picker/picker';
 import FormField from '../../components/FormField';
 import CustomButton  from '../../components/CustomButton';
 
@@ -18,9 +17,31 @@ const SignUp = () => {
     password:''
   })
   const [isSubmitting, setisSubmitting] = useState(false)
+  const [yearCourseOptions, setYearCourseOptions] = useState([]);
+  const [isYearCourseEnabled, setIsYearCourseEnabled] = useState(false);
+
+  const handleDepartmentChange = (department) => {
+    let options = [];
+    switch (department) {
+      case 'JHS Department':
+        options = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'];
+        break;
+      case 'SHS Department':
+        options = ['STEM', 'ICT', 'ABM', 'GAS', 'HUMSS'];
+        break;
+      case 'College Department':
+        options = ['CHM', 'CCS', 'CED', 'CCJE', 'CBA'];
+        break;
+      default:
+        options = [];
+    }
+    setform({ ...form, department, yearCourseSection: '' });
+    setYearCourseOptions(options);
+    setIsYearCourseEnabled(true);
+  };
 
   const submit = () => {
-
+    // Handle the form submission logic
   }
   return (
     <SafeAreaView className="bg-white h-full">
@@ -36,18 +57,50 @@ const SignUp = () => {
           handleChangeText={(e) => setform({...form, name: e})}
           otherStyles="mt-7"
         />
-        <FormField 
+        <View className="mt-7">
+        <Text className="text-base text-black-100 font-pmedium">Department</Text>
+            <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
+              <Picker
+                selectedValue={form.department}
+                onValueChange={handleDepartmentChange}
+                style={{ flex: 1, color: '#000' }}
+              >
+                <Picker.Item label="Select Department" value="" />
+                <Picker.Item label="JHS Department" value="JHS Department" />
+                <Picker.Item label="SHS Department" value="SHS Department" />
+                <Picker.Item label="College Department" value="College Department" />
+              </Picker>
+            </View>
+        </View>
+        {/* <FormField 
           title="Department"
           value={form.department}
           handleChangeText={(e) => setform({...form, department: e})}
           otherStyles="mt-7"
-        />
-        <FormField 
+        /> */}
+        
+        <View className="mt-7">
+            <Text className="text-base text-black-100 font-pmedium">Year/Course/Section</Text>
+            <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
+              <Picker
+                selectedValue={form.yearCourseSection}
+                onValueChange={(value) => setForm({ ...form, yearCourseSection: value })}
+                enabled={isYearCourseEnabled}
+                style={{ flex: 1, color: '#000' }}
+              >
+                <Picker.Item label="Select Year/Course/Section" value="" />
+                {yearCourseOptions.map((option, index) => (
+                  <Picker.Item key={index} label={option} value={option} />
+                ))}
+              </Picker>
+            </View>
+          </View>
+        {/* <FormField 
           title="Year/Course/Section"
           value={form.yearCourseSection}
           handleChangeText={(e) => setform({...form, yearCourseSection: e})}
           otherStyles="mt-7"
-        />
+        /> */}
         <FormField 
           title="Email"
           value={form.email}
