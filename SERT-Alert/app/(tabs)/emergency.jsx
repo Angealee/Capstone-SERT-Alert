@@ -67,9 +67,9 @@ const Emergency = () => {
   }
   
   return (
-    <SafeAreaView className="bg-white-100 h-full">
+    <SafeAreaView className=" bg-red-200 h-full">
       <ScrollView>
-        <View className="w-full bg-red-200 h-full justify-center h-full[85vh] px-5 pb-10 my-10 border border-red-600 rounded-md">
+        <View className="w-full h-full justify-center h-full[85vh] px-5 pb-10 my-10">
           <Image source={images.SERTlogo}
            resizeMode='contain' 
            className="w-[100px] h-[100px] "/>
@@ -77,38 +77,39 @@ const Emergency = () => {
            <Text className="text-2xl text-black text-semibold mt-2 font-psemibold ">
              Report an Emergency!
            </Text>
+
+          <View className="bg-white rounded justify-center px-5 pb-10 mt-10 border border-red-600">
+            <FormField 
+            title="Input location"
+            value={form.location}
+            handleChangeText={(e) => setform({...form, location: e})}
+            otherStyles="mt-7"
+            />
           
-          <FormField 
-          title="Input location"
-          value={form.location}
-          handleChangeText={(e) => setform({...form, location: e})}
-          otherStyles="mt-7"
-          />
-          
-          <FormField 
-          title="Input Context"
-          value={form.context}
-          handleChangeText={(e) => setform({...form, context: e})}
-          otherStyles="mt-7"
-          />
+            <FormField 
+            title="Input Context"
+            value={form.context}
+            handleChangeText={(e) => setform({...form, context: e})}
+            otherStyles="mt-7 mx-2"
+            />
 {/* code snippet open  */}
-          <CustomButton
-            title="Capture Image"
-            handlePress={pickImage}
-            containerStyles="mt-7"
-          />
-          {form.image && (
-            <Image source={{ uri: form.image }} style={{ width: 200, height: 200, marginTop: 10 }} />
-          )}
+            <CustomButton
+              title="Capture Image"
+              handlePress={pickImage}
+              containerStyles="mt-7"
+            />
+            {form.image && (
+              <Image source={{ uri: form.image }} style={{ width: 200, height: 200, marginTop: 10 }} />
+          ) }
 {/* code snippet close  */}
 
-         <CustomButton 
-          title="Report Emergency"
-          handlePress={submit}
-          containerStyles="mt-10"
-          isLoading={isSubmitting}
-        />
-
+            <CustomButton 
+              title="Report Emergency"
+              handlePress={submit}
+              containerStyles="mt-10"
+              isLoading={isSubmitting}
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
