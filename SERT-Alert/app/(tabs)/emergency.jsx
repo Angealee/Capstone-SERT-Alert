@@ -69,7 +69,7 @@ const Emergency = () => {
   return (
     <SafeAreaView className="bg-red-200 h-full">
       <ScrollView>
-        <View className="w-full justify-center h-full[85vh] px-6 my-10 border border-red-600 rounded-md flex item-center">
+        <View className="w-full justify-center h-full[85vh] px-6 my-10 border border-red-600 rounded-md">
           <Image source={images.SERTlogo}
            resizeMode='contain' 
            className="w-[100px] h-[100px] "/>
