@@ -51,12 +51,15 @@ const SignUp = () => {
           resizeMode='contain' className="w-[115px] h-[35px]"/> */}
           <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">Sign Up!</Text>
 
+        {/* Name */}
         <FormField 
           title="Name"
           value={form.name}
           handleChangeText={(e) => setform({...form, name: e})}
           otherStyles="mt-7"
         />
+
+        {/* Department */}
         <View className="mt-7">
         <Text className="text-base text-black-100 font-pmedium">Department</Text>
             <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
@@ -72,24 +75,34 @@ const SignUp = () => {
               </Picker>
             </View>
         </View>
-        
+            
+        {/* YEAR COURSE SECTION */}
         <View className="mt-7">
-            <Text className="text-base text-black-100 font-pmedium">Year/Course/Section</Text>
-            <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
-              <Picker
-                selectedValue={form.yearCourseSection}
-                onValueChange={(value) => setForm({ ...form, yearCourseSection: value })}
-                enabled={isYearCourseEnabled}
-                style={{ flex: 1, color: '#000' }}
-              >
-                <Picker.Item label="Select Year/Course/Section" value="" />
-                {yearCourseOptions.map((option, index) => (
-                  <Picker.Item key={index} label={option} value={option} />
-                ))}
-              </Picker>
-            </View>
+          <Text className="text-base text-black-100 font-pmedium">Year/Course/Section</Text>
+          <View className={`w-full h-16 px-4 rounded-2xl items-center flex-row ${
+            isYearCourseEnabled 
+              ? 'border-2 border-red-500 bg-white-100' 
+              : 'bg-gray-200'
+          }`}>
+            <Picker
+              selectedValue={form.yearCourseSection}
+              onValueChange={(value) => setForm({ ...form, yearCourseSection: value })}
+              enabled={isYearCourseEnabled}
+              style={{ 
+                flex: 1, 
+                color: isYearCourseEnabled ? '#000' : '#888',
+                opacity: isYearCourseEnabled ? 1 : 0.5
+              }}
+            >
+              <Picker.Item label="Select Year/Course/Section" value="" />
+              {yearCourseOptions.map((option, index) => (
+                <Picker.Item key={index} label={option} value={option} />
+              ))}
+            </Picker>
           </View>
+        </View>
 
+        {/* Email */}
         <FormField 
           title="Email"
           value={form.email}
