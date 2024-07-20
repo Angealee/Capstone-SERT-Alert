@@ -1,0 +1,31 @@
+SERT Alert Notes/Packages/Dependencies installation:
+
+First you need to have:
+-Git
+-Node (npm, npx)
+	-check if you installed the node/npm properly by using; node -v and npm -v
+
+Then installation of dependencies and tools:
+
+-npm install -g expo-cli
+	:to install the expo CLI first. using npm
+
+NOTE: In this case we will use expo. Usage of npx is a MUST.
+Use 'npx' instead of 'npm'
+example: Use 'npx expo install @react-native-image-picker/picker' instead of 'npm install @react-native-image-picker/picker'
+
+-npx create-expo-app 'appname' (NOTE: Only use this when creating a new project)
+	:using this command will create the expo app you desire.
+
+-npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
+	:using this command will install all the basic/initial dependencies needed.
+
+Then all good to go. Except if your device doesnt have the other dependency installed.
+Errors will pop up and will say what dependency is missing. Just simply download/install them using the command "npx expo install"
+
+example: npx expo install @react-native-image-picker/picker
+
+
+Extension to use: (OPTIONAL)
+-Prettier
+-ES7 + React/Redux/React-Native snippets v4.4.3
