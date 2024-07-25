@@ -5,6 +5,9 @@ import profile from "../assets/icons/profile.png";
 import leftArrow from "../assets/icons/left-arrow.png";
 import hamburgerMenu from "../assets/icons/hamburger-menu.png";
 import menu from "../assets/icons/menu.png";
+import microphone from "../assets/icons/microphone.png";
+import notification from "../assets/icons/notification.png";
+import camera from "../assets/icons/camera.png";
 import search from "../assets/icons/search.png";
 import upload from "../assets/icons/upload.png";
 import emergency from "../assets/icons/emergency.png";
@@ -23,6 +26,9 @@ export default {
   leftArrow,
   hamburgerMenu,
   menu,
+  camera,
+  notification,
+  microphone,
   search,
   upload,
   emergency,
