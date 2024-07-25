@@ -73,6 +73,22 @@ const TabsLayout = () => {
                 }}
             />
             <Tabs.Screen 
+                name="Notification"
+                options={{
+                  title: 'Notification',
+                  headerShown: false,
+                  tabBarIcon: ({ color, focused }) => (
+                    <TabIcon
+                      icon={icons.notification}
+                      color={color}
+                      name="Notification"
+                      focused={focused}
+                    />
+                    
+                  )
+                }}
+            />  
+            <Tabs.Screen 
                 name="SERTmenu"
                 options={{
                   title: 'Menu',
