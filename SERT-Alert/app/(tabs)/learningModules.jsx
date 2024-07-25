@@ -7,7 +7,7 @@ import LearningMaterials from '../../components/LearningMaterials';
 
 const LearningModules = () => {
   return (
-    <SafeAreaView className="bg-red-400 h-full">
+    <SafeAreaView className="bg-red-100 h-full">
       <FlatList 
         data={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]}
         keyExtractor={(item) => item.id}
