@@ -13,6 +13,7 @@ import logout from "../assets/icons/logout.png";
 import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
+import camera from "../assets/icons/camera.png";
 
 export default {
   play,
@@ -30,4 +31,5 @@ export default {
   logout,
   eyeHide,
   eye,
+  camera,
 };
