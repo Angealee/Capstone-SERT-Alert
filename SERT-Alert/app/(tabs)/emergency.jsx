@@ -1,10 +1,10 @@
 import React, { useState } from 'react'; 
-import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, Image, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { router } from 'expo-router';
-
 import { images } from '../../constants';
+
 import FormField from '../../components/FormField';
 import CustomButton  from '../../components/CustomButton';
 
@@ -46,9 +46,9 @@ const Emergency = () => {
     }
 
     try {
-      const db = getDatabase(app);
-      const emergencyRef = ref(db, 'emergencies');
-      await push(emergencyRef, {
+      const db = firebase.database();
+      const emergencyRef = db.ref('emergencies');
+      await emergencyRef.push({
         location: form.location,
         context: form.context,
         image: form.image,
@@ -67,45 +67,49 @@ const Emergency = () => {
   }
   
   return (
-    <SafeAreaView className="bg-white h-full">
+    <SafeAreaView className=" bg-red-200 h-full">
       <ScrollView>
-        <View className="w-full justify-center h-full[85vh] px-4 my-6">
-          <Image source={images.logo}
-          resizeMode='contain' className="w-[115px] h-[35px]"/>
+        <View className="w-full h-full justify-center h-full[85vh] px-5 pb-10 my-10">
+          <Image source={images.SERTlogo}
+           resizeMode='contain' 
+           className="w-[100px] h-[100px] "/>
           
-          <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">Report an Emergency!</Text>
+           <Text className="text-2xl text-black text-semibold mt-2 font-psemibold ">
+             Report an Emergency!
+           </Text>
 
-          <FormField 
-          title="Input location"
-          value={form.location}
-          handleChangeText={(e) => setform({...form, location: e})}
-          otherStyles="mt-7"
-          />
+          <View className="bg-white rounded justify-center px-5 pb-10 mt-10 border border-red-600">
+            <FormField 
+            title="Input location"
+            value={form.location}
+            handleChangeText={(e) => setform({...form, location: e})}
+            otherStyles="mt-7"
+            />
           
-          <FormField 
-          title="Input Context"
-          value={form.context}
-          handleChangeText={(e) => setform({...form, context: e})}
-          otherStyles="mt-7"
-          />
+            <FormField 
+            title="Input Context"
+            value={form.context}
+            handleChangeText={(e) => setform({...form, context: e})}
+            otherStyles="mt-7 mx-2"
+            />
 {/* code snippet open  */}
-          <CustomButton
-            title="Capture Image"
-            handlePress={pickImage}
-            containerStyles="mt-7"
-          />
-          {form.image && (
-            <Image source={{ uri: form.image }} style={{ width: 200, height: 200, marginTop: 10 }} />
-          )}
+            <CustomButton
+              title="Capture Image"
+              handlePress={pickImage}
+              containerStyles="mt-7"
+            />
+            {form.image && (
+              <Image source={{ uri: form.image }} style={{ width: 200, height: 200, marginTop: 10 }} />
+          ) }
 {/* code snippet close  */}
 
-         <CustomButton 
-          title="Report Emergency"
-          handlePress={submit}
-          containerStyles="mt-10"
-          isLoading={isSubmitting}
-        />
-
+            <CustomButton 
+              title="Report Emergency"
+              handlePress={submit}
+              containerStyles="mt-10"
+              isLoading={isSubmitting}
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

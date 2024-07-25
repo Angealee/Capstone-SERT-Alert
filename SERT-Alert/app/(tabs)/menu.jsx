@@ -8,11 +8,9 @@ import CustomButton from '../../components/CustomButton';
 
 const menu = () => {
   return (
-    <SafeAreaView className="bg-white h-full">
+    <SafeAreaView className="bg-red-200 h-full">
       <ScrollView>
         <View className="w-full justify-center h-full[85vh] px-4 my-6">
-          <Image source={images.logo}
-          resizeMode='contain' className="w-[115px] h-[35px]"/>
           
           <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">The Menu for your options!</Text>
           

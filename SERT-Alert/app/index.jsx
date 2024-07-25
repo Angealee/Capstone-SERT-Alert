@@ -8,16 +8,16 @@ import CustomButton from '../components/CustomButton';
 
 export default function App() {
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-white">
       <ScrollView contentContainerStyle={{ height: '100%'}}>
         <View className="w-full justify-center items-center min-h-[85vh] px-4">
         {/* <Text className="text-3xl font-pblack">SERT Alert</Text>
             <StatusBar style="auto" />
             <Link href="/emergency" style={{ color: 'white'}}>Report an Emergency!</Link> */}
-          <Text className="text-3xl text-white font-pblack">SERT Alert</Text>
+          <Text className="text-4xl text-black-200 font-pblack">SERT Alert</Text>
 
           <Image
-           source={images.siren}
+           source={images.SERTlogo}
            className="max-w[390px] max-full h-[300px]"
           resizeMode="contain"
           /> 
@@ -26,9 +26,9 @@ export default function App() {
           </View> */}
 
           <CustomButton 
-            title="Enter"
+            title="Report an Emergency!"
             handlePress={() => router.push('/emergency')}
-            containerStyles="w-full mt-7"
+            containerStyles="w-60 mt-7"
           />
           
         </View> 
