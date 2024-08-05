@@ -6,6 +6,7 @@ import { router } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import FormField from '../../components/FormField';
 import CustomButton  from '../../components/CustomButton';
+import { createUser } from '../../lib/appwrite';
 
 
 const SignUp = () => {
@@ -42,6 +43,7 @@ const SignUp = () => {
 
   const submit = () => {
     // Handle the form submission logic
+    createUser();
   }
   return (
     <SafeAreaView className="bg-white h-full">
