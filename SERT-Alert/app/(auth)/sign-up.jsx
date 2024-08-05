@@ -1,5 +1,5 @@
 import React, { useState } from 'react'; 
-import { View, Text, SafeAreaView, ScrollView} from 'react-native'
+import { Alert, View, Text, SafeAreaView, ScrollView} from 'react-native'
 import { Link } from 'expo-router';
 import { router } from 'expo-router';
 
@@ -10,40 +10,57 @@ import { createUser } from '../../lib/appwrite';
 
 
 const SignUp = () => {
-  const [form, setform] = useState({
+  const [form, setForm] = useState({
     name: '',
-    department: '',
-    yearCourseSection: '',
+    // department: '',
+    // yearCourseSection: '',
     email: '',
     password:''
   })
   const [isSubmitting, setisSubmitting] = useState(false)
-  const [yearCourseOptions, setYearCourseOptions] = useState([]);
-  const [isYearCourseEnabled, setIsYearCourseEnabled] = useState(false);
+  // const [yearCourseOptions, setYearCourseOptions] = useState([]);
+  // const [isYearCourseEnabled, setIsYearCourseEnabled] = useState(false);
 
-  const handleDepartmentChange = (department) => {
-    let options = [];
-    switch (department) {
-      case 'JHS Department':
-        options = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'];
-        break;
-      case 'SHS Department':
-        options = ['STEM', 'ICT', 'ABM', 'GAS', 'HUMSS'];
-        break;
-      case 'College Department':
-        options = ['CHM', 'CCS', 'CED', 'CCJE', 'CBA'];
-        break;
-      default:
-        options = [];
-    }
-    setform({ ...form, department, yearCourseSection: '' });
-    setYearCourseOptions(options);
-    setIsYearCourseEnabled(true);
-  };
+  // const handleDepartmentChange = (department) => {
+  //   let options = [];
+  //   switch (department) {
+  //     case 'JHS Department':
+  //       options = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'];
+  //       break;
+  //     case 'SHS Department':
+  //       options = ['STEM', 'ICT', 'ABM', 'GAS', 'HUMSS'];
+  //       break;
+  //     case 'College Department':
+  //       options = ['CHM', 'CCS', 'CED', 'CCJE', 'CBA'];
+  //       break;
+  //     default:
+  //       options = [];
+  //   }
+  //   setForm({ ...form, department, yearCourseSection: '' });
+  //   setYearCourseOptions(options);
+  //   setIsYearCourseEnabled(true);
+  // };
 
-  const submit = () => {
+  const submit = async () => {
     // Handle the form submission logic
-    createUser();
+    if(!form.name || !form.email || !form.password){
+      Alert.alert('Error', 'Please fill in all the fields')
+    }
+
+    setisSubmitting(true);
+
+    try{
+      const result = await createUser(form.email, form.password, form.name)
+
+      //set it to global state...
+      router.replace('/menu')
+
+    } catch (error){
+      Alert.alert('Error', error.message)
+    } finally {
+      setisSubmitting(false)
+    }
+
   }
   return (
     <SafeAreaView className="bg-white h-full">
@@ -56,10 +73,10 @@ const SignUp = () => {
         <FormField 
           title="Name"
           value={form.name}
-          handleChangeText={(e) => setform({...form, name: e})}
+          handleChangeText={(e) => setForm({...form, name: e})}
           otherStyles="mt-7"
         />
-        <View className="mt-7">
+        {/* <View className="mt-7">
         <Text className="text-base text-black-100 font-pmedium">Department</Text>
             <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
               <Picker
@@ -73,9 +90,9 @@ const SignUp = () => {
                 <Picker.Item label="College Department" value="College Department" />
               </Picker>
             </View>
-        </View>
+        </View> */}
         
-        <View className="mt-7">
+        {/* <View className="mt-7">
             <Text className="text-base text-black-100 font-pmedium">Year/Course/Section</Text>
             <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
               <Picker
@@ -90,19 +107,19 @@ const SignUp = () => {
                 ))}
               </Picker>
             </View>
-          </View>
+          </View> */}
 
         <FormField 
           title="Email"
           value={form.email}
-          handleChangeText={(e) => setform({...form, email: e})}
+          handleChangeText={(e) => setForm({...form, email: e})}
           otherStyles="mt-7"
           keyboardType="email-address"
         />
         <FormField 
           title="Password"
           value={form.password}
-          handleChangeText={(e) => setform({...form, password: e})}
+          handleChangeText={(e) => setForm({...form, password: e})}
           otherStyles="mt-7"
         />
 
