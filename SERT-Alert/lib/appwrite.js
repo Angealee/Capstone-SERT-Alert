@@ -2,7 +2,6 @@ import { ID, Account, Client, Avatars, Databases } from 'react-native-appwrite';
 
 export const appwriteConfig = {
     endpoint: 'https://cloud.appwrite.io/v1',
-    platform: 'com.angeale.capstoneSERTalert',
     projectId: '66923beb0025ee8308d2',
     databaseId: '669248d1001d9d29f489',
     collectionId: '669248d1001d9d29f489',
@@ -11,77 +10,77 @@ export const appwriteConfig = {
     storageId: '66aed87b0020ea8d8e8d'
 }
 
-
 // Init your React Native SDK
 const client = new Client();
 
 client
     .setEndpoint(appwriteConfig.endpoint) // Your Appwrite Endpoint
-    .setProject(appwriteConfig.projectId) // Your project ID
-    .setPlatform(appwriteConfig.platform) // Your application ID or bundle ID.
+    .setProject(appwriteConfig.projectId); // Your project ID
 
-    const account = new Account(client);
-    const avatars = new Avatars(client);
-    const databases = new Databases(client);
-    
-    export const createUser = async (email, password, name) => {
+const account = new Account(client);
+const avatars = new Avatars(client);
+const databases = new Databases(client);
+
+export const createUser = async (email, password, name) => {
+    try {
         // Register User
-        try{
-            const newAccount = await account.create(
-                ID.unique(),
-                email,
-                password,
-                name
-            )
+        const newAccount = await account.create(
+            ID.unique(),
+            email,
+            password,
+            name
+        );
 
-        if(!newAccount) throw Error;
-        const avatarUrl = avatars.getInitials(name)
+        console.log('New account created:', newAccount);
 
-          await  signIn(email, password)
+        if (!newAccount) throw new Error('Account creation failed');
+        const avatarUrl = avatars.getInitials(name);
 
-          const newUser = await databases.createDocument(
+        await signIn(email, password);
+
+        const newUser = await databases.createDocument(
             appwriteConfig.databaseId,
             appwriteConfig.collectionId,
             ID.unique(),
             {
-            accountId: newAccount.$id,
-            email,
-            name,
-            avatar: avatarUrl
+                accountId: newAccount.$id,
+                email,
+                username: name, // assuming username is the name
+                avatar: avatarUrl
             }
-          )
+        );
 
-          return newUser;
-        } catch (error){
-            console.log(error);
-            throw new Error(error);
-        }
+        return newUser;
+    } catch (error) {
+        console.error('Error creating user:', error);
+        throw new Error(error.message);
     }
+};
 
-    export async function signIn(email, password){
-        try{
-         // Log out any existing sessions
+export const signIn = async (email, password) => {
+    try {
+        // Log out any existing sessions
         const sessions = await account.listSessions();
         for (let session of sessions.sessions) {
             await account.deleteSession(session.$id);
         }
 
         // Create a new session
-         const session = await account.createEmailSession(email, password)
+        const session = await account.createEmailSession(email, password);
+        console.log('New session created:', session);
+        return session;
 
-         return session;
-
-        }catch (error){
-            throw new Error(error);
-        }
+    } catch (error) {
+        console.error('Error signing in:', error);
+        throw new Error(error.message);
     }
-    
-    export const listCollections = async () => {
-        try {
-            const collections = await databases.listCollections(appwriteConfig.databaseId);
-            console.log('Collections:', collections);
-        } catch (error) {
-            console.log('Error listing collections:', error);
-        }
-    };
-;
+};
+
+export const listCollections = async () => {
+    try {
+        const collections = await databases.listCollections(appwriteConfig.databaseId);
+        console.log('Collections:', collections);
+    } catch (error) {
+        console.error('Error listing collections:', error);
+    }
+};
