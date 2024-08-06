@@ -19,11 +19,12 @@ const SignUp = () => {
       Alert.alert('Error', 'Please fill in all the fields');
       return;
     }
-
     setisSubmitting(true);
 
     try {
       const result = await createUser(form.email, form.password, form.name);
+      //set it to global state ...
+
       console.log('User created:', result);
       router.replace('/menu');
     } catch (error) {
@@ -60,7 +61,7 @@ const SignUp = () => {
           />
 
           <CustomButton 
-            title="Submit Request Account"
+            title="Create an account"
             handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
