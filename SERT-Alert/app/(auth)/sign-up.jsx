@@ -1,5 +1,5 @@
 import React, { useState } from 'react'; 
-import { View, Text, SafeAreaView, ScrollView} from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, Alert} from 'react-native'
 import { Link } from 'expo-router';
 import { router } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
@@ -18,9 +18,25 @@ const SignUp = () => {
   const [isSubmitting, setisSubmitting] = useState(false)
 
 
-  const submit = () => {
+  const submit = async () => {
     // Handle the form submission logic
-    createUser();
+    if(!form.username || !form.email || !form.password){
+      Alert.alert('Error', 'Please fill in all the fields!')
+    }
+
+    setisSubmitting(true);
+
+    try{
+      const result = await createUser(form.email, form.password, form.username)
+
+      //set it to global state ...
+
+      router.replace('/menu')
+    } catch (error) {
+      Alert.alert('error', error.message)
+    } finally {
+      setisSubmitting(false)
+    }
   }
   return (
     <SafeAreaView className="bg-white h-full">
@@ -56,7 +72,7 @@ const SignUp = () => {
         />
 
         <CustomButton 
-          title="Submit Request Account"
+          title="Sign up"
           handlePress={submit}
           containerStyles="mt-7"
           isLoading={isSubmitting}
