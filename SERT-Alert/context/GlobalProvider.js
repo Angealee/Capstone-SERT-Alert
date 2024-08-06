@@ -10,7 +10,7 @@ import { getCurrentUser } from "../lib/appwrite";
     const [isLoading, setIsLoading] = useState(true);   
     
     useEffect(() => {
-        getCurrentUser
+        getCurrentUser()
         .then((res) => {
             if(res) {
                 setIsLoggedIn(true);
@@ -31,10 +31,16 @@ import { getCurrentUser } from "../lib/appwrite";
     return (
         <GlobalContext.Provider
             value={{
-                
+                isLoggedIn,
+                setIsLoggedIn,
+                user,
+                setUser,
+                isLoading
             }}
         >
             {children}
         </GlobalContext.Provider>
     )
  }
+
+ export default GlobalProvider;
