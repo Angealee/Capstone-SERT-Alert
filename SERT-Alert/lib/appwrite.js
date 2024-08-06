@@ -58,6 +58,7 @@ export const createUser = async (email, password, username) => {
     }
 }
 
+//Sign In the User
 export const signIn = async (email, password, username) => {
     try {
         const session = await account.createEmailPasswordSession(email, password)
@@ -68,11 +69,12 @@ export const signIn = async (email, password, username) => {
     }
 }
 
+//Get Current User
 export const getCurrentUser = async () => {
     try{
-        const getCurrentAccount = await account.get();
+        const currentAccount = await account.get();
 
-        if(!getCurrentAccount) throw Error;
+        if(!currentAccount) throw Error;
 
         const currentUser = await databases.listDocuments(
             config.databaseId,
@@ -85,6 +87,7 @@ export const getCurrentUser = async () => {
         return currentUser.documents[0]
     }   catch (error) {
         console.log(error);
+        throw new Error(error.message)
     }
 }
 
