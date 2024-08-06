@@ -31,13 +31,15 @@ const SignUp = () => {
 
       //set it to global state ...
 
-      router.replace('/menu')
+      router.replace('/sign-in')
+      Alert.alert('Account creation Successful!');
     } catch (error) {
       Alert.alert('error', error.message)
     } finally {
       setisSubmitting(false)
     }
   }
+  
   return (
     <SafeAreaView className="bg-white h-full">
       <ScrollView>
