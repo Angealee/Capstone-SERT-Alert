@@ -2,46 +2,25 @@ import React, { useState } from 'react';
 import { View, Text, SafeAreaView, ScrollView} from 'react-native'
 import { Link } from 'expo-router';
 import { router } from 'expo-router';
-
 import { Picker } from '@react-native-picker/picker';
+import { createUser } from '../../lib/appwrite';
+
 import FormField from '../../components/FormField';
 import CustomButton  from '../../components/CustomButton';
 
 
 const SignUp = () => {
   const [form, setform] = useState({
-    name: '',
-    department: '',
-    yearCourseSection: '',
+    username: '',
     email: '',
     password:''
   })
   const [isSubmitting, setisSubmitting] = useState(false)
-  const [yearCourseOptions, setYearCourseOptions] = useState([]);
-  const [isYearCourseEnabled, setIsYearCourseEnabled] = useState(false);
 
-  const handleDepartmentChange = (department) => {
-    let options = [];
-    switch (department) {
-      case 'JHS Department':
-        options = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'];
-        break;
-      case 'SHS Department':
-        options = ['STEM', 'ICT', 'ABM', 'GAS', 'HUMSS'];
-        break;
-      case 'College Department':
-        options = ['CHM', 'CCS', 'CED', 'CCJE', 'CBA'];
-        break;
-      default:
-        options = [];
-    }
-    setform({ ...form, department, yearCourseSection: '' });
-    setYearCourseOptions(options);
-    setIsYearCourseEnabled(true);
-  };
 
   const submit = () => {
     // Handle the form submission logic
+    createUser();
   }
   return (
     <SafeAreaView className="bg-white h-full">
@@ -54,8 +33,8 @@ const SignUp = () => {
         {/* Name */}
         <FormField 
           title="Name"
-          value={form.name}
-          handleChangeText={(e) => setform({...form, name: e})}
+          value={form.username}
+          handleChangeText={(e) => setform({...form, username: e})}
           otherStyles="mt-7"
         />
 
