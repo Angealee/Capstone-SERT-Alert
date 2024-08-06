@@ -47,7 +47,7 @@ const SignIn = () => {
         />
 
         <CustomButton 
-          title="Request an Account"
+          title="Sign-up"
           handlePress={() => router.push('/sign-up')}
           containerStyles="mt-7"
           isLoading={isSubmitting}

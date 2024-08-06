@@ -59,49 +59,6 @@ const SignUp = () => {
           otherStyles="mt-7"
         />
 
-        {/* Department */}
-        <View className="mt-7">
-        <Text className="text-base text-black-100 font-pmedium">Department</Text>
-            <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
-              <Picker
-                selectedValue={form.department}
-                onValueChange={handleDepartmentChange}
-                style={{ flex: 1, color: '#000' }}
-              >
-                <Picker.Item label="Select Department" value="" />
-                <Picker.Item label="JHS Department" value="JHS Department" />
-                <Picker.Item label="SHS Department" value="SHS Department" />
-                <Picker.Item label="College Department" value="College Department" />
-              </Picker>
-            </View>
-        </View>
-            
-        {/* YEAR COURSE SECTION */}
-        <View className="mt-7">
-          <Text className="text-base text-black-100 font-pmedium">Year/Course/Section</Text>
-          <View className={`w-full h-16 px-4 rounded-2xl items-center flex-row ${
-            isYearCourseEnabled 
-              ? 'border-2 border-red-500 bg-white-100' 
-              : 'bg-gray-200'
-          }`}>
-            <Picker
-              selectedValue={form.yearCourseSection}
-              onValueChange={(value) => setForm({ ...form, yearCourseSection: value })}
-              enabled={isYearCourseEnabled}
-              style={{ 
-                flex: 1, 
-                color: isYearCourseEnabled ? '#000' : '#888',
-                opacity: isYearCourseEnabled ? 1 : 0.5
-              }}
-            >
-              <Picker.Item label="Select Year/Course/Section" value="" />
-              {yearCourseOptions.map((option, index) => (
-                <Picker.Item key={index} label={option} value={option} />
-              ))}
-            </Picker>
-          </View>
-        </View>
-
         {/* Email */}
         <FormField 
           title="Email"
@@ -110,6 +67,8 @@ const SignUp = () => {
           otherStyles="mt-7"
           keyboardType="email-address"
         />
+
+        {/* Password */}
         <FormField 
           title="Password"
           value={form.password}
