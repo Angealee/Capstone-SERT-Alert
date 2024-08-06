@@ -5,6 +5,7 @@ import { Redirect, router } from 'expo-router';
 
 import { images } from '../constants';
 import CustomButton from '../components/CustomButton';
+import 'react-native-url-polyfill/auto';
 
 export default function App() {
   return (

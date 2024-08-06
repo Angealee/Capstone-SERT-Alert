@@ -1,48 +1,45 @@
 import React, { useState } from 'react'; 
-import { View, Text, SafeAreaView, ScrollView} from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, Alert} from 'react-native'
 import { Link } from 'expo-router';
 import { router } from 'expo-router';
-
 import { Picker } from '@react-native-picker/picker';
+import { createUser } from '../../lib/appwrite';
+
 import FormField from '../../components/FormField';
 import CustomButton  from '../../components/CustomButton';
 
 
 const SignUp = () => {
   const [form, setform] = useState({
-    name: '',
-    department: '',
-    yearCourseSection: '',
+    username: '',
     email: '',
     password:''
   })
   const [isSubmitting, setisSubmitting] = useState(false)
-  const [yearCourseOptions, setYearCourseOptions] = useState([]);
-  const [isYearCourseEnabled, setIsYearCourseEnabled] = useState(false);
 
-  const handleDepartmentChange = (department) => {
-    let options = [];
-    switch (department) {
-      case 'JHS Department':
-        options = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10'];
-        break;
-      case 'SHS Department':
-        options = ['STEM', 'ICT', 'ABM', 'GAS', 'HUMSS'];
-        break;
-      case 'College Department':
-        options = ['CHM', 'CCS', 'CED', 'CCJE', 'CBA'];
-        break;
-      default:
-        options = [];
-    }
-    setform({ ...form, department, yearCourseSection: '' });
-    setYearCourseOptions(options);
-    setIsYearCourseEnabled(true);
-  };
 
-  const submit = () => {
+  const submit = async () => {
     // Handle the form submission logic
+    if(!form.username || !form.email || !form.password){
+      Alert.alert('Error', 'Please fill in all the fields!')
+    }
+
+    setisSubmitting(true);
+
+    try{
+      const result = await createUser(form.email, form.password, form.username)
+
+      //set it to global state ...
+
+      router.replace('/sign-in')
+      Alert.alert('Account creation Successful!');
+    } catch (error) {
+      Alert.alert('error', error.message)
+    } finally {
+      setisSubmitting(false)
+    }
   }
+  
   return (
     <SafeAreaView className="bg-white h-full">
       <ScrollView>
@@ -54,53 +51,10 @@ const SignUp = () => {
         {/* Name */}
         <FormField 
           title="Name"
-          value={form.name}
-          handleChangeText={(e) => setform({...form, name: e})}
+          value={form.username}
+          handleChangeText={(e) => setform({...form, username: e})}
           otherStyles="mt-7"
         />
-
-        {/* Department */}
-        <View className="mt-7">
-        <Text className="text-base text-black-100 font-pmedium">Department</Text>
-            <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
-              <Picker
-                selectedValue={form.department}
-                onValueChange={handleDepartmentChange}
-                style={{ flex: 1, color: '#000' }}
-              >
-                <Picker.Item label="Select Department" value="" />
-                <Picker.Item label="JHS Department" value="JHS Department" />
-                <Picker.Item label="SHS Department" value="SHS Department" />
-                <Picker.Item label="College Department" value="College Department" />
-              </Picker>
-            </View>
-        </View>
-            
-        {/* YEAR COURSE SECTION */}
-        <View className="mt-7">
-          <Text className="text-base text-black-100 font-pmedium">Year/Course/Section</Text>
-          <View className={`w-full h-16 px-4 rounded-2xl items-center flex-row ${
-            isYearCourseEnabled 
-              ? 'border-2 border-red-500 bg-white-100' 
-              : 'bg-gray-200'
-          }`}>
-            <Picker
-              selectedValue={form.yearCourseSection}
-              onValueChange={(value) => setForm({ ...form, yearCourseSection: value })}
-              enabled={isYearCourseEnabled}
-              style={{ 
-                flex: 1, 
-                color: isYearCourseEnabled ? '#000' : '#888',
-                opacity: isYearCourseEnabled ? 1 : 0.5
-              }}
-            >
-              <Picker.Item label="Select Year/Course/Section" value="" />
-              {yearCourseOptions.map((option, index) => (
-                <Picker.Item key={index} label={option} value={option} />
-              ))}
-            </Picker>
-          </View>
-        </View>
 
         {/* Email */}
         <FormField 
@@ -110,6 +64,8 @@ const SignUp = () => {
           otherStyles="mt-7"
           keyboardType="email-address"
         />
+
+        {/* Password */}
         <FormField 
           title="Password"
           value={form.password}
@@ -118,7 +74,7 @@ const SignUp = () => {
         />
 
         <CustomButton 
-          title="Submit Request Account"
+          title="Sign up"
           handlePress={submit}
           containerStyles="mt-7"
           isLoading={isSubmitting}
