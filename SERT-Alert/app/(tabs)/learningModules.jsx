@@ -1,4 +1,4 @@
-import { View, Text,ScrollView, Image, FlatList } from 'react-native'
+import { View, TouchableOpacity, Text,ScrollView, Image, FlatList } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
@@ -8,13 +8,7 @@ import LearningMaterials from '../../components/LearningMaterials';
 const LearningModules = () => {
   return (
     <SafeAreaView className="bg-red-100 h-full">
-      <FlatList 
-        data={[{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }]}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <Text className="text-3xl">{item.id}</Text>
-        )}
-        ListHeaderComponent={() => (
+      <ScrollView>
           <View className="my-6 px-4 space-y-6">
             <View className="justify-between items-start flex-row mb-6">
               <View>
@@ -42,20 +36,72 @@ const LearningModules = () => {
               <Text className="text-black-100 text-lg font-pregular mb-3">
                 Learning Materials
               </Text>
+              <View className="flex-row justify-between flex-wrap">
+                <TouchableOpacity 
+                  className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
+                  onPress={() => handleNavigate('types-of-emergency')}
+                >
+                  <Image 
+                    source={images.emergency} // Add your thumbnail image here
+                    className="w-full h-24 rounded-lg"
+                    resizeMode='cover'
+                  />
+                  <Text className="text-center mt-2 text-lg font-psemibold">
+                    Types of Emergency
+                  </Text>
+                </TouchableOpacity>
 
-              <LearningMaterials posts={[{ id: 1}, { id: 2}, { id: 3}, { id: 4}] ?? []} />
+                <TouchableOpacity 
+                  className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
+                  onPress={() => handleNavigate('water-safety')}
+                >
+                  <Image 
+                    source={images.waterSafety} // Add your thumbnail image here
+                    className="w-full h-24 rounded-lg"
+                    resizeMode='cover'
+                  />
+                  <Text className="text-center mt-2 text-lg font-psemibold">
+                    Water Safety: Swimming Safety
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                  className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
+                  onPress={() => handleNavigate('first-aid-procedures')}
+                >
+                  <Image 
+                    source={images.firstAid} // Add your thumbnail image here
+                    className="w-full h-24 rounded-lg"
+                    resizeMode='cover'
+                  />
+                  <Text className="text-center mt-2 text-lg font-psemibold">
+                    First Aid Procedures
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity 
+                  className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
+                  onPress={() => handleNavigate('earthquake-drills')}
+                >
+                  <Image 
+                    source={images.earthquake} // Add your thumbnail image here
+                    className="w-full h-24 rounded-lg"
+                    resizeMode='cover'
+                  />
+                  <Text className="text-center mt-2 text-lg font-psemibold">
+                    Earthquake Drills and Information
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              
             </View>
           </View>
-        )}
-        ListEmptyComponent={() => (
-          <Text>
-            Empty
-          </Text>
-        )}
-      />
-        
+
+      {/* /> */}
+      </ScrollView>
     </SafeAreaView>
   )
 }
 
 export default LearningModules
+//initial commit
