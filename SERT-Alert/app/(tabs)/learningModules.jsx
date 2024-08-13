@@ -49,12 +49,12 @@ const LearningModules = () => {
                   onPress={() => handleNavigate('emergencyResponseBasics')}
                 >
                   <Image 
-                    source={images.emergency} // Add your thumbnail image here
+                    source={images.emergencyResponse} // Add your thumbnail image here
                     className="w-full h-24 rounded-lg"
                     resizeMode='cover'
                   />
-                  <Text className="text-center mt-2 text-lg font-psemibold">
-                    Emergency Response Basics
+                  <Text className="text-center mb-2 text-lg font-psemibold">
+                    Basic Emergency Response
                   </Text>
                 </TouchableOpacity>
 
@@ -64,7 +64,7 @@ const LearningModules = () => {
                   onPress={() => handleNavigate('firstAidTechniques')}
                 >
                   <Image 
-                    source={images.waterSafety} // Add your thumbnail image here
+                    source={images.firstAid} // Add your thumbnail image here
                     className="w-full h-24 rounded-lg"
                     resizeMode='cover'
                   />
@@ -79,22 +79,22 @@ const LearningModules = () => {
                   onPress={() => handleNavigate('naturalDisasterPreparedness')}
                 >
                   <Image 
-                    source={images.firstAid} // Add your thumbnail image here
+                    source={images.naturalDisaster} // Add your thumbnail image here
                     className="w-full h-24 rounded-lg"
                     resizeMode='cover'
                   />
-                  <Text className="text-center mt-2 text-lg font-psemibold">
+                  <Text className="text-center mb-1 text-lg font-psemibold">
                   Natural Disaster Preparedness
                   </Text>
                 </TouchableOpacity>
 
                 {/* •	Swimming and Water Safety */}
                 <TouchableOpacity 
-                  className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
+                  className="bg-white border-red-600 p-4 rounded-lg mb-4 w-[48%] h-40"
                   onPress={() => handleNavigate('swimmingWaterSafety')}
                 >
                   <Image 
-                    source={images.earthquake} // Add your thumbnail image here
+                    source={images.waterSafety} // Add your thumbnail image here
                     className="w-full h-24 rounded-lg"
                     resizeMode='cover'
                   />
