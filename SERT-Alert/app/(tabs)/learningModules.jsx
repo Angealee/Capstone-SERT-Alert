@@ -3,7 +3,6 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
 import SearchInput from '../../components/SearchInput';
-import LearningMaterials from '../../components/LearningMaterials';
 
 const LearningModules = () => {
   return (
