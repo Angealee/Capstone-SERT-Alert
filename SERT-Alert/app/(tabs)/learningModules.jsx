@@ -1,10 +1,16 @@
-import { View, TouchableOpacity, Text,ScrollView, Image, FlatList } from 'react-native'
+import { View, TouchableOpacity, Text,ScrollView, Image, handleNavigate } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
 import SearchInput from '../../components/SearchInput';
 
 const LearningModules = () => {
+  const router = useRouter(); // Initialize router
+
+  // Function to handle navigation to the specific topic
+  const handleNavigate = (topic) => {
+  router.push(`/learning/${topic}`);
+  };
   return (
     <SafeAreaView className="bg-red-100 h-full">
       <ScrollView>
@@ -36,9 +42,10 @@ const LearningModules = () => {
                 Learning Materials
               </Text>
               <View className="flex-row justify-between flex-wrap">
+                {/* •	Emergency Response Basics */}
                 <TouchableOpacity 
                   className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
-                  onPress={() => handleNavigate('types-of-emergency')}
+                  onPress={() => handleNavigate('SAMPLE')}
                 >
                   <Image 
                     source={images.emergency} // Add your thumbnail image here
@@ -46,13 +53,14 @@ const LearningModules = () => {
                     resizeMode='cover'
                   />
                   <Text className="text-center mt-2 text-lg font-psemibold">
-                    Types of Emergency
+                    Emergency Response Basics
                   </Text>
                 </TouchableOpacity>
 
+                {/* •	First Aid Techniques */}
                 <TouchableOpacity 
                   className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
-                  onPress={() => handleNavigate('water-safety')}
+                  onPress={() => handleNavigate('SAMPLE')}
                 >
                   <Image 
                     source={images.waterSafety} // Add your thumbnail image here
@@ -60,10 +68,11 @@ const LearningModules = () => {
                     resizeMode='cover'
                   />
                   <Text className="text-center mt-2 text-lg font-psemibold">
-                    Water Safety: Swimming Safety
+                    First Aid Techniques
                   </Text>
                 </TouchableOpacity>
 
+                {/* •	Natural Disaster Preparedness */}
                 <TouchableOpacity 
                   className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
                   onPress={() => handleNavigate('first-aid-procedures')}
@@ -78,6 +87,7 @@ const LearningModules = () => {
                   </Text>
                 </TouchableOpacity>
 
+                {/* •	Swimming and Water Safety */}
                 <TouchableOpacity 
                   className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
                   onPress={() => handleNavigate('earthquake-drills')}
