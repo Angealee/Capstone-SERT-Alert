@@ -2,6 +2,7 @@ import { View, TouchableOpacity, Text,ScrollView, Image, handleNavigate } from '
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
+import { useRouter } from 'expo-router';
 import SearchInput from '../../components/SearchInput';
 
 const LearningModules = () => {
@@ -9,7 +10,7 @@ const LearningModules = () => {
 
   // Function to handle navigation to the specific topic
   const handleNavigate = (topic) => {
-  router.push(`/learning/${topic}`);
+  router.push(`/learningTopics/${topic}`);
   };
   return (
     <SafeAreaView className="bg-red-100 h-full">
@@ -45,7 +46,7 @@ const LearningModules = () => {
                 {/* •	Emergency Response Basics */}
                 <TouchableOpacity 
                   className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
-                  onPress={() => handleNavigate('SAMPLE')}
+                  onPress={() => handleNavigate('emergencyResponseBasics')}
                 >
                   <Image 
                     source={images.emergency} // Add your thumbnail image here
@@ -60,7 +61,7 @@ const LearningModules = () => {
                 {/* •	First Aid Techniques */}
                 <TouchableOpacity 
                   className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
-                  onPress={() => handleNavigate('SAMPLE')}
+                  onPress={() => handleNavigate('firstAidTechniques')}
                 >
                   <Image 
                     source={images.waterSafety} // Add your thumbnail image here
@@ -75,7 +76,7 @@ const LearningModules = () => {
                 {/* •	Natural Disaster Preparedness */}
                 <TouchableOpacity 
                   className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
-                  onPress={() => handleNavigate('first-aid-procedures')}
+                  onPress={() => handleNavigate('naturalDisasterPreparedness')}
                 >
                   <Image 
                     source={images.firstAid} // Add your thumbnail image here
@@ -83,14 +84,14 @@ const LearningModules = () => {
                     resizeMode='cover'
                   />
                   <Text className="text-center mt-2 text-lg font-psemibold">
-                    First Aid Procedures
+                  Natural Disaster Preparedness
                   </Text>
                 </TouchableOpacity>
 
                 {/* •	Swimming and Water Safety */}
                 <TouchableOpacity 
                   className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
-                  onPress={() => handleNavigate('earthquake-drills')}
+                  onPress={() => handleNavigate('swimmingWaterSafety')}
                 >
                   <Image 
                     source={images.earthquake} // Add your thumbnail image here
@@ -98,7 +99,7 @@ const LearningModules = () => {
                     resizeMode='cover'
                   />
                   <Text className="text-center mt-2 text-lg font-psemibold">
-                    Earthquake Drills and Information
+                  Swimming and Water Safety
                   </Text>
                 </TouchableOpacity>
               </View>
