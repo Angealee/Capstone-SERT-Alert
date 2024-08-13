@@ -12,6 +12,14 @@ const LearningModules = () => {
   const handleNavigate = (topic) => {
   router.push(`/learningTopics/${topic}`);
   };
+
+  const getShadowStyle = () => ({
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 8, // For Android shadow
+  });
   return (
     <SafeAreaView className="bg-red-100 h-full">
       <ScrollView>
@@ -47,13 +55,15 @@ const LearningModules = () => {
                 <TouchableOpacity 
                   className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
                   onPress={() => handleNavigate('emergencyResponseBasics')}
+                  style={getShadowStyle()}
                 >
                   <Image 
                     source={images.emergencyResponse} // Add your thumbnail image here
                     className="w-full h-24 rounded-lg"
                     resizeMode='cover'
                   />
-                  <Text className="text-center mb-2 text-lg font-psemibold">
+                  <Text className="text-center mb-2 text-lg font-psemibold"
+                  style={{fontSize: 14}}>
                     Basic Emergency Response
                   </Text>
                 </TouchableOpacity>
@@ -62,6 +72,7 @@ const LearningModules = () => {
                 <TouchableOpacity 
                   className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
                   onPress={() => handleNavigate('firstAidTechniques')}
+                  style={getShadowStyle()}
                 >
                   <Image 
                     source={images.firstAid} // Add your thumbnail image here
@@ -77,6 +88,7 @@ const LearningModules = () => {
                 <TouchableOpacity 
                   className="bg-white p-4 rounded-lg mb-4 w-[48%] h-40"
                   onPress={() => handleNavigate('naturalDisasterPreparedness')}
+                  style={getShadowStyle()}
                 >
                   <Image 
                     source={images.naturalDisaster} // Add your thumbnail image here
@@ -92,6 +104,7 @@ const LearningModules = () => {
                 <TouchableOpacity 
                   className="bg-white border-red-600 p-4 rounded-lg mb-4 w-[48%] h-40"
                   onPress={() => handleNavigate('swimmingWaterSafety')}
+                  style={getShadowStyle()}
                 >
                   <Image 
                     source={images.waterSafety} // Add your thumbnail image here
