@@ -11,5 +11,10 @@ import emergencyResponse from "../assets/images/emergencyResponse.png";
 import firstAid from "../assets/images/firstAid.jpg";
 import naturalDisaster from "../assets/images/naturalDisaster.png";
 import waterSafety from "../assets/images/waterSafety.jpg";
+import charldrinBello from "../assets/images/charldrinBello.jpg";
+import SERTpicture from "../assets/images/SERTpicture.png";
+import kobyMacale from "../assets/images/kobyMacale.jpg";
+import kiokiSerrano from "../assets/images/kiokiSerrano.jpg";
+import luisMagdangal from "../assets/images/luisMagdangal.jpg";
 
-export default { profile, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster };
+export default { profile, charldrinBello, kiokiSerrano, luisMagdangal, kobyMacale, SERTpicture, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster };
