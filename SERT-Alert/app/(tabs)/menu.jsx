@@ -9,6 +9,11 @@ import FormField from '../../components/FormField';
 
 //initial commit
 const menu = () => {
+  
+const handleNavigate = (info) => {
+  router.push(`/aboutInfo/${info}`);
+  };
+
   return (
     <SafeAreaView className="bg-red-200 h-full">
       <ScrollView>
@@ -22,13 +27,13 @@ const menu = () => {
         <View className="bg-white rounded justify-center px-5 pb-10 mt-20">
         <CustomButton 
             title="About SERT"
-            handlePress={() => router.push('/sign-in')}
+            handlePress={() => handleNavigate('aboutSERT')}
             containerStyles="mt-10 align-center"
           />
 
           <CustomButton 
             title="About Dev"
-            handlePress={() => router.push('/sign-in')}
+            handlePress={() => handleNavigate('aboutDev')}
             containerStyles="mt-10 align-center"
           />
 
