@@ -5,7 +5,7 @@ import { images } from '../../constants';
 import FormField from '../../components/FormField';
 import { Redirect, router } from 'expo-router';
 import CustomButton from '../../components/CustomButton';
-
+//initial commit
 const menu = () => {
   return (
     <SafeAreaView className="bg-red-200 h-full">
