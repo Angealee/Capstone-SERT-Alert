@@ -2,9 +2,11 @@ import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
 import React from 'react'
 
 import { images } from '../../constants';
-import FormField from '../../components/FormField';
 import { Redirect, router } from 'expo-router';
 import CustomButton from '../../components/CustomButton';
+import { Picker } from '@react-native-picker/picker';
+import FormField from '../../components/FormField';
+
 //initial commit
 const menu = () => {
   return (
@@ -14,17 +16,28 @@ const menu = () => {
           
           <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">The Menu for your options!</Text>
           
+          
+        </View>
+        
+        <View className="bg-white rounded justify-center px-5 pb-10 mt-20">
+        <CustomButton 
+            title="About SERT"
+            handlePress={() => router.push('/sign-in')}
+            containerStyles="mt-10 align-center"
+          />
+
           <CustomButton 
+            title="About Dev"
+            handlePress={() => router.push('/sign-in')}
+            containerStyles="mt-10 align-center"
+          />
+
+        <CustomButton 
             title="Sign In"
             handlePress={() => router.push('/sign-in')}
-            containerStyles="w-full mt-7"
+            containerStyles="mt-10 align-center"
           />
-        </View>
-
-        <View className='justify-center flex-row'>
-          <Text className='text-lg text-gray-100 font-pregular'>
-            Are you a SERT Member?
-          </Text>
+        
         </View>
 
       </ScrollView>

@@ -135,7 +135,7 @@ const Emergency = () => {
               </View>
               
             {/* Floor Location */}
-              <Text className="text-base text-black-100 mt-3 font-pmedium">Floor Location:</Text>
+            <Text className="text-base text-black-100 mt-3 font-pmedium">Floor Location:</Text>
             <View className={`w-full h-16 px-4 rounded-2xl items-center flex-row ${
               isFloorLocationEnabled 
                 ? 'border-2 border-red-500 bg-white-100' 
