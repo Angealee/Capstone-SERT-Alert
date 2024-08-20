@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SertApi.DAL;
 using SertApi.Interfaces;
+using SertApi.Models;
 using SertApi.Repositories;
 
 namespace SertApi.Controllers
@@ -45,6 +46,37 @@ namespace SertApi.Controllers
             {
                 _logger.LogError(ex, "Error in IsUserOnline()");
                 return false;
+            }
+        }
+
+        [HttpPost("AddUser")]
+        public async Task<IActionResult> AddUser(UserModel jsonModel)
+        {
+            try
+            {
+                var exists = await _userRepository.IsUserExists(jsonModel.Username);
+
+                if(exists)
+                {
+                    return BadRequest("User already exists.");
+                }
+
+                var newUser = new User
+                {
+                    Username = jsonModel.Username,
+                    Password = jsonModel.Password,
+                    FirstName = jsonModel.FirstName,
+                    LastName = jsonModel.LastName,
+                    Permission = jsonModel.Permission
+                };
+
+                await _userRepository.Add(newUser);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in AddUser()");
+                return StatusCode(500, ex.Message);
             }
         }
         #endregion
