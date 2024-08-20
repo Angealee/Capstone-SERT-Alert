@@ -1,0 +1,6 @@
+@SertApi_HostAddress = http://localhost:5037
+
+GET {{SertApi_HostAddress}}/sert/
+Accept: application/json
+
+###
