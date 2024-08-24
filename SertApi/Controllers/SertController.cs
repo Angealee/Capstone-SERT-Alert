@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using SertApi.DAL;
+using SertApi.Hubs;
 using SertApi.Interfaces;
 using SertApi.Models;
 using SertApi.Repositories;
@@ -8,11 +10,15 @@ namespace SertApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class SertController(ILogger<SertController> logger, UserRepository userRepository, ReportRepository reportRepository) : ControllerBase
+    public class SertController(ILogger<SertController> logger, 
+        UserRepository userRepository, 
+        ReportRepository reportRepository, 
+        IHubContext<MainHub> hubContext) : ControllerBase
     {
         private readonly ILogger<SertController> _logger = logger;
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IReportRepository _reportRepository = reportRepository;
+        private readonly IHubContext<MainHub> _hubContext = hubContext;
 
 
         #region Users
@@ -35,19 +41,19 @@ namespace SertApi.Controllers
             }
         }
 
-        [HttpGet("IsUserOnline")]
-        public async Task<bool> IsUserOnline(string username)
-        {
-            try
-            {
-                return await _userRepository.IsUserOnline(username);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error in IsUserOnline()");
-                return false;
-            }
-        }
+        //[HttpGet("IsUserOnline")]
+        //public async Task<bool> IsUserOnline(string username)
+        //{
+        //    try
+        //    {
+        //        return await _userRepository.IsUserOnline(username);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, "Error in IsUserOnline()");
+        //        return false;
+        //    }
+        //}
 
         [HttpPost("AddUser")]
         public async Task<IActionResult> AddUser(UserModel jsonModel)

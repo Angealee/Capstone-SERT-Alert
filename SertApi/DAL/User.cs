@@ -7,6 +7,11 @@
         public required string Password { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
+
+        /* 0 - User
+         * 1 - Admin
+         * 2 - 2nd Admin
+         */
         public int Permission { get; set; } = 0;
         public bool IsOnline { get; set; } = false;
 

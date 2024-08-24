@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SertApi;
+using SertApi.Hubs;
 using SertApi.Repositories;
 using System.Configuration;
 
@@ -13,6 +14,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<UserRepository>(); // Register UserRepository
 builder.Services.AddScoped<ReportRepository>(); // Register ReportRepository
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -31,5 +34,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<MainHub>("/serthub");
 
 app.Run();
