@@ -1,22 +1,44 @@
 ﻿using Newtonsoft.Json;
+using SertApi.Enums;
 
 namespace SertApi.Models
 {
     public class UserModel
     {
+        [JsonProperty("userId")]
+        public required int Id { get; set; }
+
         [JsonProperty("username")]
-        public string Username { get; set; } = string.Empty;
+        public required string Username { get; set; }
 
         [JsonProperty("password")]
-        public string Password { get; set; } = string.Empty;
+        public required string Password { get; set; }
 
-        [JsonProperty("firstname")]
-        public string FirstName { get; set; } = string.Empty;
+        [JsonProperty("name")]
+        public required string Name { get; set; }
 
-        [JsonProperty("lastname")]
-        public string LastName { get; set; } = string.Empty;
+        [JsonProperty("course")]
+        public required string Course { get; set; }
 
-        [JsonProperty("permission")]
-        public int Permission { get; set; } = 0;
+        [JsonProperty("year")]
+        public required string Year { get; set; }
+
+        [JsonProperty("section")]
+        public required string Section { get; set; }
+
+        [JsonProperty("email")]
+        public string? Email { get; set; } = string.Empty;
+
+        [JsonProperty("position")]
+        public string Position { get; set; } = string.Empty;
+
+        [JsonProperty("role")]
+        public required Role Role { get; set; } = Role.User;
+
+        [JsonProperty("active")]
+        public bool IsActive { get; set; } = true;
+
+        [JsonProperty("online")]
+        public bool IsOnline { get; set; } = false;
     }
 }

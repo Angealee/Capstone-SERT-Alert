@@ -12,8 +12,8 @@ using SertApi;
 namespace SertApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240820111721_AddIsOnlineColumn")]
-    partial class AddIsOnlineColumn
+    [Migration("20240824153729_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,14 @@ namespace SertApi.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<byte[]>("Attachment")
+                        .HasColumnType("longblob");
+
                     b.Property<string>("BuildingName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -43,11 +50,8 @@ namespace SertApi.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("LocationName")
+                    b.Property<string>("LocationDetail")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Notes")
                         .HasColumnType("longtext");
 
                     b.Property<string>("ReportedBy")
@@ -67,29 +71,48 @@ namespace SertApi.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Course")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("DateModified")
+                    b.Property<DateTime?>("DateModified")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("Email")
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsOnline")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Permission")
+                    b.Property<string>("Position")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
+                    b.Property<string>("Section")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Year")
                         .IsRequired()
                         .HasColumnType("longtext");
 

@@ -34,6 +34,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<MainHub>("/serthub");
+app.MapHub<UserHub>("/userhub");
 
 app.Run();
