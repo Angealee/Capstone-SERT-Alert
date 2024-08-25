@@ -103,23 +103,23 @@ const Emergency = () => {
   }
   
   return (
-    <SafeAreaView className=" bg-red-200 h-full">
+    <SafeAreaView className="flex-1 bg-orange-600 p-2">
       <ScrollView>
-        <View className="w-full h-full justify-center h-full[85vh] px-5 pb-10 my-6">
+        <View className="bg-white p-6 rounded-xl shadow-lg mt-5 mb-6">
           <Image source={images.SERTlogo}
            resizeMode='contain' 
-           className="w-[100px] h-[100px] "/>
+           className="w-20 h-20 mx-auto mb-4"/>
           
-           <Text className="text-2xl text-black text-semibold mt-2 font-psemibold ">
+           <Text className="text-2xl text-black text-center text-semibold mt-2 mb-6 font-psemibold ">
              Report an Emergency!
            </Text>
 
 {/* Start of the white background section view container */}
-          <View className="bg-white rounded justify-center px-5 pb-10 mt-10 border border-red-600">
+          <View className="bg-white rounded-xl justify-center px-5 pb-10 mt-2">
           {/* Inside of the white background view container */}
           
           {/* Location */}
-            <Text className="text-base mt-5 text-black-100 font-pmedium">Building:</Text>
+            <Text className="text-black-600 font-semibold mt-5 mb-2">Building:</Text>
             <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
                 <Picker
                   selectedValue={form.Building}
@@ -135,7 +135,7 @@ const Emergency = () => {
               </View>
               
             {/* Floor Location */}
-            <Text className="text-base text-black-100 mt-3 font-pmedium">Floor Location:</Text>
+            <Text className="text-black-600 font-semibold mb-2 mt-3">Floor Location:</Text>
             <View className={`w-full h-16 px-4 rounded-2xl items-center flex-row ${
               isFloorLocationEnabled 
                 ? 'border-2 border-red-500 bg-white-100' 
@@ -157,13 +157,23 @@ const Emergency = () => {
                 ))}
               </Picker>
             </View>
-
-            <FormField 
-            title="Input Context"
+            
+            {/* Input Context */}
+            <View className="mb-4">
+              <Text className="text-gray-600 font-semibold mt-4">Input Context</Text>
+              {/* <View className="bg-white border-2 border-gray-300 rounded-lg p-3 shadow-sm"> */}
+                <FormField
+                  placeholder="Describe the emergency..."
+                  placeholderTextColor="#999"
+                  className="text-gray-800"
+                />
+              {/* </View> */}
+            </View>
+            {/* <FormField 
             value={form.context}
             handleChangeText={(e) => setform({...form, context: e})}
-            otherStyles="mt-3 mx-2"
-            />
+            otherStyles="mx-2"
+            /> */}
 
 {/* code snippet open  */}
             <CaptureButton
