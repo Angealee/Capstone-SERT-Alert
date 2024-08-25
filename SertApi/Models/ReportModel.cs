@@ -13,9 +13,6 @@ namespace SertApi.Models
         [JsonProperty("location")]
         public string LocationDetail { get; set; } = string.Empty;
 
-        [JsonProperty("reporter")]
-        public required string ReportedBy { get; set; }
-
         [JsonProperty("content")]
         public required string Content { get; set; }
 

@@ -38,7 +38,6 @@ Below are the columns and their descriptions:
 | BuildingName   | string     | No       | The name of the building where the report was created. |
 | LocationDetail | string     | Yes      | Other location details related to the building name. |
 | Content        | string     | No       | Description or details of what the report is all about. |
-| ReportedBy     | string     | No       | The name of the person who reported the issue. |
 | Attachment     | blob       | Yes      | Description or details of what the report is all about. |
 | DateCreated    | DateTime   | No       | The date and time when the report was created. |
 | DateModified   | DateTime?  | Yes      | The date and time when the report was last modified. |

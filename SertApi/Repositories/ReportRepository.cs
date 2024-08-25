@@ -37,12 +37,6 @@ namespace SertApi.Repositories
                 ?? throw new Exception("Report not found");
         }
 
-        public async Task<Report> FindByReporterName(string reporter)
-        {
-            return await _context.Reports.FirstOrDefaultAsync(r => r.ReportedBy.Trim().Equals(reporter.Trim(), StringComparison.CurrentCultureIgnoreCase))
-                ?? throw new Exception("Reporter not found");
-        }
-
         #region basic operations
         public async Task Add(Report report)
         {

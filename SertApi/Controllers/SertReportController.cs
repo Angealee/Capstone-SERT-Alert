@@ -67,25 +67,6 @@ namespace SertApi.Controllers
             }
         }
 
-        [HttpGet("GetReportByReporter")]
-        public async Task<IActionResult> GetReportByReporter(string reporter)
-        {
-            try
-            {
-                var report = await _reportRepository.FindByReporterName(reporter);
-                if (report == null)
-                {
-                    return NotFound();
-                }
-                return Ok(report);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error in GetReportByReporter()");
-                return StatusCode(500, ex.Message);
-            }
-        }
-
         [HttpPost("AddReport")]
         public async Task<IActionResult> AddReport(ReportModel jsonModel)
         {
@@ -95,7 +76,6 @@ namespace SertApi.Controllers
                 {
                     BuildingName = jsonModel.BuildingName,
                     LocationDetail = jsonModel.LocationDetail,
-                    ReportedBy = jsonModel.ReportedBy,
                     Content = jsonModel.Content,
                     Attachment = jsonModel.Attachment,
                     DateCreated = DateTime.Now
@@ -123,7 +103,6 @@ namespace SertApi.Controllers
                 }
 
                 report.BuildingName = jsonModel.BuildingName;
-                report.ReportedBy = jsonModel.ReportedBy;
                 report.Content = jsonModel.Content;
                 report.Attachment = jsonModel.Attachment;
                 report.DateModified = DateTime.Now;
