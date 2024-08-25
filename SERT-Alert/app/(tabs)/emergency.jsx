@@ -160,7 +160,7 @@ const Emergency = () => {
             
             {/* Input Context */}
             <View className="mb-4">
-              <Text className="text-gray-600 font-semibold mt-4">Input Context</Text>
+
               {/* <View className="bg-white border-2 border-gray-300 rounded-lg p-3 shadow-sm"> */}
                 <FormField
                   placeholder="Describe the emergency..."
