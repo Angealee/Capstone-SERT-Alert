@@ -70,10 +70,11 @@ namespace SertApi.Controllers
                 var newUser = new User
                 {
                     Username = jsonModel.Username,
-                    Password = jsonModel.Password,
-                    FirstName = jsonModel.FirstName,
-                    LastName = jsonModel.LastName,
-                    Permission = jsonModel.Permission
+                    Name = jsonModel.Name,
+                    Email = jsonModel.Email,
+                    Position = jsonModel.Position,
+                    CourseSection = jsonModel.CourseSection,
+                    Password = jsonModel.Password
                 };
 
                 await _userRepository.Add(newUser);

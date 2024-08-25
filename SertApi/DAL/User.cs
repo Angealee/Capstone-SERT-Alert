@@ -4,9 +4,11 @@
     {
         public int Id { get; set; }
         public required string Username { get; set; }
+        public required string Name { get; set; }
+        public required string Email { get; set; }
+        public required string Position { get; set; }
+        public required string CourseSection { get; set; }
         public required string Password { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
 
         /* 0 - User
          * 1 - Admin
@@ -15,7 +17,7 @@
         public int Permission { get; set; } = 0;
         public bool IsOnline { get; set; } = false;
 
-        public DateTime DateCreated { get; set; } = DateTime.Now;
-        public DateTime? DateModified { get; set; }
+        public DateTime? CreatedAt { get; set; } = DateTime.Now;
+        public DateTime? UpdatedAt { get; set; }
     }
 }
