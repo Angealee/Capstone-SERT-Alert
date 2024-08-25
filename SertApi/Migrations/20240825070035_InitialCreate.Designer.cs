@@ -12,8 +12,8 @@ using SertApi;
 namespace SertApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240825063612_RemoveReportName")]
-    partial class RemoveReportName
+    [Migration("20240825070035_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

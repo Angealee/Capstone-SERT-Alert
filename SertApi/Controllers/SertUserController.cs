@@ -53,7 +53,7 @@ namespace SertApi.Controllers
         {
             try
             {
-                var exists = await _userRepository.IsUserExists(jsonModel.Id);
+                var exists = await _userRepository.IsUserExists(jsonModel.Id, jsonModel.Username);
 
                 if (exists)
                 {

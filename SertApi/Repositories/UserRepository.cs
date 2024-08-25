@@ -31,16 +31,19 @@ namespace SertApi.Repositories
                 ?? throw new Exception("User not found");
         }
 
-        public async Task<bool> IsUserExists(int id)
+        public async Task<bool> IsUserExists(int id, string username)
         {
-            if (id <= 0)
+            if (id <= 0 || string.IsNullOrEmpty(username))
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(username), "Missing id or username.");
             }
 
+            var existsById = await _context.Users.AnyAsync(u => u.IsActive == true && u.Id == id);
             // case sensitive for now to avoid username exhaustion during testing
             // ex. Username1 != username1
-            return await _context.Users.AnyAsync(u => u.IsActive == true && u.Id == id);
+            var existsByUsername = await _context.Users.AnyAsync(u => u.IsActive == true && u.Username.Trim().Equals(username));
+
+            return existsById || existsByUsername;
         }
 
         public async Task<bool> IsUserOnline(int id)

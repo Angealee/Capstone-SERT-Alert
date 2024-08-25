@@ -25,8 +25,6 @@ namespace SertApi.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     LocationDetail = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ReportedBy = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Content = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Attachment = table.Column<byte[]>(type: "longblob", nullable: true),
