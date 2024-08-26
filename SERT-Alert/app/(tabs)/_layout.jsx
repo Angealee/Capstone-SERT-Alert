@@ -1,9 +1,11 @@
 import { View, Text } from 'react-native'
 import { Tabs, Redirect } from 'expo-router';
 import { Image } from 'react-native';
-
-
+import { createStackNavigator } from '@react-navigation/stack';
 import  { icons } from '../../constants'
+
+// Stack Navigator for Learning Modules
+// const LearningStack = createStackNavigator();
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
@@ -23,6 +25,19 @@ const TabIcon = ({ icon, color, name, focused }) => {
     </View>
   )
 }
+
+// const LearningModulesStack = () => {
+//   return (
+//     <LearningStack.Navigator>
+//       <LearningStack.Screen name="emergencyResponseBasics" component={learningTopics} />
+//       <LearningStack.Screen name="firstAidTechniques" component={learningTopics} />
+//       <LearningStack.Screen name="naturalDisasterPreparedness" component={learningTopics} />
+//       <LearningStack.Screen name="swimmingWaterSafety" component={learningTopics} />
+//       {/* Add more screens as needed */}
+//     </LearningStack.Navigator>
+//   );
+// };
+
 const TabsLayout = () => {
   return (
     <>

@@ -42,7 +42,6 @@ const EmergencyResponseBasics = () => {
             className="w-full h-56 rounded-lg"
             resizeMode='contain'
             />
-
           </View>
 
           <View>

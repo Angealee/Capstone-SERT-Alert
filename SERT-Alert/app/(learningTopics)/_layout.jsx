@@ -3,12 +3,12 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react'
 import { Stack } from 'expo-router';
 
-const learningTopicsLayout = () => {
+const TopicsLayout = () => {
   return (
     <>
       <Stack>
         <Stack.Screen
-          name="emergencyResponse"
+          name="emergencyResponseBasics"
           options={{
             headerShown:false,
           }}
@@ -25,12 +25,6 @@ const learningTopicsLayout = () => {
             headerShown:false,
           }}
         />
-        <Stack.Screen
-          name="swimmingWaterSafety"
-          options={{
-            headerShown:false,
-          }}
-        />
       </Stack>
       <StatusBar backgroundColor='#161622'
       style='light'/>
@@ -39,6 +33,6 @@ const learningTopicsLayout = () => {
   )
 }
 
-export default learningTopicsLayout
+export default TopicsLayout
 
 const styles = StyleSheet.create({})
