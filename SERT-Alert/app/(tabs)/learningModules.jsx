@@ -10,7 +10,7 @@ const LearningModules = () => {
 
   // Function to handle navigation to the specific topic
   const handleNavigate = (topic) => {
-  router.push(`/learningTopics/${topic}`);
+  router.push(`/(learningTopics)/${topic}`);
   };
   return (
     <SafeAreaView className="bg-red-100 h-full">
