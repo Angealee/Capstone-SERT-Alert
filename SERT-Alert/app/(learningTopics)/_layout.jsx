@@ -10,7 +10,7 @@ const TopicsLayout = () => {
         screenOptions={({ route }) => ({
           headerTitle: getHeaderTitle(route.name),
           headerStyle: {
-            backgroundColor: '#161622', // Customize header background color
+            backgroundColor: '#ea580b', // Customize header background color
           },
           headerTintColor: '#fff', // Customize header text color
         })}
