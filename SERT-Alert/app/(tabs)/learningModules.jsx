@@ -21,7 +21,7 @@ const LearningModules = () => {
     elevation: 8, // For Android shadow
   });
   return (
-    <SafeAreaView className="bg-red-100 h-full">
+    <SafeAreaView className="bg-orange-600 h-full">
       <ScrollView>
           <View className="my-6 px-4 space-y-6">
             <View className="justify-between items-start flex-row mb-6">
