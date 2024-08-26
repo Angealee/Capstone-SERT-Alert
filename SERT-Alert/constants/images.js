@@ -8,8 +8,9 @@ import logo from "../assets/images/logo.png";
 import logoSmall from "../assets/images/logo-small.png";
 import empty from "../assets/images/empty.png";
 import emergencyResponse from "../assets/images/emergencyResponse.png";
+import emergencyResponseHeader from "../assets/images/emergencyResponseHeader.png";
 import firstAid from "../assets/images/firstAid.jpg";
 import naturalDisaster from "../assets/images/naturalDisaster.png";
 import waterSafety from "../assets/images/waterSafety.jpg";
 
-export default { profile, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster };
+export default { profile, siren, thumbnail, emergencyResponseHeader, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster };
