@@ -1,9 +1,6 @@
-import { View, Text } from 'react-native'
-import { Tabs, Redirect } from 'expo-router';
-import { Image } from 'react-native';
-
-
-import  { icons } from '../../constants'
+import { Tabs } from 'expo-router';
+import { View, Text, Image } from 'react-native';
+import { icons } from '../../constants';
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
@@ -14,16 +11,14 @@ const TabIcon = ({ icon, color, name, focused }) => {
         tintColor={color}
         className="w-5 h-5"
       />
-
-      {/* to style the text, use this snippet: 
-      style={{ color:color}} */}
       <Text className={`${focused ? 'font-psemibold':'font-pregular'} text-xs`}>
         {name}
       </Text>
     </View>
-  )
-}
-const TabsLayout = () => {
+  );
+};
+
+export default function TabsLayout() {
   return (
     <>
         <Tabs
@@ -92,5 +87,3 @@ const TabsLayout = () => {
     </>
   )
 }
-
-export default TabsLayout
