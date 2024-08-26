@@ -32,16 +32,28 @@ const EmergencyResponseBasics = () => {
           
           </Text>
 
-          <Text className="text-xl font-pbold mb-2">
-          1. Assessing the Situation
-          </Text>
+          <View className="mb-4">
+            <Text className="text-xl font-pbold mb-2">
+            1. Assessing the Situation
+            </Text>
 
+            <Image 
+            source={images.riskAssessment} // Add your image here
+            className="w-full h-56 rounded-lg"
+            resizeMode='contain'
+            />
+
+          </View>
+
+          <View>
           <Text className="text-xl font-bold mb-2 pl-4">
           A. Situational Awareness: 
           </Text>
           <Text className="text-lg mb-2 pl-4 pr-2">
           Situational awareness is the ability to recognize and understand what is happening in the environment around you. In the context of emergency response, it involves quickly and accurately assessing the scene to identify any immediate dangers, hazards, or ongoing threats. This step is crucial as it determines the appropriate course of action to ensure the safety of both the responder and the victims.
           </Text>
+          </View>
+
           
         </View>
       </ScrollView>
