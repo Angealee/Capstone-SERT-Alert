@@ -14,9 +14,14 @@
     },
     "ios": {
       "package": "com.casptone.sertalert",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "SERT Alert",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app needs access to your camera to take photos."
+      }
     },
     "android": {
+      "permissions": ["CAMERA"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
