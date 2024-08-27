@@ -23,8 +23,7 @@ const TopicsLayout = () => {
           headerTintColor: '#fff', // Customize header text color
           headerTitleStyle: {
             fontFamily: 'Poppins-Regular', // Custom font for title
-            fontSize: 20, // Larger font size for title
-            letterSpacing: 0.5, // Slight letter spacing
+            fontSize: 18, // Larger font size for title
           },
         })}
     >
