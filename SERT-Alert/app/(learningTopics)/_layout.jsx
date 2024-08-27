@@ -10,11 +10,25 @@ const TopicsLayout = () => {
         screenOptions={({ route }) => ({
           headerTitle: getHeaderTitle(route.name),
           headerStyle: {
-            backgroundColor: '#161622', // Customize header background color
+            backgroundColor: '#ea580b', // Customize header background color
+            headerShadowVisible: false,
+            borderBottomWidth: 0, // Remove bottom border
+            elevation: 10, // Adds shadow for Android
+            shadowColor: '#000', // Shadow color
+            shadowOpacity: 0.2, // Subtle shadow opacity
+            shadowRadius: 10, // Soft shadow
+            borderBottomLeftRadius: 15, // Rounded corners
+            borderBottomRightRadius: 15, // Rounded corners
           },
           headerTintColor: '#fff', // Customize header text color
+          headerTitleStyle: {
+            fontFamily: 'Poppins-Regular', // Custom font for title
+            fontSize: 20, // Larger font size for title
+            letterSpacing: 0.5, // Slight letter spacing
+          },
         })}
     >
+        
       <Stack.Screen
         name="emergencyResponseBasics"
         options={{
