@@ -3,10 +3,12 @@
     public class Report
     {
         public int Id { get; set; }
-        public string LocationName { get; set; } = string.Empty;
-        public string BuildingName { get; set; } = string.Empty;
-        public string ReportedBy { get; set; } = string.Empty;
-        public string? Notes { get; set; }
+        public required string BuildingName { get; set; }
+        public string LocationDetail { get; set; } = string.Empty;
+        public required string Content { get; set; }
+        public byte[]? Attachment { get; set; } // Changed the type to byte[] for storing as blob
+
+        // audit fields
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public DateTime DateModified { get; set; }
     }

@@ -1,23 +1,24 @@
-﻿namespace SertApi.DAL
+﻿using SertApi.Enums;
+
+namespace SertApi.DAL
 {
     public class User
     {
         public int Id { get; set; }
         public required string Username { get; set; }
-        public required string Name { get; set; }
-        public required string Email { get; set; }
-        public required string Position { get; set; }
-        public required string CourseSection { get; set; }
         public required string Password { get; set; }
-
-        /* 0 - User
-         * 1 - Admin
-         * 2 - 2nd Admin
-         */
-        public int Permission { get; set; } = 0;
+        public required string Name { get; set; }
+        public required string Course { get; set; }
+        public required string Year { get; set; }
+        public required string Section { get; set; }
+        public string? Email { get; set; }
+        public string? Position { get; set; }
+        public Role Role { get; set; } = 0;
+        public bool IsActive { get; set; } = true;
         public bool IsOnline { get; set; } = false;
 
-        public DateTime? CreatedAt { get; set; } = DateTime.Now;
-        public DateTime? UpdatedAt { get; set; }
+        // audit fields
+        public DateTime DateCreated { get; set; } = DateTime.Now;
+        public DateTime? DateModified { get; set; }
     }
 }

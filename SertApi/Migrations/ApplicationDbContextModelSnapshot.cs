@@ -30,7 +30,14 @@ namespace SertApi.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<byte[]>("Attachment")
+                        .HasColumnType("longblob");
+
                     b.Property<string>("BuildingName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -40,14 +47,7 @@ namespace SertApi.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("LocationName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ReportedBy")
+                    b.Property<string>("LocationDetail")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -64,16 +64,21 @@ namespace SertApi.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CourseSection")
+                    b.Property<string>("Course")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("DateModified")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsOnline")
                         .HasColumnType("tinyint(1)");
@@ -86,17 +91,21 @@ namespace SertApi.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Permission")
+                    b.Property<string>("Position")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<string>("Position")
+                    b.Property<string>("Section")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Year")
                         .IsRequired()
                         .HasColumnType("longtext");
 
