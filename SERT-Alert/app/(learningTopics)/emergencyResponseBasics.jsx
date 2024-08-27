@@ -43,7 +43,7 @@ const EmergencyResponseBasics = () => {
             resizeMode='contain'
             />
           </View>
-         
+
           <View>
           <Text className="text-xl font-bold mb-2 pl-4">
           A. Situational Awareness: 
