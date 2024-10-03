@@ -1,0 +1,92 @@
+﻿@using SertWebApp.Enums
+@{
+    ViewData["Title"] = "Home";
+}
+
+<style>
+    .container-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+    }
+
+    .button-container {
+        display: flex;
+        gap: 20px;
+        background-color: #f8f9fa;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .square-button {
+        width: 150px;
+        height: 150px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 5px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+        flex-direction: column;
+
+    }
+
+        .square-button svg {
+            font-size: 40px; /* Adjust the size of the icon */
+            margin-bottom: 10px; /* Space between icon and text */
+        }
+
+        .square-button:nth-child(1) {
+            background-color: rgb(70, 130, 180); /* Steel Blue */
+        }
+
+        .square-button:nth-child(2) {
+            background-color: rgb(60, 179, 113); /* Medium Sea Green */
+        }
+
+        .square-button:nth-child(3) {
+            background-color: rgb(178, 34, 34); /* Firebrick */
+        }
+
+        .square-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .square-button:visited, .square-button:active {
+            color: white;
+        }
+</style>
+
+
+<div class="container-fluid px-4">
+    <h1 class="mt-1">@ViewData["Title"]</h1>
+    <div class="row">
+    </div>
+    <div class="row">
+    </div>
+    <div class="container-center">
+        <div class="button-container">
+            <a class="square-button" title="SERT Management" href="@Url.Action("UserList", "User")">
+                <i class="fa-solid fa-users"></i>
+                <span>SERT</span>
+            </a>
+            @if (ViewBag.UserDetails?.Role == Role.Admin2 || ViewBag.UserDetails?.Role == Role.Admin)
+            {
+                <a class="square-button" title="Report Management" href="@Url.Action("ReportList", "Report")">
+                    <i class="fa-solid fa-book"></i>
+                    <span>Report</span>
+                </a>
+                <a class="square-button" title="Admin Management" href="@Url.Action("AdminList", "User")">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    <span>Admin</span>
+                </a>
+            }
+        </div>
+    </div>
+</div>

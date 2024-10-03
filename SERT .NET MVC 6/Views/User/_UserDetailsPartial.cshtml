@@ -1,0 +1,156 @@
+﻿@using SertWebApp.Enums
+@model SertWebApp.Models.ViewModels.UserViewModel
+<div class="container">
+    @if (Model.PageMode == PageMode.View) // Not in used yet
+    {
+        <div class="row mb-2">
+            <div class="col-sm-4 font-weight-bold">Username:</div>
+            <div class="col-sm-8">@Model.Username</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-4 font-weight-bold">Name:</div>
+            <div class="col-sm-8">@Model.Name</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-4 font-weight-bold">Course:</div>
+            <div class="col-sm-8">@Model.Course</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-4 font-weight-bold">Year:</div>
+            <div class="col-sm-8">@Model.Year</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-4 font-weight-bold">Section:</div>
+            <div class="col-sm-8">@Model.Section</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-4 font-weight-bold">Email:</div>
+            <div class="col-sm-8">@Model.Email</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-4 font-weight-bold">Position:</div>
+            <div class="col-sm-8">@Model.Position</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-4 font-weight-bold">Role:</div>
+            <div class="col-sm-8">@Model.Role</div>
+        </div>
+    }
+    else
+    {
+        @using (Html.BeginForm("Save", "User", FormMethod.Post, new { id = "userForm" }))
+        {
+            @Html.HiddenFor(m => m.IsAdmin)
+            @Html.HiddenFor(m => m.PageMode, new { @id = "PageMode", @name = "PageMode" })
+            @Html.HiddenFor(m => m.Id, new { @id = "userId", name = "Id" })
+            if (Model.PageMode == PageMode.Update || Model.PageMode == PageMode.Add)
+            {
+                <div class="row mb-2">
+                    <div class="col-sm-4 font-weight-bold">Username:</div>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Username, new { @id = "username", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                if (Model.PageMode == PageMode.Add)
+                {
+                    <div class="row mb-2">
+                        <div class="col-sm-4 font-weight-bold">Password:</div>
+                        <div class="col-sm-8">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", type = "password" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    @Html.HiddenFor(m => m.Password)
+                }
+                <div class="row mb-2">
+                    <div class="col-sm-4 font-weight-bold">Name:</div>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                if (!Model.IsAdmin) // Admins don't have these fields
+                {
+                    <div class="row mb-2">
+                        <div class="col-sm-4 font-weight-bold">Course:</div>
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Course, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Course, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 font-weight-bold">Year:</div>
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Year, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Year, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 font-weight-bold">Section:</div>
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Section, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Section, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 font-weight-bold">Email:</div>
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 font-weight-bold">Role:</div>
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.Role, Html.GetEnumSelectList<Role>()
+                                     .Where(r => (Role)Enum.Parse(typeof(Role), r.Value) != Role.Admin &&
+                                     (Role)Enum.Parse(typeof(Role), r.Value) != Role.Admin2), new { @class = "form-select" })
+                            @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+                else // Admins have these fields
+                {
+                    <div class="row mb-2">
+                        <div class="col-sm-4 font-weight-bold">Position:</div>
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(m => m.Position, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Position, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-sm-4 font-weight-bold">Role:</div>
+                        <div class="col-sm-8">
+                            @if (ViewBag.UserDetails?.Role == Role.Admin2)
+                            {
+                                @Html.DropDownListFor(m => m.Role, Html.GetEnumSelectList<Role>()
+                                         .Where(r => (Role)Enum.Parse(typeof(Role), r.Value) == Role.Admin2), new { @class = "form-select" })
+                            }
+                            else
+                            {
+                                @Html.DropDownListFor(m => m.Role, Html.GetEnumSelectList<Role>()
+                                         .Where(r => (Role)Enum.Parse(typeof(Role), r.Value) == Role.Admin ||
+                                         (Role)Enum.Parse(typeof(Role), r.Value) == Role.Admin2), new { @class = "form-select" })
+                            }
+                            
+                            @Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                }
+            }
+            else if (Model.PageMode == PageMode.Delete)
+            {
+                @Html.HiddenFor(m => m.Username)
+                @Html.HiddenFor(m => m.Password)
+                @Html.HiddenFor(m => m.Name)
+                <p class="fs-5">Are you sure you want to delete user <mark>@Model.Name (@Model.Username)</mark>?</p>
+            }
+        }
+    }
+</div>

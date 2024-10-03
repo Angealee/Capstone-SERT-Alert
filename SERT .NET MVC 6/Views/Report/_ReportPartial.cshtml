@@ -1,0 +1,76 @@
+﻿@using SertWebApp.Enums
+@model SertWebApp.Models.ViewModels.ReportViewModel
+<div class="container">
+    @if (Model.PageMode == PageMode.View)
+    {
+        <div class="row mb-2">
+            <div class="col-sm-4 font-weight-bold">Building:</div>
+            <div class="col-sm-8">@Model.BuildingName</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-4 font-weight-bold">Location:</div>
+            <div class="col-sm-8">@Model.LocationDetail</div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-4 font-weight-bold">Content:</div>
+            <div class="col-sm-8">@Model.Content</div>
+        </div>
+    }
+    else
+    {
+        @using (Html.BeginForm("Save", "Report", FormMethod.Post, new { id = "reportForm", enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(m => m.PageMode, new { @id = "PageMode", @name = "PageMode"})
+            @Html.HiddenFor(m => m.Id)
+            if (Model.PageMode == PageMode.Update || Model.PageMode == PageMode.Add)
+            {
+                <div class="row mb-2">
+                    <div class="col-sm-4 font-weight-bold">Building:</div>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.BuildingName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.BuildingName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-4 font-weight-bold">Location:</div>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.LocationDetail, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LocationDetail, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-4 font-weight-bold">Content:</div>
+                    <div class="col-sm-8">
+                        @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @rows = "7" })
+                        @Html.ValidationMessageFor(m => m.Content, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-4 font-weight-bold">Attachment:</div>
+                    <div class="col-sm-8">
+                        @if (Model.Attachment != null && Model.Attachment.Length > 0)
+                        {
+                            <div class="mb-2">
+                                <a href="@Url.Action("DownloadAttachment", "Report", new { id = Model.Id })"><i class="fa-solid fa-paperclip"></i> @Model.FileName</a>
+                                <a role="button" class="btn-sm btn-delete-attachment" data-report-id="@Model.Id" style="color: red;">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <input class="form-control form-control-sm" id="inputAttachment" type="file" accept=".pdf,image/*" name="attachment">
+                        }
+                    </div>
+                </div>
+            }
+            else if (Model.PageMode == PageMode.Delete)
+            {
+                @Html.HiddenFor(m => m.BuildingName)
+                @Html.HiddenFor(m => m.LocationDetail)
+                @Html.HiddenFor(m => m.Content)
+                <p class="fs-5">Are you sure you want to delete the selected report?</p>
+            }
+        }
+    }
+</div>
