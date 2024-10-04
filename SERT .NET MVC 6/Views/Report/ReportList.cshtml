@@ -1,0 +1,241 @@
+﻿@{
+    ViewData["Title"] = "Report List";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-1">@ViewData["Title"]</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"><a href="@Url.Action("Index", "Home")">Home</a></li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="row">
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fa-solid fa-table"></i>
+                <span>List of all reports</span>
+            </div>
+            <div class="card-body">
+                <table id="tblReports" class="table table-hover table-striped table-responsive">
+                </table> @* needs to have this closing tag explicitly, otherwise footer will display atop the table *@
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="reportModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="reportModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnCancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="btnSave" type="button" class="btn btn-success btn-save-report">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(() => {
+            let reportPopup = new bootstrap.Modal(document.getElementById('reportModal'));
+
+            function showPopup(content) {
+                // create the content first to load the correct PageMode
+                $('#reportModal .modal-body').html(content);
+
+                let pageMode = $('#PageMode').val();
+                let title = "", saveBtnLabel = "", cancelBtnLabel = "";
+
+                switch (pageMode) {
+                    case "Add":
+                        title = "Add New Report";
+                        saveBtnLabel = "Add";
+                        cancelBtnLabel = "Close";
+                        break;
+                    case "Update":
+                        title = "Update Details";
+                        saveBtnLabel = "Save";
+                        cancelBtnLabel = "Cancel";
+                        break;
+                    case "Delete":
+                        title = "Delete Report";
+                        saveBtnLabel = "Yes";
+                        cancelBtnLabel = "No";
+                        break;
+                    default:
+                        console.log("Invalid page mode.");
+                }
+
+                $('#reportModal .modal-title').text(title);
+                $('#btnSave').text(saveBtnLabel);
+                $('#btnCancel').text(cancelBtnLabel);
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-header",
+                    cursor: "move"
+                });
+
+                reportPopup.show();
+                reportPopup.handleUpdate();
+            }
+
+            function reloadTable() {
+                $('#tblReports').DataTable().ajax.reload();
+            }
+
+            // Add
+            $(".card-body").on('click', '.btn-add-report', function () {
+                $.ajax({
+                    url: '@Url.Action("Add", "Report")',
+                    type: 'GET',
+                    success: function (result) {
+                        showPopup(result);
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error(xhr.responseText);
+                    }
+                });
+            });
+
+            // Update
+            $('.card-body').on('click', '.btn-edit-report', function () {
+                let reportId = $(this).data('report-id');
+
+                $.ajax({
+                    url: '@Url.Action("Edit", "Report")',
+                    type: 'GET',
+                    data: { id: reportId },
+                    success: function (result) {
+                        showPopup(result);
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error(xhr.responseText);
+                    }
+                });
+            });
+
+            // Delete
+            $('.card-body').on('click', '.btn-delete-report', function () {
+                let reportId = $(this).data('report-id');
+                $.ajax({
+                    url: '@Url.Action("Delete", "Report")',
+                    type: 'GET',
+                    data: { id: reportId },
+                    success: function (result) {
+                        showPopup(result);
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error(xhr.responseText);
+                    }
+                });
+            });
+
+            // Save Actions
+            $('#reportModal').on('click', '.btn-save-report', function (event) {
+                event.preventDefault();
+
+                // let formData = $('#reportForm').serialize();
+                let form = $('#reportForm')[0];
+                let formData = new FormData(form);
+
+                $.ajax({
+                    url: '@Url.Action("Save", "Report")',
+                    type: 'POST',
+                    data: formData,
+                    processData: false, // Prevent jQuery from automatically transforming the data into a query string
+                    contentType: false, // Prevent jQuery from setting the Content-Type header
+                    success: function (result) {
+                        let hasValidationErrors = result.includes("field-validation-error");
+
+                        if (hasValidationErrors) {
+                            // refresh content to show validation errors
+                            showPopup(result);
+                        }
+                        else {
+                            reportPopup.hide();
+                            toastr.success('Success.');
+                            // temporary fix to show the toastr
+                            reloadTable();
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error(xhr.responseText);
+                    }
+                });
+            });
+
+            $('.card-body').on('click', '.btn-download-attachment', function (event) {
+                event.preventDefault();
+
+                let reportId = $(this).data('report-id');
+
+                $.ajax({
+                    url: '@Url.Action("DownloadAttachment", "Report")',
+                    type: 'GET',
+                    data: { id: reportId },
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    success: function (data, status, xhr) {
+                        var filename = "";
+                        var disposition = xhr.getResponseHeader('Content-Disposition');
+                        if (disposition && disposition.indexOf('attachment') !== -1) {
+                            var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                            var matches = filenameRegex.exec(disposition);
+                            if (matches != null && matches[1]) filename = matches[1].replace(/['"]/g, '');
+                        }
+
+                        var blob = new Blob([data], { type: xhr.getResponseHeader('Content-Type') });
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = filename || 'downloaded_file';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error(xhr.responseText);
+                    }
+                });
+            });
+
+            $('#reportModal').on('click', '.btn-delete-attachment', function (event) {
+                event.preventDefault();
+
+                let reportId = $(this).data('report-id');
+
+                if (confirm("Are you sure you want to delete the attachment?")) {
+                    $.ajax({
+                        url: '@Url.Action("DeleteAttachment", "Report")',
+                        type: 'POST',
+                        data: { id: reportId },
+                        success: function (result) {
+                            if (result.success) {
+                                reportPopup.hide();
+                                toastr.success('Attachment deleted successfully.');
+                                reloadTable();
+                            } else {
+                                toastr.error("Error deleting attachment.");
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error(xhr.responseText);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+

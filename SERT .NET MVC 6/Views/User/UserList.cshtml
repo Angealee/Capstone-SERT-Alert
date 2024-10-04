@@ -1,0 +1,283 @@
+﻿@using SertWebApp.Enums
+@{
+    ViewData["Title"] = "User List";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-1">@ViewData["Title"]</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active"><a href="@Url.Action("Index", "Home")">Home</a></li>
+        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+    </ol>
+    <div class="row">
+    </div>
+    <div class="row">
+    </div>
+    <div class="row">
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fa-solid fa-table"></i>
+                <span>List of all users</span>
+            </div>
+            <div class="card-body">
+                <table id="tblUsers" class="table table-hover table-striped table-responsive">
+                </table> @* needs to have this closing tag explicitly, otherwise footer will display atop the table *@
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div id="userModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="userModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <div>
+                            @if (ViewBag.UserDetails?.Role == Role.Admin)
+                            {
+                                <button id="btnChangePassword" type="button" class="btn btn-sm btn-outline-danger" data-bs-target="#changePasswordModal" data-bs-toggle="modal" data-bs-dismiss="modal">Change Password</button>
+                            }
+                        </div>
+                        <div>
+                            <button id="btnCancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button id="btnSave" type="button" class="btn btn-success btn-save-user">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Change Password Modal -->
+        <div id="changePasswordModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="changePasswordModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnCancel" type="button" class="btn btn-secondary" data-bs-target="#userModal" data-bs-toggle="modal" data-bs-dismiss="modal">Cancel</button>
+                        <button id="btnSave" type="button" class="btn btn-success btn-change-password">Change Password</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(() => {
+            let userPopup = new bootstrap.Modal(document.getElementById('userModal'));
+            let currentUserRole = '@ViewBag.UserDetails?.Role';
+
+            function checkPermission() {
+                if (currentUserRole.toLowerCase() !== "admin" && currentUserRole.toLowerCase() !== "admin2"){
+                    $('#tblUsers').DataTable().button(0).enable(false);
+                } 
+                else {
+                    $('#tblUsers').DataTable().button(0).enable(true);
+                }
+            }
+
+            checkPermission();
+
+            function showPopup(content) {
+                // create the content first to load the correct PageMode
+                $('#userModal .modal-body').html(content);
+
+                let pageMode = $('#PageMode').val();
+                let title = "", saveBtnLabel = "", cancelBtnLabel = "";
+                $('.modal-footer #btnChangePassword').hide();
+
+                switch (pageMode) {
+                    case "Add":
+                        title = "Add New User";
+                        saveBtnLabel = "Add";
+                        cancelBtnLabel = "Close";
+                        
+                        break;
+                    case "Update":
+                        title = "Update Details";
+                        saveBtnLabel = "Save";
+                        cancelBtnLabel = "Cancel";
+                        $('.modal-footer #btnChangePassword').show();
+                        break;
+                    case "Delete":
+                        title = "Delete User";
+                        saveBtnLabel = "Yes";
+                        cancelBtnLabel = "No";
+                        break;
+                    default:
+                        console.log("Invalid page mode.");
+                }
+
+                $('#userModal .modal-title').text(title);
+                $('#btnSave').text(saveBtnLabel);
+                $('#btnCancel').text(cancelBtnLabel);
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-header",
+                    cursor: "move"
+                });
+                
+                userPopup.show();
+                userPopup.handleUpdate();
+            }
+
+            function reloadTable() {
+                $('#tblUsers').DataTable().ajax.reload();
+                checkPermission();
+            }
+
+            
+            // Add
+            if (currentUserRole.toLowerCase() === "admin" || currentUserRole.toLowerCase() === "admin2") {
+                $(".card-body").on('click', '.btn-add-user', function () {
+                    $.ajax({
+                        url: '@Url.Action("Add", "User")',
+                        type: 'GET',
+                        data: { isAdmin: false },
+                        success: function (result) {
+                            showPopup(result);
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error(xhr.responseText);
+                        }
+                    });
+                });
+            }
+            
+            // Update
+            $('.card-body').on('click', '.btn-edit-user', function () {
+                let userId = $(this).data('user-id');
+                $.ajax({
+                    url: '@Url.Action("Edit", "User")',
+                    type: 'GET',
+                    data: { id: userId, isAdmin: false },
+                    success: function (result) {
+                        showPopup(result);
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error(xhr.responseText);
+                    }
+                });
+            });
+
+            // Delete
+            $('.card-body').on('click', '.btn-delete-user', function () {
+                let userId = $(this).data('user-id');
+                $.ajax({
+                    url: '@Url.Action("Delete", "User")',
+                    type: 'GET',
+                    data: { id: userId, isAdmin: false },
+                    success: function (result) {
+                        showPopup(result);
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error(xhr.responseText);
+                    }
+                });
+            });
+
+            // Save Actions
+            $('#userModal').on('click', '.btn-save-user', function (event) {
+                event.preventDefault();
+
+                let formData = $('#userForm').serialize();
+
+                $.ajax({
+                    url: '@Url.Action("Save", "User")',
+                    type: 'POST',
+                    data: formData,
+                    success: function (result) {
+                        let hasValidationErrors = result.includes("field-validation-error");
+
+                        if (hasValidationErrors) {
+                            // refresh content to show validation errors
+                            showPopup(result);
+                        }
+                        else {
+                            userPopup.hide();
+                            toastr.success('Success.');
+                            // temporary fix to show the toastr
+                            reloadTable();
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error(xhr.responseText);
+                    }
+                });
+            });
+
+            // Change password
+            $('.modal-footer').on('click', '#btnChangePassword', function () {
+                let userId = $('#userId').val();
+                let username = $('#username').val();
+                $.ajax({
+                    url: '@Url.Action("ChangePassword", "User")',
+                    type: 'GET',
+                    data: { id: userId, isAdmin: false },
+                    success: function (result) {
+                        $('#changePasswordModal .modal-title').html(`Changing password for: <mark>${username}</mark>`);
+                        $('#changePasswordModal .modal-body').html(result);
+
+                        $('.modal-dialog').draggable({
+                            handle: ".modal-header",
+                            cursor: "move"
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error(xhr.responseText);
+                    }
+                });
+            });
+
+            $('#changePasswordModal').on('click', '.btn-change-password', function (event) {
+                event.preventDefault();
+
+                let formData = $('#changePasswordForm').serialize();
+
+                $.ajax({
+                    url: '@Url.Action("ChangePassword", "User")',
+                    type: 'POST',
+                    data: formData,
+                    success: function (result) {
+                        let hasValidationErrors = result.includes("field-validation-error");
+                        let changePasswordModal = document.querySelector('#changePasswordModal');
+                        let changePasswordPopup = bootstrap.Modal.getOrCreateInstance(changePasswordModal);
+
+                        if (hasValidationErrors) {
+                            // refresh content to show validation errors
+                            $('#changePasswordModal .modal-body').html(result);
+
+                            $('.modal-dialog').draggable({
+                                handle: ".modal-header",
+                                cursor: "move"
+                            });
+
+                            changePasswordPopup.handleUpdate();
+                        }
+                        else {
+                            changePasswordPopup.toggle();
+                            userPopup.toggle();
+                            toastr.success('Success.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+}
+

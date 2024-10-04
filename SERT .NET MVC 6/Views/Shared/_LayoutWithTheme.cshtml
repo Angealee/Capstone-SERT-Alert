@@ -1,0 +1,162 @@
+﻿@using SertWebApp.Enums
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-sb-admin-style.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/SertWebApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/datatables.net-bs5/datatables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="~/lib/datatables.net-buttons-bs5/buttons.bootstrap5.min.css" />
+    <link rel="stylesheet" href="~/lib/jqueryui/themes/base/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/lib/jqueryui/themes/base/theme.min.css" />
+</head>
+<body class="sb-nav-fixed">
+    <div id="loadingScreen" style="position:fixed; width:100%; height:100%; top:0; left:0; background-color:rgba(0,0,0,0.5); z-index:9999; display:flex; justify-content:center; align-items:center;">
+        <div style="text-align:center; display: flex; align-items: center;">
+            <img src="~/images/loading.gif" alt="Loading" style="width:50px; height:50px;" />
+            <span style="color:white; margin-left: 10px;">Please wait...</span>
+        </div>
+    </div>
+    <header>
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-1" asp-area="" asp-controller="Home" asp-action="Index">SERT Project</a>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                @if (Context.Session.GetString("CurrentUser") != null)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="#!">Profile</a></li>
+                            <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li>
+                                @* <a class="dropdown-item" href="#!">Logout</a> *@
+                                <a class="dropdown-item" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                    </li>
+                }
+                
+            </ul>
+        </nav>
+    </header>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="nav-link" href="@Url.Action("UserList", "User")" title="SERT Management">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
+                            SERT
+                        </a>
+                        @if (ViewBag.UserDetails?.Role == Role.Admin2 || ViewBag.UserDetails?.Role == Role.Admin)
+                        {
+                            <a class="nav-link" href="@Url.Action("ReportList", "Report")" title="Report Management">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+                                Reports
+                            </a>
+                            <a class="nav-link" href="@Url.Action("AdminList", "User")" title="Admin Management">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                                Admin
+                            </a>
+                        }
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    @if (Context.Session.GetString("CurrentUser") != null)
+                    {
+                        <div class="small">Logged in as:</div>
+                        <span>@ViewBag.UserDetails?.Name <i>(@ViewBag.UserDetails?.Role.ToString())</i></span>
+                    }
+                    else
+                    {
+                        <a class="nav-link" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
+                    }
+                    
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                @Html.AntiForgeryToken()
+                @RenderBody()
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">&copy; SERT Project @DateTime.Now.ToString("yyyy")</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    <script src="~/lib/datatables.net/datatables.min.js"></script>
+    <script src="~/lib/datatables.net-bs5/datatables.bootstrap5.min.js"></script>
+    <script src="~/lib/datatables.net-buttons/js/datatables.buttons.min.js"></script>
+    <script src="~/lib/jszip/jszip.min.js"></script>
+    <script src="~/lib/pdfmake/pdfmake.min.js"></script>
+    <script src="~/lib/pdfmake/vfs_fonts.min.js"></script>
+    <script src="~/lib/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/lib/datatables.net-buttons-bs5/buttons.bootstrap5.min.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/dataTables-custom.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+    <script type="text/javascript">
+        // Loading overlay
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("loadingScreen").style.display = "none";
+        });
+
+        // Toggle the side navigation
+        const sidebarToggle = document.body.querySelector('#sidebarToggle');
+        if (sidebarToggle) {
+            // Uncomment Below to persist sidebar toggle between refreshes
+            if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+                document.body.classList.toggle('sb-sidenav-toggled');
+            }
+            sidebarToggle.addEventListener('click', event => {
+                event.preventDefault();
+                document.body.classList.toggle('sb-sidenav-toggled');
+                localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+            });
+        }
+    </script>
+</body>
+</html>
