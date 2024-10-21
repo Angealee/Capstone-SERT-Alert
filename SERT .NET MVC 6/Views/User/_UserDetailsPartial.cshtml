@@ -100,9 +100,16 @@
                     <div class="row mb-2">
                         <div class="col-sm-4 font-weight-bold">Email:</div>
                         <div class="col-sm-8">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id="txtUserEmail" })
                             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            <asp:RegularExpressionValidator id="RegularExpressionValidator1"
+                                                            ControlToValidate="txtUserEmail"
+                                                            ValidationExpression="\w+([-+.']\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*"
+                                                            Display="Dynamic"
+                                                            ErrorMessage="Invalid Email."
+                                                            runat="server" />
                         </div>
+
                     </div>
                     <div class="row mb-2">
                         <div class="col-sm-4 font-weight-bold">Role:</div>
