@@ -104,7 +104,6 @@ namespace SertWebApp.Managers
                     ?? new User();
 
                 userToUpsert.Username = userModel.Username;
-                userToUpsert.Password = userModel.Password;
                 userToUpsert.Name = userModel.Name;
                 userToUpsert.Course = userModel.Course;
                 userToUpsert.Year = userModel.Year;
