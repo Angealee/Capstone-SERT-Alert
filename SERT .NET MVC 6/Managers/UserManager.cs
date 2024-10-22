@@ -116,7 +116,13 @@ namespace SertWebApp.Managers
 
                 if (userToUpsert.Id != 0)
                 {
+                    // UPDATE
                     userToUpsert.DateModified = DateTime.Now;
+                }
+                else
+                {
+                    // INSERT
+                    userToUpsert.Password = userModel.Password;
                 }
 
                 _userRepository.Update(userToUpsert);
