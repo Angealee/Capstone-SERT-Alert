@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react'
 import { Stack } from 'expo-router';
 
-const TopicsLayout = () => {
+const InfoLayout = () => {
   return (
     <>
       <Stack
@@ -29,30 +29,18 @@ const TopicsLayout = () => {
     >
         
       <Stack.Screen
-        name="emergencyResponseBasics"
+        name="aboutSERT"
         options={{
-          title: 'Emergency Response Basics',
+          title: 'About SERT',
         }}
       />
       <Stack.Screen
-        name="firstAidTechniques"
+        name="aboutDev"
         options={{
-          title: 'First Aid Techniques',
+          title: 'About Dev',
         }}
       />
-      <Stack.Screen
-        name="naturalDisasterPreparedness"
-        options={{
-          title: 'Natural Disaster Preparedness',
-        }}
-      />
-      <Stack.Screen
-        name="swimmingWaterSafety"
-        options={{
-          title: 'Swimming and Water Safety',
-        }}
-      />
-      {/* Add more screens as needed */}
+
     </Stack>
     
       <StatusBar backgroundColor='#161622'
@@ -65,20 +53,17 @@ const TopicsLayout = () => {
 // Helper function to get the header title based on the route name
 const getHeaderTitle = (routeName) => {
   switch (routeName) {
-    case 'emergencyResponseBasics':
-      return 'Emergency Response Basics';
-    case 'firstAidTechniques':
-      return 'First Aid Techniques';
-    case 'naturalDisasterPreparedness':
-      return 'Natural Disaster Preparedness';
-    case 'swimmingWaterSafety':
-      return 'Swimming and Water Safety';
+    case 'aboutSERT':
+      return 'About SERT';
+    case 'aboutDev':
+      return 'About Dev';
     default:
-      return 'Learning Module';
+      return 'Menu';
   }
 };
 
 
-export default TopicsLayout
+export default InfoLayout
 
 const styles = StyleSheet.create({})
+
