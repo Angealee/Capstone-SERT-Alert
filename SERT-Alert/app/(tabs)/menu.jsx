@@ -1,82 +1,51 @@
-import { View, Text, SafeAreaView, ScrollView, StyleSheet } from 'react-native';
-import React from 'react';
-import { router } from 'expo-router';  // Correct import for navigation
+import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
+import React from 'react'
 
 import { images } from '../../constants';
+import { Redirect, router } from 'expo-router';
 import CustomButton from '../../components/CustomButton';
+import { Picker } from '@react-native-picker/picker';
+import FormField from '../../components/FormField';
 
+//initial commit
 const menu = () => {
   
-  // Navigation handler for different information pages
-  const handleNavigate = (info) => {
-    router.push(`/aboutInfo/${info}`);
+const handleNavigate = (info) => {
+  router.push(`/aboutInfo/${info}`);
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView className="flex-1 bg-orange-500 p-2">
       <ScrollView>
-        <View style={styles.content}>
+        <View className="bg-white rounded-xl justify-center px-10 pb-10 mt-40">
+          <View className="w-full justify-center h-full[85vh] px-4 my-6">
+            <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">Menu</Text>
 
-          {/* Menu Title */}
-          <Text style={styles.title}>The Menu for your options!</Text>
-          
-        </View>
-
-        {/* Buttons Section */}
-        <View style={styles.buttonContainer}>
-          <CustomButton 
+          </View>
+        <CustomButton 
             title="About SERT"
             handlePress={() => handleNavigate('aboutSERT')}
-            containerStyles={styles.button}
+            containerStyles="mt-5 align-center"
           />
 
           <CustomButton 
             title="About Dev"
             handlePress={() => handleNavigate('aboutDev')}
-            containerStyles={styles.button}
+            containerStyles="mt-5 align-center"
           />
 
-          <CustomButton 
+        <CustomButton 
             title="Sign In"
             handlePress={() => router.push('/sign-in')}
-            containerStyles={styles.button}
+            containerStyles="mt-5 align-center"
           />
+        
         </View>
+
       </ScrollView>
     </SafeAreaView>
-  );
-};
+  )
+}
 
-// StyleSheet for consistent styling
-const styles = StyleSheet.create({
-  safeArea: {
-    backgroundColor: '#f9f9f9',
-    flex: 1,
-  },
-  content: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    marginVertical: 20,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: '600',
-    marginVertical: 20,
-    color: '#333',
-  },
-  buttonContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 20,
-    marginTop: 20,
-  },
-  button: {
-    marginTop: 15,
-    width: '100%',
-    alignItems: 'center',
-  },
-});
-
-export default menu;
+export default menu
+//initial UI modification
