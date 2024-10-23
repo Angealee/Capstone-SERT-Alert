@@ -1,11 +1,9 @@
 import React, { useState } from 'react'; 
 import { View, Text, SafeAreaView, ScrollView, Alert } from 'react-native'
 import { router } from 'expo-router';
-
-
 import FormField from '../../components/FormField';
 import CustomButton  from '../../components/CustomButton';
-import { signIn } from '../../lib/appwrite';
+
 
 
 const SignIn = () => {
@@ -21,21 +19,8 @@ const SignIn = () => {
     if(!form.username || !form.password){
       Alert.alert('Error', 'Please fill in all the fields!')
     }
-
     setisSubmitting(true);
-
-    try{
-      await signIn(form.username, form.password)
-
-      //set it to global state ...
-
-      router.replace('/SERTemergency')
-      Alert.alert('Welcome!');
-    } catch (error) {
-      Alert.alert('error', error.message)
-    } finally {
-      setisSubmitting(false)
-    }
+    
   }
   return (
     <SafeAreaView className="bg-white h-full">
