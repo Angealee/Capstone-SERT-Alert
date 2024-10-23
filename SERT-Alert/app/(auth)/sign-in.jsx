@@ -1,40 +1,26 @@
 import React, { useState } from 'react'; 
 import { View, Text, SafeAreaView, ScrollView, Alert } from 'react-native'
 import { router } from 'expo-router';
-
-
 import FormField from '../../components/FormField';
 import CustomButton  from '../../components/CustomButton';
-import { signIn } from '../../lib/appwrite';
+
 
 
 const SignIn = () => {
+  
   const [form, setform] = useState({
-    email: '',
+    username: '',
     password:''
   })
   const [isSubmitting, setisSubmitting] = useState(false)
 
   const submit = async () => {
     // Handle the form submission logic
-    if(!form.email || !form.password){
+    if(!form.username || !form.password){
       Alert.alert('Error', 'Please fill in all the fields!')
     }
-
     setisSubmitting(true);
-
-    try{
-      await signIn(form.email, form.password)
-
-      //set it to global state ...
-
-      router.replace('/SERTemergency')
-      Alert.alert('Welcome!');
-    } catch (error) {
-      Alert.alert('error', error.message)
-    } finally {
-      setisSubmitting(false)
-    }
+    
   }
   return (
     <SafeAreaView className="bg-white h-full">
@@ -45,11 +31,10 @@ const SignIn = () => {
           <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">Sign In!</Text>
 
         <FormField 
-          title="Email"
-          value={form.email}
-          handleChangeText={(e) => setform({...form, email: e})}
+          title="Username"
+          value={form.username}
+          handleChangeText={(e) => setform({...form, username: e})}
           otherStyles="mt-7"
-          keyboardType="email-address"
         />
         <FormField 
           title="Password"

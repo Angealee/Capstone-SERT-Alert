@@ -15,11 +15,20 @@
     "ios": {
       "package": "com.casptone.sertalert",
       "supportsTablet": true,
-      "bundleIdentifier": "SERT Alert",
+      "bundleIdentifier": "com.capstone.sertalert",
       "infoPlist": {
-        "NSCameraUsageDescription": "This app needs access to your camera to take photos."
+        "NSCameraUsageDescription": "This app needs access to your camera to take photos.",
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true,
+          "NSExceptionDomains": {
+            "localhost": {
+              "NSExceptionAllowsInsecureHTTPLoads": true
+            }
+          }
+        }
       }
     },
+
     "android": {
       "permissions": ["CAMERA"],
       "adaptiveIcon": {

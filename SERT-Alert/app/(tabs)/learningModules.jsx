@@ -22,7 +22,7 @@ const LearningModules = () => {
   });
   return (
     <SafeAreaView className="flex-1 bg-orange-500 p-2">
-      {/* <ScrollView> */}
+      <ScrollView> 
           <View className="my-5 px-3 space-y-6">
             <View className="justify-between items-center">
             <View className="">
@@ -119,7 +119,7 @@ const LearningModules = () => {
           </View>
 
       {/* /> */}
-      {/* </ScrollView> */}
+      </ScrollView> 
     </SafeAreaView>
   )
 }
