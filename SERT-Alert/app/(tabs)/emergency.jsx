@@ -79,26 +79,6 @@ const Emergency = () => {
       setIsSubmitting(false);
       return;
     }
-
-    try {
-      // Firebase or your backend integration here
-      const db = firebase.database();
-      const emergencyRef = db.ref('emergencies');
-      await emergencyRef.push({
-        Building: form.Building,
-        FloorLocation: form.FloorLocation,
-        context: form.context,
-        image: form.image,
-        timestamp: Date.now(),
-      });
-
-      Alert.alert('Success', 'Emergency reported successfully.');
-      navigation.goBack();
-    } catch (error) {
-      Alert.alert('Error', 'Failed to report emergency. Please try again.');
-    } finally {
-      setIsSubmitting(false);
-    }
   };
 
   return (
