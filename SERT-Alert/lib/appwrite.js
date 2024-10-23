@@ -90,5 +90,6 @@ export const getCurrentUser = async () => {
         throw new Error(error.message)
     }
 }
+//appwrite removal
 
 
