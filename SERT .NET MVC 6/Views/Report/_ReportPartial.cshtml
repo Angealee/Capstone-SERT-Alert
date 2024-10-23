@@ -8,11 +8,11 @@
             <div class="col-sm-8">@Model.BuildingName</div>
         </div>
         <div class="row mb-2">
-            <div class="col-sm-4 font-weight-bold">Location:</div>
+            <div class="col-sm-4 font-weight-bold">Floor Location:</div>
             <div class="col-sm-8">@Model.LocationDetail</div>
         </div>
         <div class="row mb-2">
-            <div class="col-sm-4 font-weight-bold">Content:</div>
+            <div class="col-sm-4 font-weight-bold">Context/Details:</div>
             <div class="col-sm-8">@Model.Content</div>
         </div>
     }
@@ -32,14 +32,14 @@
                     </div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-sm-4 font-weight-bold">Location:</div>
+                    <div class="col-sm-4 font-weight-bold">Floor Location:</div>
                     <div class="col-sm-8">
                         @Html.TextBoxFor(m => m.LocationDetail, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.LocationDetail, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="row mb-2">
-                    <div class="col-sm-4 font-weight-bold">Content:</div>
+                    <div class="col-sm-4 font-weight-bold">Context/Details:</div>
                     <div class="col-sm-8">
                         @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @rows = "7" })
                         @Html.ValidationMessageFor(m => m.Content, "", new { @class = "text-danger" })

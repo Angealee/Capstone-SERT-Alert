@@ -74,13 +74,13 @@
         <div class="button-container">
             <a class="square-button" title="SERT Management" href="@Url.Action("UserList", "User")">
                 <i class="fa-solid fa-users"></i>
-                <span>SERT</span>
+                <span> SERT Members</span>
             </a>
             @if (ViewBag.UserDetails?.Role == Role.Admin2 || ViewBag.UserDetails?.Role == Role.Admin)
             {
                 <a class="square-button" title="Report Management" href="@Url.Action("ReportList", "Report")">
                     <i class="fa-solid fa-book"></i>
-                    <span>Report</span>
+                    <span>Reports</span>
                 </a>
                 <a class="square-button" title="Admin Management" href="@Url.Action("AdminList", "User")">
                     <i class="fa-solid fa-screwdriver-wrench"></i>
