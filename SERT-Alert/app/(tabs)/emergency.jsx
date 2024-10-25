@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import { View, Text, SafeAreaView, ScrollView, Image, Alert, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
@@ -11,6 +11,12 @@ import CustomButton from '../../components/CustomButton';
 import CaptureButton from '../../components/CaptureButton';
 
 const Emergency = () => {
+  const getAPIdata = () => {
+
+    const getAPIdata = () => {
+      console.warn("TEST FETCHING")
+    }
+  }
   const [form, setForm] = useState({
     Building: '',
     FloorLocation: '',
