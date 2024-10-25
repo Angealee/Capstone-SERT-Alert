@@ -10,6 +10,8 @@ import CustomButton from '../../components/CustomButton';
 import CaptureButton from '../../components/CaptureButton';
 
 const Emergency = () => {
+
+//API
   const getAPIdata = () => {
     console.warn("TEST FETCHING");
   };
@@ -30,6 +32,7 @@ const Emergency = () => {
 
   const navigation = useNavigation();
 
+//Location Handler
   const handleLocationChange = (Building) => {
     let options = [];
     let enableFloorLocation = true;
@@ -60,6 +63,7 @@ const Emergency = () => {
     setIsFloorLocationEnabled(enableFloorLocation);
   };
 
+//Image picker handler
   const pickImage = async () => {
     try {
       //Request camera permissions
