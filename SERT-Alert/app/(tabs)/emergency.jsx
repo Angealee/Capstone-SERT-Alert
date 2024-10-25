@@ -182,6 +182,7 @@ const Emergency = () => {
                     color: isFloorLocationEnabled ? '#000' : '#888',
                   },
                 }}
+                useNativeAndroidPickerStyle={false}
               />
             </View>
 
