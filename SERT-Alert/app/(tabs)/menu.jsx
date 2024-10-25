@@ -15,32 +15,29 @@ const handleNavigate = (info) => {
   };
 
   return (
-    <SafeAreaView className="bg-red-200 h-full">
+    <SafeAreaView className="flex-1 bg-orange-500 p-2">
       <ScrollView>
-        <View className="w-full justify-center h-full[85vh] px-4 my-6">
-          
-          <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">The Menu for your options!</Text>
-          
-          
-        </View>
-        
-        <View className="bg-white rounded justify-center px-5 pb-10 mt-20">
+        <View className="bg-white rounded-xl justify-center px-10 pb-10 mt-40">
+          <View className="w-full justify-center h-full[85vh] px-4 my-6">
+            <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">Menu</Text>
+
+          </View>
         <CustomButton 
             title="About SERT"
             handlePress={() => handleNavigate('aboutSERT')}
-            containerStyles="mt-10 align-center"
+            containerStyles="mt-5 align-center"
           />
 
           <CustomButton 
             title="About Dev"
             handlePress={() => handleNavigate('aboutDev')}
-            containerStyles="mt-10 align-center"
+            containerStyles="mt-5 align-center"
           />
 
         <CustomButton 
             title="Sign In"
             handlePress={() => router.push('/sign-in')}
-            containerStyles="mt-10 align-center"
+            containerStyles="mt-5 align-center"
           />
         
         </View>
@@ -51,3 +48,4 @@ const handleNavigate = (info) => {
 }
 
 export default menu
+//initial UI modification

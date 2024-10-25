@@ -51,13 +51,6 @@ const SignIn = () => {
         />
 
         <CustomButton 
-          title="Sign-up"
-          handlePress={() => router.push('/sign-up')}
-          containerStyles="mt-7"
-          isLoading={isSubmitting}
-        />
-
-        <CustomButton 
           title="Back"
           handlePress={() => router.push('/menu')}
           containerStyles="mt-7"

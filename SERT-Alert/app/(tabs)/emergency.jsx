@@ -1,16 +1,23 @@
-import React, { useState } from 'react'; 
-import { View, Text, SafeAreaView, ScrollView, Image, Alert, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, SafeAreaView, ScrollView, Image, Alert, TouchableOpacity, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { images } from '../../constants';
 import { icons } from '../../constants';
-import { Picker } from '@react-native-picker/picker';
-
+import RNPickerSelect from 'react-native-picker-select';  // Imported RNPickerSelect
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 import CaptureButton from '../../components/CaptureButton';
 
 const Emergency = () => {
+  const getAPIdata = () => {
+    console.warn("TEST FETCHING");
+  };
+
+  useEffect(() => {
+    getAPIdata();
+  }, []);
+
   const [form, setForm] = useState({
     Building: '',
     FloorLocation: '',
@@ -26,7 +33,7 @@ const Emergency = () => {
   const handleLocationChange = (Building) => {
     let options = [];
     let enableFloorLocation = true;
-    
+
     switch (Building) {
       case 'St. Dominic BLDG':
         options = ['1st Floor', '2nd Floor', '3rd Floor', '4th Floor'];
@@ -47,7 +54,7 @@ const Emergency = () => {
         options = [];
         enableFloorLocation = false;
     }
-    
+
     setForm({ ...form, Building, FloorLocation: '' });
     setFloorLocation(options);
     setIsFloorLocationEnabled(enableFloorLocation);
@@ -55,6 +62,14 @@ const Emergency = () => {
 
   const pickImage = async () => {
     try {
+      //Request camera permissions
+      const { status: cameraStatus } = await ImagePicker.requestCameraPermissionsAsync();
+      
+      if (cameraStatus !== 'granted') {
+        Alert.alert('Error', 'Permission to access the camera was denied.');
+        return;
+      }
+      
       let result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: false,
@@ -73,31 +88,11 @@ const Emergency = () => {
 
   const submit = async () => {
     setIsSubmitting(true);
-    
+
     if (!form.Building || !form.context || !form.image) {
       Alert.alert('Error', 'All fields are required.');
       setIsSubmitting(false);
       return;
-    }
-
-    try {
-      // Firebase or your backend integration here
-      const db = firebase.database();
-      const emergencyRef = db.ref('emergencies');
-      await emergencyRef.push({
-        Building: form.Building,
-        FloorLocation: form.FloorLocation,
-        context: form.context,
-        image: form.image,
-        timestamp: Date.now(),
-      });
-
-      Alert.alert('Success', 'Emergency reported successfully.');
-      navigation.goBack();
-    } catch (error) {
-      Alert.alert('Error', 'Failed to report emergency. Please try again.');
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -105,12 +100,12 @@ const Emergency = () => {
     <SafeAreaView className="flex-1 bg-orange-500 p-2">
       <ScrollView>
         <View className="bg-white p-6 rounded-3xl shadow-lg mt-10 mb-6">
-          <Image 
+          <Image
             source={images.SERTlogo}
-            resizeMode='contain' 
+            resizeMode='contain'
             className="w-20 h-20 mx-auto mb-4"
           />
-          
+
           <Text className="text-2xl text-black text-center font-psemibold mt-2 mb-6">
             Report an Emergency!
           </Text>
@@ -118,47 +113,78 @@ const Emergency = () => {
           {/* Start of the white background section view container */}
           <View className="bg-white rounded-xl justify-center px-5 pb-10 mt-2">
             {/* Inside of the white background view container */}
-            
+
             {/* Location */}
             <Text className="text-black-600 font-semibold mt-5 mb-2">Building:</Text>
             <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
-              <Picker
-                selectedValue={form.Building}
-                onValueChange={handleLocationChange}
-                style={{ flex: 1, color: '#000' }}
-              >
-                <Picker.Item label="Select Bldg." value="" />
-                <Picker.Item label="St. Dominic BLDG" value="St. Dominic BLDG" />
-                <Picker.Item label="St. Catherine of Siena BLDG" value="St. Catherine of Siena BLDG" />
-                <Picker.Item label="Holy Rosary BLDG" value="Holy Rosary BLDG" />
-                <Picker.Item label="Others" value="Others" />
-              </Picker>
+              {/* TouchableOpacity only on Android to fix touch issue */}
+              {Platform.OS === 'android' ? (
+                <TouchableOpacity style={{ flex: 1 }}>
+                  <RNPickerSelect
+                    onValueChange={handleLocationChange}
+                    value={form.Building}
+                    items={[
+                      { label: "St. Dominic BLDG", value: "St. Dominic BLDG" },
+                      { label: "St. Catherine of Siena BLDG", value: "St. Catherine of Siena BLDG" },
+                      { label: "Holy Rosary BLDG", value: "Holy Rosary BLDG" },
+                      { label: "Others", value: "Others" }
+                    ]}
+                    style={{
+                      inputIOS: {
+                        color: '#000', // iOS-specific styling
+                      },
+                      inputAndroid: {
+                        color: '#000', // Android-specific styling
+                      },
+                    }}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <RNPickerSelect
+                  onValueChange={handleLocationChange}
+                  value={form.Building}
+                  items={[
+                    { label: "Select Bldg.", value: "" },
+                    { label: "St. Dominic BLDG", value: "St. Dominic BLDG" },
+                    { label: "St. Catherine of Siena BLDG", value: "St. Catherine of Siena BLDG" },
+                    { label: "Holy Rosary BLDG", value: "Holy Rosary BLDG" },
+                    { label: "Others", value: "Others" }
+                  ]}
+                  style={{
+                    inputIOS: {
+                      color: '#000', // iOS-specific styling
+                    },
+                    inputAndroid: {
+                      color: '#000', // Android-specific styling
+                    },
+                  }}
+                />
+              )}
             </View>
-            
+
             {/* Floor Location */}
             <Text className="text-black-600 font-semibold mb-2 mt-3">Floor Location:</Text>
             <View className={`w-full h-16 px-4 rounded-2xl items-center flex-row ${
-              isFloorLocationEnabled 
-                ? 'border-2 border-red-500 bg-white-100' 
+              isFloorLocationEnabled
+                ? 'border-2 border-red-500 bg-white-100'
                 : 'bg-gray-200'
             }`}>
-              <Picker
-                selectedValue={form.FloorLocation}
+              <RNPickerSelect
                 onValueChange={(value) => setForm({ ...form, FloorLocation: value })}
-                enabled={isFloorLocationEnabled}
-                style={{ 
-                  flex: 1, 
-                  color: isFloorLocationEnabled ? '#000' : '#888',
-                  opacity: isFloorLocationEnabled ? 1 : 0.5
+                value={form.FloorLocation}
+                items={FloorLocation.map(option => ({ label: option, value: option }))}
+                disabled={!isFloorLocationEnabled}
+                style={{
+                  inputIOS: {
+                    color: isFloorLocationEnabled ? '#000' : '#888',
+                  },
+                  inputAndroid: {
+                    color: isFloorLocationEnabled ? '#000' : '#888',
+                  },
                 }}
-              >
-                <Picker.Item label="Select Floor/Location" value="" />
-                {FloorLocation.map((option, index) => (
-                  <Picker.Item key={index} label={option} value={option} />
-                ))}
-              </Picker>
+              />
             </View>
-            
+
             {/* Input Context */}
             <View className="mb-4">
               <FormField
@@ -166,7 +192,7 @@ const Emergency = () => {
                 placeholderTextColor="#999"
                 className="text-gray-800"
                 value={form.context}
-                handleChangeText={(e) => setForm({...form, context: e})}
+                handleChangeText={(e) => setForm({ ...form, context: e })}
               />
             </View>
 
@@ -175,8 +201,8 @@ const Emergency = () => {
               <View className="mt-4 mb-4">
                 <Text className="text-black-600 font-semibold mb-2">Image Preview:</Text>
                 <View className="border border-gray-300 rounded-lg overflow-hidden">
-                  <Image 
-                    source={{ uri: form.image }} 
+                  <Image
+                    source={{ uri: form.image }}
                     style={{ width: '100%', height: 200 }}
                   />
                 </View>
@@ -192,7 +218,7 @@ const Emergency = () => {
             />
 
             {/* Report Emergency Button */}
-            <CustomButton 
+            <CustomButton
               title="Report Emergency"
               handlePress={submit}
               containerStyles="mt-5"
@@ -203,6 +229,6 @@ const Emergency = () => {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 export default Emergency;
