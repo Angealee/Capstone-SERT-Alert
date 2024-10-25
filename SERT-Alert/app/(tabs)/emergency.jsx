@@ -9,14 +9,18 @@ import { Picker } from '@react-native-picker/picker';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 import CaptureButton from '../../components/CaptureButton';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 const Emergency = () => {
-  const getAPIdata = () => {
 
-    const getAPIdata = () => {
-      console.warn("TEST FETCHING")
-    }
+  const getAPIdata = () => {
+      console.warn("TEST FETCHING")   
   }
+
+  useEffect(() => {
+    getAPIdata()
+  },[])
+
   const [form, setForm] = useState({
     Building: '',
     FloorLocation: '',
