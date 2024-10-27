@@ -11,7 +11,7 @@ import CaptureButton from '../../components/CaptureButton';
 
 const Emergency = () => {
 
-//API
+//API initial commit
   const getAPIdata = () => {
     console.warn("TEST FETCHING");
   };
