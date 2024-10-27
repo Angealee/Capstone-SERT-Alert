@@ -10,6 +10,8 @@ import CustomButton from '../../components/CustomButton';
 import CaptureButton from '../../components/CaptureButton';
 
 const Emergency = () => {
+
+//API
   const getAPIdata = () => {
     console.warn("TEST FETCHING");
   };
@@ -30,6 +32,7 @@ const Emergency = () => {
 
   const navigation = useNavigation();
 
+//Location Handler
   const handleLocationChange = (Building) => {
     let options = [];
     let enableFloorLocation = true;
@@ -60,6 +63,7 @@ const Emergency = () => {
     setIsFloorLocationEnabled(enableFloorLocation);
   };
 
+//Image picker handler
   const pickImage = async () => {
     try {
       //Request camera permissions
@@ -77,12 +81,17 @@ const Emergency = () => {
         quality: 1,
       });
 
-      if (!result.canceled) {
-        console.log(result.uri);  // Log the URI to verify it's correct
-        setForm({ ...form, image: result.uri });
+      // Log the result to see the structure
+      console.log("Image Picker Result: ", result);
+
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        // Access the image URI from the `assets` array
+        setForm({ ...form, image: result.assets[0].uri });
+        console.log("Image URI: ", result.assets[0].uri); // Log URI to check
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to pick image. Please try again.');
+      console.error("Error in picking image: ", error);
     }
   };
 
@@ -182,6 +191,7 @@ const Emergency = () => {
                     color: isFloorLocationEnabled ? '#000' : '#888',
                   },
                 }}
+                useNativeAndroidPickerStyle={false}
               />
             </View>
 
@@ -200,10 +210,10 @@ const Emergency = () => {
             {form.image && (
               <View className="mt-4 mb-4">
                 <Text className="text-black-600 font-semibold mb-2">Image Preview:</Text>
-                <View className="border border-gray-300 rounded-lg overflow-hidden">
+                <View className="border border-red-500 rounded-lg overflow-hidden">
                   <Image
                     source={{ uri: form.image }}
-                    style={{ width: '100%', height: 200 }}
+                    style={{ width: '100%', height: 350 }}
                   />
                 </View>
               </View>
