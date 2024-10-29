@@ -1,13 +1,12 @@
-import { View, Text } from 'react-native'
+import { Platform, View, Text } from 'react-native'
 import { Tabs, Redirect } from 'expo-router';
 import { Image } from 'react-native';
-
-
 import  { icons } from '../../constants'
 
+//tabs for SERT UI
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
-    <View className="items-center justify-center gap-2">
+    <View className="items-center justify-center gap-2" style={styles.tabIconContainer}>
       <Image
         source={icon}
         resizeMode="contain"
@@ -17,7 +16,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
 
       {/* to style the text, use this snippet: 
       style={{ color:color}} */}
-      <Text className={`${focused ? 'font-psemibold':'font-pregular'} text-xs`}>
+      <Text style={{ color: color }} className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`}>
         {name}
       </Text>
     </View>
@@ -29,14 +28,14 @@ const TabsLayout = () => {
         <Tabs
           screenOptions={{
             tabBarShowLabel: false,
-            tabBarActiveTintColor: '#EF2A39',
-            tabBarInactiveTintColor:'#FD9BA2',
+            tabBarActiveTintColor: '#ab0505',
+            tabBarInactiveTintColor:'#EF2A39',
             tabBarStyle:{
-            //backgroundColor: '',
-              borderTopWidth: 1,
+              backgroundColor: '#ECB548',
+              borderTopWidth: 0,
               borderTopColor: '232553',
-              height: 78,
-            }
+              height: Platform.OS === 'ios' ? 70 : 70, // Increased height for iOS
+            },
           }}
         >
             <Tabs.Screen 
@@ -50,10 +49,8 @@ const TabsLayout = () => {
                       color={color}
                       name="Emergency"
                       focused={focused}
-                      //style={{ width: 100, height: 100 }}
                     />
-                    
-                  )
+                  ),
                 }}
             />
             <Tabs.Screen 
@@ -68,8 +65,7 @@ const TabsLayout = () => {
                       name="Learn"
                       focused={focused}
                     />
-                    
-                  )
+                  ),
                 }}
             />
             <Tabs.Screen 
@@ -108,5 +104,19 @@ const TabsLayout = () => {
     </>
   )
 }
+
+const styles = {
+  tabIconContainer: {
+    marginBottom: Platform.OS === 'ios' ? -25 : 0, // Adjust icon position only on iOS
+  },
+  iconIOS: {
+    width: 25, // Adjust icon size for iOS
+    height: 25,
+  },
+  iconDefault: {
+    width: 20,
+    height: 20,
+  },
+};
 
 export default TabsLayout
