@@ -22,6 +22,11 @@ const SignIn = () => {
     setisSubmitting(true);
     
   }
+
+  const handleNavigate = (info) => {
+    router.push(`/aboutInfo/${info}`);
+    };
+
   return (
     <SafeAreaView className="bg-white h-full">
       <ScrollView>
@@ -45,7 +50,8 @@ const SignIn = () => {
 
         <CustomButton 
           title="Login"
-          handlePress={submit}
+          // handlePress={submit}
+          handlePress={() => router.push('/SERTemergency')}
           containerStyles="mt-7"
           isLoading={isSubmitting}
         />
