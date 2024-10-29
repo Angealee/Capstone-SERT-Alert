@@ -11,10 +11,16 @@ import CaptureButton from '../../components/CaptureButton';
 
 const Emergency = () => {
 
-//API initial commit
-  const getAPIdata = () => {
-    console.warn("TEST FETCHING");
-  };
+//API
+  const [data,setData] = useState(undefined);
+
+  const getAPIdata = async () => {
+    const apiUrl = "https://localhost:443";
+    let result = await fetch(apiUrl);
+    result = await result.json();
+    console.warn(result);
+    setData(result)
+  }
 
   useEffect(() => {
     getAPIdata();
@@ -198,7 +204,7 @@ const Emergency = () => {
             {/* Input Context */}
             <View className="mb-4">
               <FormField
-                placeholder="Describe the emergency..."
+                placeholder="Context here ..."
                 placeholderTextColor="#999"
                 className="text-gray-800"
                 value={form.context}
