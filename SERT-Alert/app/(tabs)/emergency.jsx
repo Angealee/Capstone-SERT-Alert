@@ -11,21 +11,6 @@ import CaptureButton from '../../components/CaptureButton';
 
 const Emergency = () => {
 
-//API
-  const [data,setData] = useState(undefined);
-
-  const getAPIdata = async () => {
-    const apiUrl = "https://localhost:443";
-    let result = await fetch(apiUrl);
-    result = await result.json();
-    console.warn(result);
-    setData(result)
-  }
-
-  useEffect(() => {
-    getAPIdata();
-  }, []);
-
   const [form, setForm] = useState({
     Building: '',
     FloorLocation: '',
@@ -38,7 +23,7 @@ const Emergency = () => {
 
   const navigation = useNavigation();
 
-//Location Handler
+  // Location Handler
   const handleLocationChange = (Building) => {
     let options = [];
     let enableFloorLocation = true;
@@ -69,10 +54,9 @@ const Emergency = () => {
     setIsFloorLocationEnabled(enableFloorLocation);
   };
 
-//Image picker handler
+  // Image picker handler
   const pickImage = async () => {
     try {
-      //Request camera permissions
       const { status: cameraStatus } = await ImagePicker.requestCameraPermissionsAsync();
       
       if (cameraStatus !== 'granted') {
@@ -87,13 +71,8 @@ const Emergency = () => {
         quality: 1,
       });
 
-      // Log the result to see the structure
-      console.log("Image Picker Result: ", result);
-
       if (!result.canceled && result.assets && result.assets.length > 0) {
-        // Access the image URI from the `assets` array
         setForm({ ...form, image: result.assets[0].uri });
-        console.log("Image URI: ", result.assets[0].uri); // Log URI to check
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to pick image. Please try again.');
@@ -101,6 +80,7 @@ const Emergency = () => {
     }
   };
 
+  // Submit handler with POST request
   const submit = async () => {
     setIsSubmitting(true);
 
@@ -108,6 +88,42 @@ const Emergency = () => {
       Alert.alert('Error', 'All fields are required.');
       setIsSubmitting(false);
       return;
+    }
+
+    try {
+      const apiUrl = "https://jsonplaceholder.typicode.com/posts"; //sample API
+
+      //req body
+      const bodyData = {
+        building: form.Building,
+        floorLocation: form.FloorLocation,
+        context: form.context,
+        image: form.image,
+      };
+
+      //POST request
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bodyData),
+      });
+
+      // Handle response
+      const result = await response.json();
+      if (response.ok) {
+        Alert.alert('Success', 'Emergency reported successfully!');
+        console.log('Response data:', result);
+      } else {
+        Alert.alert('Error', 'Failed to report emergency.');
+        console.error('Error response:', result);
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Something went wrong. Please try again.');
+      console.error("Error in submit:", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -125,14 +141,9 @@ const Emergency = () => {
             Report an Emergency!
           </Text>
 
-          {/* Start of the white background section view container */}
           <View className="bg-white rounded-xl justify-center px-5 pb-10 mt-2">
-            {/* Inside of the white background view container */}
-
-            {/* Location */}
             <Text className="text-black-600 font-semibold mt-5 mb-2">Building:</Text>
             <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
-              {/* TouchableOpacity only on Android to fix touch issue */}
               {Platform.OS === 'android' ? (
                 <TouchableOpacity style={{ flex: 1 }}>
                   <RNPickerSelect
@@ -145,12 +156,8 @@ const Emergency = () => {
                       { label: "Others", value: "Others" }
                     ]}
                     style={{
-                      inputIOS: {
-                        color: '#000', // iOS-specific styling
-                      },
-                      inputAndroid: {
-                        color: '#000', // Android-specific styling
-                      },
+                      inputIOS: { color: '#000' },
+                      inputAndroid: { color: '#000' },
                     }}
                   />
                 </TouchableOpacity>
@@ -166,18 +173,13 @@ const Emergency = () => {
                     { label: "Others", value: "Others" }
                   ]}
                   style={{
-                    inputIOS: {
-                      color: '#000', // iOS-specific styling
-                    },
-                    inputAndroid: {
-                      color: '#000', // Android-specific styling
-                    },
+                    inputIOS: { color: '#000' },
+                    inputAndroid: { color: '#000' },
                   }}
                 />
               )}
             </View>
 
-            {/* Floor Location */}
             <Text className="text-black-600 font-semibold mb-2 mt-3">Floor Location:</Text>
             <View className={`w-full h-16 px-4 rounded-2xl items-center flex-row ${
               isFloorLocationEnabled
@@ -190,18 +192,13 @@ const Emergency = () => {
                 items={FloorLocation.map(option => ({ label: option, value: option }))}
                 disabled={!isFloorLocationEnabled}
                 style={{
-                  inputIOS: {
-                    color: isFloorLocationEnabled ? '#000' : '#888',
-                  },
-                  inputAndroid: {
-                    color: isFloorLocationEnabled ? '#000' : '#888',
-                  },
+                  inputIOS: { color: isFloorLocationEnabled ? '#000' : '#888' },
+                  inputAndroid: { color: isFloorLocationEnabled ? '#000' : '#888' },
                 }}
                 useNativeAndroidPickerStyle={false}
               />
             </View>
 
-            {/* Input Context */}
             <View className="mb-4">
               <FormField
                 placeholder="Context here ..."
@@ -212,7 +209,6 @@ const Emergency = () => {
               />
             </View>
 
-            {/* Image Preview Container */}
             {form.image && (
               <View className="mt-4 mb-4">
                 <Text className="text-black-600 font-semibold mb-2">Image Preview:</Text>
@@ -225,15 +221,13 @@ const Emergency = () => {
               </View>
             )}
 
-            {/* Capture Image Button */}
             <CaptureButton
               title="Capture Image"
               handlePress={pickImage}
               containerStyles="mt-12"
-              icon={icons.camera} // Pass the icon here
+              icon={icons.camera}
             />
 
-            {/* Report Emergency Button */}
             <CustomButton
               title="Report Emergency"
               handlePress={submit}
