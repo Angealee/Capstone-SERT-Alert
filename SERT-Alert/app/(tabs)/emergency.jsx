@@ -115,6 +115,13 @@ const Emergency = () => {
       if (response.ok) {
         Alert.alert('Success', 'Emergency reported successfully!');
         console.log('Response data:', result);
+          setForm({
+            Building: '',
+            FloorLocation: '',
+            context: '',
+            image: '',
+          });
+
       } else {
         Alert.alert('Error', 'Failed to report emergency.');
         console.error('Error response:', result);
