@@ -133,14 +133,16 @@ $(() => {
             type: 'POST',
             datatype: 'json',
             dataSrc: function (result) {
+                debugger;
                 return result.data;
             }
         },
         columns: [
             null,
-            { data: 'buildingName', title: 'Building' },
-            { data: 'locationDetail', title: 'Location' },
-            { data: 'content', title: 'Content' },
+            { data: 'buildingName', title: 'Building Name' },
+            { data: 'locationDetail', title: 'Floor Location' },
+            { data: 'content', title: 'Context' },
+            { data: 'dateCreated', title: 'Created Date' },
             { data: 'attachment', title: 'Attachment' }
         ],
         columnDefs: [

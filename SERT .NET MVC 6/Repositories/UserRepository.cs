@@ -65,7 +65,8 @@ namespace SertWebApp.Repositories
             =>  _context.Users
                     .FirstOrDefault(u => u.IsActive
                     && u.Username.Trim().Equals(username) 
-                    && u.Password == password);
+                    && u.Password == password
+                    && (u.Role == Role.Admin || u.Role == Role.Admin2));
         #endregion
 
         #region Other Search
