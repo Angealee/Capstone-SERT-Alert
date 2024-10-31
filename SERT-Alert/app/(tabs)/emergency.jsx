@@ -92,13 +92,14 @@ const Emergency = () => {
 
     try {
       const apiUrl = "https://jsonplaceholder.typicode.com/posts"; //sample API
-
+      const timestamp = new Date().toISOString();
       //req body
       const bodyData = {
         building: form.Building,
         floorLocation: form.FloorLocation,
         context: form.context,
         image: form.image,
+        timestamp: timestamp,
       };
 
       //POST request
