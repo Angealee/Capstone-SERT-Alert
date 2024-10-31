@@ -1,124 +1,55 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
 const Notification = () => {
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    // Fetch notifications
+    const fetchNotifications = async () => {
+      try {
+        const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // Sample API URL for GET request
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await response.json();
+        setNotifications(data); // Update state na may fetched notifications
+      } catch (error) {
+        Alert.alert("Error", "Failed to fetch notifications");
+        console.error("Fetch error:", error);
+      }
+    };
+
+    fetchNotifications();
+  }, []); 
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Notifications</Text>
 
       {/* Notifications List */}
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        
-        {/* 1st Notification */}
-        <View style={styles.notificationBox}>
-          <Text style={styles.time}>11:34 AM</Text>
-          <View style={styles.notificationContent}>
-            <Text style={styles.contextText}>Nadapa nahulog sa hagdan. Come help please.</Text>
-            <Text style={styles.subText}>Holy Rosary BLDG. | 3rd Floor</Text>
+        {notifications.map((notification) => (
+          
+          // for displaying time
+          <View key={notification.id} style={styles.notificationBox}>
+            <Text style={styles.time}>{new Date(notification.timestamp).toLocaleTimeString()}</Text>
+
+            {/* this is for displaying context, subject to change still */}
+            <View style={styles.notificationContent}>
+              <Text style={styles.contextText}>{notification.title}</Text>
+              
+              {/* this is for displaying building and floor location, subject to change still */}
+              <Text style={styles.subText}>
+                {notification.id} | {notification.userId}
+              </Text>
+
+            </View>
           </View>
-        </View>
-
-        {/* 2nd Notification */}
-        <View style={styles.notificationBox}>
-          <Text style={styles.time}>11:45 AM</Text>
-          <View style={styles.notificationContent}>
-            <Text style={styles.contextText}>Nahimatay po siya</Text>
-            <Text style={styles.subText}>Holy Rosary BLDG. | 4th Floor</Text>
-          </View>
-        </View>
-
-        {/* 3rd Notification */}
-        <View style={styles.notificationBox}>
-          <Text style={styles.time}>12:10 PM</Text>
-          <View style={styles.notificationContent}>
-            <Text style={styles.contextText}>Nadapa, dumudugo po ng sobra. Pa respond naman po.</Text>
-            <Text style={styles.subText}>Others | Covered Court</Text>
-          </View>
-        </View>
-
-                {/* 1st Notification */}
-                <View style={styles.notificationBox}>
-          <Text style={styles.time}>11:34 AM</Text>
-          <View style={styles.notificationContent}>
-            <Text style={styles.contextText}>Nadapa nahulog sa hagdan. Come help please.</Text>
-            <Text style={styles.subText}>Holy Rosary BLDG. | 3rd Floor</Text>
-          </View>
-        </View>
-
-        {/* 2nd Notification */}
-        <View style={styles.notificationBox}>
-          <Text style={styles.time}>11:45 AM</Text>
-          <View style={styles.notificationContent}>
-            <Text style={styles.contextText}>Nahimatay po siya</Text>
-            <Text style={styles.subText}>Holy Rosary BLDG. | 4th Floor</Text>
-          </View>
-        </View>
-
-        {/* 3rd Notification */}
-        <View style={styles.notificationBox}>
-          <Text style={styles.time}>12:10 PM</Text>
-          <View style={styles.notificationContent}>
-            <Text style={styles.contextText}>Nadapa, dumudugo po ng sobra. Pa respond naman po.</Text>
-            <Text style={styles.subText}>Others | Covered Court</Text>
-          </View>
-        </View>
-
-                {/* 1st Notification */}
-                <View style={styles.notificationBox}>
-          <Text style={styles.time}>11:34 AM</Text>
-          <View style={styles.notificationContent}>
-            <Text style={styles.contextText}>Nadapa nahulog sa hagdan. Come help please.</Text>
-            <Text style={styles.subText}>Holy Rosary BLDG. | 3rd Floor</Text>
-          </View>
-        </View>
-
-        {/* 2nd Notification */}
-        <View style={styles.notificationBox}>
-          <Text style={styles.time}>11:45 AM</Text>
-          <View style={styles.notificationContent}>
-            <Text style={styles.contextText}>Nahimatay po siya</Text>
-            <Text style={styles.subText}>Holy Rosary BLDG. | 4th Floor</Text>
-          </View>
-        </View>
-
-        {/* 3rd Notification */}
-        <View style={styles.notificationBox}>
-          <Text style={styles.time}>12:10 PM</Text>
-          <View style={styles.notificationContent}>
-            <Text style={styles.contextText}>Nadapa, dumudugo po ng sobra. Pa respond naman po.</Text>
-            <Text style={styles.subText}>Others | Covered Court</Text>
-          </View>
-        </View>
-
-                {/* 1st Notification */}
-                <View style={styles.notificationBox}>
-          <Text style={styles.time}>11:34 AM</Text>
-          <View style={styles.notificationContent}>
-            <Text style={styles.contextText}>Nadapa nahulog sa hagdan. Come help please.</Text>
-            <Text style={styles.subText}>Holy Rosary BLDG. | 3rd Floor</Text>
-          </View>
-        </View>
-
-        {/* 2nd Notification */}
-        <View style={styles.notificationBox}>
-          <Text style={styles.time}>11:45 AM</Text>
-          <View style={styles.notificationContent}>
-            <Text style={styles.contextText}>Nahimatay po siya</Text>
-            <Text style={styles.subText}>Holy Rosary BLDG. | 4th Floor</Text>
-          </View>
-        </View>
-
-        {/* 3rd Notification */}
-        <View style={styles.notificationBox}>
-          <Text style={styles.time}>12:10 PM</Text>
-          <View style={styles.notificationContent}>
-            <Text style={styles.contextText}>Nadapa, dumudugo po ng sobra. Pa respond naman po.</Text>
-            <Text style={styles.subText}>Others | Covered Court</Text>
-          </View>
-        </View>
-
-
-
+        ))}
       </ScrollView>
     </View>
   );
