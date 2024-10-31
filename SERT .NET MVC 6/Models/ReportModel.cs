@@ -9,6 +9,7 @@
         public byte[]? Attachment { get; set; }
         public string? FileName { get; set; }
         public string? FileType { get; set; }
+        public DateTime DateCreated { get; set; }
         public string ErrorMessage { get; set; } = string.Empty;
     }
 }

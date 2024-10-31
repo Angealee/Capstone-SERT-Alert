@@ -3,6 +3,7 @@ import { Tabs } from 'expo-router';
 import { Image } from 'react-native';
 import { icons } from '../../constants';
 
+//tabs for User UI
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
     <View className="items-center justify-center gap-2" style={styles.tabIconContainer}>
@@ -13,6 +14,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
         className="w-5 h-5"
         style={Platform.OS === 'ios' ? styles.iconIOS : styles.iconDefault}
       />
+
       <Text style={{ color: color }} className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`}>
         {name}
       </Text>
@@ -32,7 +34,7 @@ const TabsLayout = () => {
             backgroundColor: '#ECB548',
             borderTopWidth: 0,
             borderTopColor: '232553',
-            height: Platform.OS === 'ios' ? 70 : 50, // Increased height for iOS
+            height: Platform.OS === 'ios' ? 70 : 70, // Increased height for iOS
           },
         }}
       >
