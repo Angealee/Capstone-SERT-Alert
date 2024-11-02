@@ -133,7 +133,6 @@ $(() => {
             type: 'POST',
             datatype: 'json',
             dataSrc: function (result) {
-                debugger;
                 return result.data;
             }
         },
@@ -179,6 +178,11 @@ $(() => {
             },
             {
                 targets: 4,
+                data: 'dateCreated',
+                render: DataTable.render.datetime('Do MMM YYYY')
+            },
+            {
+                targets: 5,
                 data: 'attachment',
                 render: function (data, type, row, meta) {
                     return data != null

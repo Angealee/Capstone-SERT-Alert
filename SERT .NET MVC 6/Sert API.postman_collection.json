@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "37cab82a-64e2-4a37-bdb2-60d17bd1d7bd",
+		"name": "Sert API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19626171"
+	},
+	"item": [
+		{
+			"name": "GetReportList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7296/api/GetReportList",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7296",
+					"path": [
+						"api",
+						"GetReportList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"erwin\",\r\n    \"password\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7296/api/Login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7296",
+					"path": [
+						"api",
+						"Login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Report",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"building\": \"Bulding Test API\",\r\n    \"floorLocation\": \"Location Test API\",\r\n    \"context\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ullamcorper libero nisl. Proin vitae mattis ex, vel blandit enim. Integer suscipit, risus nec vestibulum euismod, magna justo fringilla erat, eget venenatis libero lacus vel odio. Quisque risus libero, consequat in ultricies at, lacinia eget massa. Donec facilisis nibh vitae sem laoreet varius quis sed enim. Maecenas eget viverra lacus, vitae venenatis libero. Cras dictum orci at eros auctor, non pulvinar ex cursus. In hac habitasse platea dictumst. Donec vitae arcu sit amet tellus molestie vestibulum sed in ex. Fusce id dui a metus commodo feugiat sed convallis tortor. Suspendisse ultricies nulla sed accumsan luctus. Nulla in iaculis dui. Proin lacinia nisl sit amet imperdiet semper. Cras facilisis volutpat augue nec porta. Duis egestas sed enim elementum molestie. Curabitur a nulla id nulla commodo sodales at eu diam. Vestibulum tempor molestie nisi.\",\r\n    \"image\": \"\",\r\n    \"fileName\": \"\",\r\n    \"fileType\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7296/api/AddReport",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7296",
+					"path": [
+						"api",
+						"AddReport"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

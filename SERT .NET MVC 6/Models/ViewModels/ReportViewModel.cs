@@ -1,4 +1,5 @@
-﻿using SertWebApp.Enums;
+﻿using Newtonsoft.Json;
+using SertWebApp.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace SertWebApp.Models.ViewModels

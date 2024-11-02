@@ -1,4 +1,5 @@
-﻿using SertWebApp.Enums;
+﻿using Google.Protobuf.WellKnownTypes;
+using SertWebApp.Enums;
 using SertWebApp.Interfaces;
 using SertWebApp.Models;
 
@@ -24,9 +25,9 @@ namespace SertWebApp.Repositories
 
             return result;
         }
-            
 
-        public List<User> FindAllUsers() 
+
+        public List<User> FindAllUsers()
             => _context.Users.Where(u => u.IsActive && u.Role == Enums.Role.User).ToList() ?? new List<User>();
 
         public List<User> FindAllAdmins(Role currentUserRole)
@@ -36,8 +37,8 @@ namespace SertWebApp.Repositories
             if (currentUserRole == Role.Admin)
             {
                 result = _context.Users
-                            .Where(u => u.IsActive 
-                                    && (u.Role == Role.Admin 
+                            .Where(u => u.IsActive
+                                    && (u.Role == Role.Admin
                                         || u.Role == Role.Admin2))
                             .ToList();
             }
@@ -58,15 +59,29 @@ namespace SertWebApp.Repositories
         public User Find(int id) =>
             _context.Users.FirstOrDefault(u => u.IsActive && u.Id == id) ?? new User();
 
-        public User FindByUsername(string username) => 
+        public User FindByUsername(string username) =>
             _context.Users?.FirstOrDefault(u => u.IsActive && u.Username.Trim().Equals(username)) ?? new User();
 
-        public User FindByUsernameAndPassword(string username, string password) 
-            =>  _context.Users
-                    .FirstOrDefault(u => u.IsActive
-                    && u.Username.Trim().Equals(username) 
-                    && u.Password == password
-                    && (u.Role == Role.Admin || u.Role == Role.Admin2));
+        public User? FindByUsernameAndPassword(string username, string password)
+        {
+            if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(password))
+            {
+                return new User { Id = -1 };
+            }
+
+            var usernameExists = FindByUsername(username).Id > 0;
+
+            if (!usernameExists)
+            {
+                return new User { Id = -1 };
+            }
+
+            return _context.Users
+            .FirstOrDefault(u => u.IsActive
+                                    && u.Username.Trim().Equals(username)
+                                    && u.Password == password
+                                    && (u.Role == Role.Admin || u.Role == Role.Admin2));
+        }
         #endregion
 
         #region Other Search

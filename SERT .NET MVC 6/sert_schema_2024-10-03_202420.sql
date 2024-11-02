@@ -45,7 +45,7 @@ CREATE TABLE `reports` (
   `FileName` longtext,
   `FileType` longtext,
   `DateModified` datetime(6) NOT NULL,
-  `DateCreated` datetime(6) NOT NULL,
+  `DateCreated` datetime(6) NOT NULL DEFAULT GETDATE(),
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -70,12 +70,14 @@ CREATE TABLE `users` (
   `Role` int NOT NULL,
   `IsActive` tinyint(1) NOT NULL,
   `IsOnline` tinyint(1) NOT NULL,
-  `DateCreated` datetime(6) NOT NULL,
+  `DateCreated` datetime(6) NOT NULL DEFAULT GETDATE(),
   `DateModified` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+INSERT INTO `users` 
+VALUES (1,'admin','uSDQqoCng1wVR7EIZB/Y6MgFGDf8X9RJzJndgvqir+E=','Admin','default','default','default','origadmin@mail.com','Admin',1,1,1,GETDATE(),NULL);
 --
 -- Dumping routines for database 'sert_schema'
 --
