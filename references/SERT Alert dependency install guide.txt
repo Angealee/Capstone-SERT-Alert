@@ -7,7 +7,7 @@ First you need to have:
 
 Then installation of dependencies and tools:
 
--npm install -g expo-cli
+-npm install expo
 	:to install the expo CLI first. using npm
 
 NOTE: In this case we will use expo. Usage of npx is a MUST.
@@ -25,6 +25,8 @@ Errors will pop up and will say what dependency is missing. Just simply download
 
 example: npx expo install @react-native-image-picker/picker
 
+to run expo metro bundler;
+npx expo start -c
 
 Extension to use: (OPTIONAL)
 -Prettier
