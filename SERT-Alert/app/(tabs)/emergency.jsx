@@ -164,7 +164,7 @@ const Emergency = () => {
                       { label: "Others", value: "Others" }
                     ]}
                     style={{
-                      inputIOS: { color: '#000' },
+                      inputIOS: { color: '#000' }, //marginBottom: Platform.OS === 'ios' ? -25 : 0, // Adjust icon position only on iOS
                       inputAndroid: { color: '#000' },
                     }}
                   />
@@ -181,7 +181,13 @@ const Emergency = () => {
                     { label: "Others", value: "Others" }
                   ]}
                   style={{
-                    inputIOS: { color: '#000' },
+                    inputIOS: { 
+                      color: '#000',
+                      fontSize: 19,
+                      textAlign: 'center',
+                      marginTop: 15,
+                      marginLeft: 30
+                     },
                     inputAndroid: { color: '#000' },
                   }}
                 />
@@ -200,7 +206,13 @@ const Emergency = () => {
                 items={FloorLocation.map(option => ({ label: option, value: option }))}
                 disabled={!isFloorLocationEnabled}
                 style={{
-                  inputIOS: { color: isFloorLocationEnabled ? '#000' : '#888' },
+                  inputIOS: { 
+                    color: isFloorLocationEnabled ? '#000' : '#888', 
+                    fontSize: 19,
+                    textAlign: 'center',
+                    marginTop: 15,
+                    marginLeft: 30
+                  },
                   inputAndroid: { color: isFloorLocationEnabled ? '#000' : '#888' },
                 }}
                 useNativeAndroidPickerStyle={false}
