@@ -182,8 +182,10 @@ const Emergency = () => {
                       { label: "Others", value: "Others" }
                     ]}
                     style={{
-                      inputIOS: { color: '#000' }, //marginBottom: Platform.OS === 'ios' ? -25 : 0, // Adjust icon position only on iOS
-                      inputAndroid: { color: '#000' },
+                      inputIOS: { color: '#000' }, 
+                      inputAndroid: { 
+                        color: '#000',
+                       },
                     }}
                   />
                 </TouchableOpacity>
@@ -206,7 +208,10 @@ const Emergency = () => {
                       marginTop: 15,
                       marginLeft: 30
                      },
-                    inputAndroid: { color: '#000' },
+                    inputAndroid: { 
+                      color: '#000',
+                      textAlign: 'center',
+                     },
                   }}
                 />
               )}
@@ -231,7 +236,12 @@ const Emergency = () => {
                     marginTop: 15,
                     marginLeft: 30
                   },
-                  inputAndroid: { color: isFloorLocationEnabled ? '#000' : '#888' },
+                  inputAndroid: { 
+                    color: isFloorLocationEnabled ? '#000' : '#888',
+                    fontSize: 17,
+                    textAlign: 'center',
+                    marginLeft: 20
+                   },
                 }}
                 useNativeAndroidPickerStyle={false}
               />
@@ -262,7 +272,7 @@ const Emergency = () => {
             <CaptureButton
               title="Capture Image"
               handlePress={pickImage}
-              containerStyles="mt-12"
+              containerStyles="mt-3 mb-10"
               icon={icons.camera}
             />
 
