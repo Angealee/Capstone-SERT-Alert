@@ -200,10 +200,14 @@ namespace SertWebApp.Controllers
                 var sortColumn = parameters?.Columns[order?.Column ?? 0]?.Data ?? string.Empty;
                 Func<ReportModel, object> orderByFunc = x => x.BuildingName; // default
 
-                if (sortColumn?.Equals("Name", StringComparison.CurrentCultureIgnoreCase) ?? false)
+                if (sortColumn?.Equals("LocationDetail", StringComparison.CurrentCultureIgnoreCase) ?? false)
                     orderByFunc = (x => x.LocationDetail ?? string.Empty);
-                if (sortColumn?.Equals("Course", StringComparison.CurrentCultureIgnoreCase) ?? false)
+                if (sortColumn?.Equals("Content", StringComparison.CurrentCultureIgnoreCase) ?? false)
                     orderByFunc = (x => x.Content ?? string.Empty);
+                if (sortColumn?.Equals("DateCreated", StringComparison.CurrentCultureIgnoreCase) ?? false)
+                    orderByFunc = (x => x.DateCreated);
+                if (sortColumn?.Equals("Attachment", StringComparison.CurrentCultureIgnoreCase) ?? false)
+                    orderByFunc = (x => x.Attachment?.Length ?? 0);
 
                 // Apply pagination
                 var totalRecords = allReports.Count;
@@ -253,6 +257,7 @@ namespace SertWebApp.Controllers
                 LocationDetail = reportModel.LocationDetail,
                 Content = reportModel.Content,
                 Attachment = reportModel.Attachment,
+                DateCreated = reportModel.DateCreated,
                 FileName = reportModel.FileName,
                 FileType = reportModel.FileType
             };

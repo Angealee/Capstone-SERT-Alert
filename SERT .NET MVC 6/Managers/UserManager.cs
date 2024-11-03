@@ -41,17 +41,18 @@ namespace SertWebApp.Managers
             }
         }
 
-        public UserModel GetUserByUsernameAndPassword(string username, string password)
+        public bool ApiLogin(string username, string password)
         {
             try
             {
-                var user = _userRepository.FindByUsernameAndPassword(username, password);
-                return ConvertToModel(user);
+                var encryptedPassword = CryptographyService.EncryptPassword(password);
+                var user = _userRepository.FindByUsernameAndPassword(username, encryptedPassword);
+                return user?.Id > 0;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error at UserManager.GetUserByUsernameAndPassword(...)");
-                return new UserModel() { Id = -1 };
+                _logger.LogError(ex, "Error at UserManager.ApiLogin(...)");
+                return false;
             }
         }
 
@@ -213,6 +214,12 @@ namespace SertWebApp.Managers
             var userModel = new UserModel() { Id = -1 };
 
             if (userDetails is null)
+            {
+                userModel.ErrorMessage = "Incorrect username/password.";
+                return userModel;
+            }
+
+            if (userDetails.Id < 0)
             {
                 userModel.ErrorMessage = "User not found";
                 return userModel;

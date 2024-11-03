@@ -2,7 +2,7 @@
 {
     public class ReportModel
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
         public string BuildingName { get; set; }
         public string LocationDetail { get; set; }
         public string Content { get; set; }

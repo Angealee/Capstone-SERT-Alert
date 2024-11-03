@@ -14,7 +14,7 @@ public partial class Report
     public string? FileName { get; set; } = null!;
     public string? FileType { get; set; } = null!;
 
-    public DateTime DateCreated { get; set; }
+    public DateTime DateCreated { get; set; } = DateTime.Now;
 
     public DateTime DateModified { get; set; }
 }

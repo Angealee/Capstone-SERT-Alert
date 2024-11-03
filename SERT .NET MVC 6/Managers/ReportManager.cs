@@ -94,6 +94,7 @@ namespace SertWebApp.Managers
                 LocationDetail = reportDetails.LocationDetail,
                 Content = reportDetails.Content,
                 Attachment = reportDetails.Attachment,
+                DateCreated = reportDetails.DateCreated,
                 FileName = reportDetails.FileName,
                 FileType = reportDetails.FileType
             };

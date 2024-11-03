@@ -7,7 +7,7 @@ namespace SertWebApp.Interfaces
     {
         UserModel Find(int id);
         UserModel Login(string username, string password);
-        UserModel GetUserByUsernameAndPassword(string username, string password);
+        bool ApiLogin(string username, string password);
         UserModel GetUserDetails(int id);
         List<UserModel> GetAllUsers();
         List<UserModel> GetAllAdmins(Role currentUserRole);
