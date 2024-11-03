@@ -8,7 +8,7 @@ const Notification = () => {
     // Fetch notifications
     const fetchNotifications = async () => {
       try {
-        const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // Sample API URL for GET request
+        const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // Sample API URL for GET request //https://localhost:7296/api/GetReportList //https://jsonplaceholder.typicode.com/posts
         const response = await fetch(apiUrl, {
           method: 'GET',
           headers: {
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginRight: 20,
     borderRadius: 20,
-    backgroundColor: '#0d0c0c',
+    // backgroundColor: '#0d0c0c',
     color: '#faf5f5',
   },
   scrollContainer: {
@@ -84,11 +84,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     alignItems: 'flex-start',
     shadowColor: '#000',
-    shadowOffset: { width: 5, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 10,
-    elevation: 3,
-    borderWidth: 1,
+    shadowOffset: { width: 3, height: 2 },
+    shadowOpacity: 0,
+    shadowRadius: 3,
+    elevation: 4,
+    borderWidth: 2,
     borderColor: '#E0E0E0',
   },
   time: {
