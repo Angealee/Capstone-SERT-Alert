@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, ScrollView, Image, Alert, TouchableOpacity, Platform, ActivityIndicator } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, Image, Alert, TouchableOpacity, Platform, ActivityIndicator, Modal } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
@@ -142,6 +142,19 @@ const Emergency = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-orange-500 p-2">
+      <Modal
+          transparent={true}
+          animationType="fade"
+          visible={isSubmitting}
+          onRequestClose={() => {}}
+        >
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+            <View style={{ padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center' }}>
+              <ActivityIndicator size="large" color="#ff6347" />
+              <Text style={{ marginTop: 10, color: '#333' }}>Submitting Report, Please wait...</Text>
+            </View>
+          </View>
+        </Modal>
       <ScrollView>
         <View className="bg-white p-6 rounded-3xl shadow-lg mt-10 mb-6">
           <Image
