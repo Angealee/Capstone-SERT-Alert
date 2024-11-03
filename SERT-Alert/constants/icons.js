@@ -17,7 +17,7 @@ import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
 import book from "../assets/icons/book.png";
-import SERT_Logo from "../assets/icons/SERT_Logo.png";
+import serticon from "../assets/icons/serticon.png";
 
 export default {
   play,
@@ -39,5 +39,5 @@ export default {
   logout,
   eyeHide,
   eye,
-  SERT_Logo
+  serticon,
 };

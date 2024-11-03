@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, SafeAreaView, ScrollView, Image, Alert, TouchableOpacity, Platform, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 import { images } from '../../constants';
 import { icons } from '../../constants';
 import RNPickerSelect from 'react-native-picker-select';  // Imported RNPickerSelect
@@ -72,7 +73,11 @@ const Emergency = () => {
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
-        setForm({ ...form, image: result.assets[0].uri });
+        // Convert the image URI to Base64
+        const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+        setForm({ ...form, image: `data:image/jpeg;base64,${base64}` }); // prepend with the format
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to pick image. Please try again.');
@@ -120,7 +125,7 @@ const Emergency = () => {
             Building: '',
             FloorLocation: '',
             context: '',
-            image: '',
+            image: null,
           });
 
       } else {

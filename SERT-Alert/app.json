@@ -5,7 +5,7 @@
     "scheme": "SERT-Alert",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "..app/assets/icons/seticon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
