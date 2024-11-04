@@ -6,13 +6,12 @@ import * as FileSystem from 'expo-file-system';
 import * as Location from 'expo-location';
 import { images } from '../../constants';
 import { icons } from '../../constants';
-import RNPickerSelect from 'react-native-picker-select';  // Imported RNPickerSelect
+import RNPickerSelect from 'react-native-picker-select';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 import CaptureButton from '../../components/CaptureButton';
 
 const Emergency = () => {
-
   const [form, setForm] = useState({
     Building: '',
     FloorLocation: '',
@@ -22,8 +21,64 @@ const Emergency = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [FloorLocation, setFloorLocation] = useState([]);
   const [isFloorLocationEnabled, setIsFloorLocationEnabled] = useState(false);
+  const [isWithinPremises, setIsWithinPremises] = useState(false);
+  const [locationInfo, setLocationInfo] = useState({
+    latitude: null,
+    longitude: null,
+    barangay: 'Unknown',
+    city: 'Unknown',
+    province: 'Unknown',
+  });
 
   const navigation = useNavigation();
+
+  // Location boundaries for Dominican College of Tarlac
+  const checkLocation = async () => {
+    try {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Location Permission', 'Permission to access location is required to report emergencies.');
+        return;
+      }
+
+      // Get the current position
+      let location = await Location.getCurrentPositionAsync({});
+      const { latitude, longitude } = location.coords;
+
+      // Reverse geocoding to get the location name
+      const reverseGeocode = await Location.reverseGeocodeAsync({
+        latitude,
+        longitude,
+      });
+
+      // Check if reverse geocoding returned a result and retrieve details
+      const locationDetails = reverseGeocode[0] || {};
+      const barangay = locationDetails.district || 'Unknown';
+      const city = locationDetails.city || 'Unknown'
+      const province = locationDetails.region || 'Unknown'
+
+      // Replace with the actual lat/long bounds of the college
+      const withinLatBounds = latitude >= 15.5 && latitude <= 15.6;
+      const withinLongBounds = longitude >= 120.5 && longitude <= 120.6;
+
+      // Set location data and check if within premises
+      setIsWithinPremises(withinLatBounds && withinLongBounds);
+      setLocationInfo({
+        latitude,
+        longitude,
+        barangay,
+        city,
+        province,
+      });
+    } catch (error) {
+      console.error("Error checking location:", error);
+      setIsWithinPremises(false);
+    }
+  };
+
+  useEffect(() => {
+    checkLocation();
+  }, []);
 
   // Location Handler
   const handleLocationChange = (Building) => {
@@ -74,11 +129,10 @@ const Emergency = () => {
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
-        // Convert the image URI to Base64
         const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, {
           encoding: FileSystem.EncodingType.Base64,
         });
-        setForm({ ...form, image: `data:image/jpeg;base64,${base64}` }); // prepend with the format
+        setForm({ ...form, image: `data:image/jpeg;base64,${base64}` });
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to pick image. Please try again.');
@@ -97,9 +151,8 @@ const Emergency = () => {
     }
 
     try {
-      const apiUrl = "https://jsonplaceholder.typicode.com/posts"; //my API: const apiUrl = "https://localhost:7296/api/AddReport"; my sample API https://jsonplaceholder.typicode.com/posts
+      const apiUrl = "https://jsonplaceholder.typicode.com/posts"; //sample API
       const timestamp = new Date().toISOString();
-      //req body
       const bodyData = {
         building: form.Building,
         floorLocation: form.FloorLocation,
@@ -108,7 +161,6 @@ const Emergency = () => {
         timestamp: timestamp,
       };
 
-      //POST request
       const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
@@ -117,18 +169,16 @@ const Emergency = () => {
         body: JSON.stringify(bodyData),
       });
 
-      // Handle response
       const result = await response.json();
       if (response.ok) {
         Alert.alert('Success', 'Emergency reported successfully!');
         console.log('Response data:', result);
-          setForm({
-            Building: '',
-            FloorLocation: '',
-            context: '',
-            image: null,
-          });
-
+        setForm({
+          Building: '',
+          FloorLocation: '',
+          context: '',
+          image: null,
+        });
       } else {
         Alert.alert('Error', 'Failed to report emergency.');
         console.error('Error response:', result);
@@ -184,9 +234,7 @@ const Emergency = () => {
                     ]}
                     style={{
                       inputIOS: { color: '#000' }, 
-                      inputAndroid: { 
-                        color: '#000',
-                       },
+                      inputAndroid: { color: '#000' },
                     }}
                   />
                 </TouchableOpacity>
@@ -208,11 +256,11 @@ const Emergency = () => {
                       textAlign: 'center',
                       marginTop: 15,
                       marginLeft: 30
-                     },
+                    },
                     inputAndroid: { 
                       color: '#000',
                       textAlign: 'center',
-                     },
+                    },
                   }}
                 />
               )}
@@ -242,21 +290,21 @@ const Emergency = () => {
                     fontSize: 17,
                     textAlign: 'center',
                     marginLeft: 20
-                   },
+                  },
                 }}
                 useNativeAndroidPickerStyle={false}
               />
             </View>
 
             <View className="mb-4">
-              <FormField
-                placeholder="Context here ..."
-                placeholderTextColor="#999"
-                className="text-gray-800"
-                value={form.context}
-                handleChangeText={(e) => setForm({ ...form, context: e })}
-              />
-            </View>
+                <FormField
+                  placeholder="Other details ..."
+                  placeholderTextColor="#999"
+                  className="text-gray-800"
+                  value={form.context}
+                  handleChangeText={(e) => setForm({ ...form, context: e })}
+                />
+              </View>
 
             {form.image && (
               <View className="mt-4 mb-4">
@@ -273,16 +321,37 @@ const Emergency = () => {
             <CaptureButton
               title="Capture Image"
               handlePress={pickImage}
-              containerStyles="mt-3 mb-10"
+              containerStyles="mt-3 mb-5"
               icon={icons.camera}
             />
+            
+            <TouchableOpacity
+              style={{
+                width: '100%',
+                paddingVertical: 25,
+                backgroundColor: isWithinPremises ? '#ff6347' : 'gray',
+                borderRadius: 10,
+                alignItems: 'center',
+                marginTop: 5,              }}
+              onPress={submit}
+              disabled={!isWithinPremises}
+            >
+              <Text style={{ color: 'white', fontSize: 18 }}>Submit Report</Text>
+            </TouchableOpacity>
+          
+            {/* Location Info */}
+            {!isWithinPremises && (
+                <Text style={{ color: 'red', fontSize: 14, marginTop: 10 }}>
+                  You are not currently in the Dominican College of Tarlac premises, you are not eligible for reporting.
+                </Text>
+              )}
+            <View style={{ marginTop: 10, alignItems: 'center' }}>
+              <Text style={{ color: '#333', fontSize: 16, fontWeight: 10 }}>Your current location:</Text>
+                <Text className="text-black-600 font-semibold">Barangay: {locationInfo.barangay} </Text>
+                <Text className="text-black-600 font-semibold">City: {locationInfo.city}</Text>
+                <Text className="text-black-600 font-semibold">Province: {locationInfo.province}</Text>
+            </View>
 
-            <CustomButton
-              title="Report Emergency"
-              handlePress={submit}
-              containerStyles="mt-5"
-              isLoading={isSubmitting}
-            />
           </View>
         </View>
       </ScrollView>
