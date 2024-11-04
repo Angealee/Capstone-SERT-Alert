@@ -37,11 +37,6 @@ const LearningModules = () => {
                   SERT Alert Learning!
                 </Text>
               </View>
-
-            </View>
-            
-            <View className="justify-center items-center mb-2">
-                <SearchInput />
             </View>
 
             <View className=" bg-yellow-100 p-6 rounded-3xl shadow-lg mt-5 mb-2">

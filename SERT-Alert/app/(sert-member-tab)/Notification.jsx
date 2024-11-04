@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Notification = () => {
   const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Fetch notifications
     const fetchNotifications = async () => {
       try {
-        const apiUrl = "https://localhost:7296/api/GetReportList"; //API URL for GET request: https://localhost:7296/api/GetReportList //Sample API: https://jsonplaceholder.typicode.com/posts
+        const apiUrl = "https://192.168.0.15:7296/api/GetReportList"; // API URL
         const response = await fetch(apiUrl, {
           method: 'GET',
           headers: {
@@ -21,38 +22,42 @@ const Notification = () => {
       } catch (error) {
         Alert.alert("Error", "Failed to load notifications");
         console.error("Fetch error:", error);
+      } finally {
+        setLoading(false); // Set loading to false after fetch completes
       }
     };
 
     fetchNotifications();
-  }, []); 
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Report Logs</Text>
-      {/* Notifications List */}
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {notifications.length === 0 ? (
-          <Text style={styles.noNotifications}>Things are still quite quiet . . . </Text>
-        ) : (
-          notifications.map((notification) => (
-            // for displaying time
-            <View key={notification.id} style={styles.notificationBox}>
-              <Text style={styles.time}>{new Date(notification.timestamp).toLocaleTimeString()}</Text>
 
-              {/* this is for displaying context, subject to change still */}
-              <View style={styles.notificationContent}>
-                <Text style={styles.contextText}>{notification.title}</Text>
-                
-                {/* this is for displaying building and floor location, subject to change still */}
-                <Text style={styles.subText}>
-                  {notification.id} | {notification.userId}
-                </Text>
+      {/* Display loading indicator if data is still loading */}
+      {loading ? (
+        <ActivityIndicator size="large" color="#fff" />
+      ) : (
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          {notifications.length === 0 ? (
+            <Text style={styles.noNotifications}>Things are still quite quiet . . .</Text>
+          ) : (
+            notifications.map((notification) => (
+              <View key={notification.id} style={styles.notificationBox}>
+                <Text style={styles.time}>{new Date(notification.timestamp).toLocaleTimeString()}</Text>
+
+                {/* Context and location display */}
+                <View style={styles.notificationContent}>
+                  <Text style={styles.contextText}>{notification.title}</Text>
+                  <Text style={styles.subText}>
+                    {notification.id} | {notification.userId}
+                  </Text>
+                </View>
               </View>
-            </View>
-          ))
-        )}
-      </ScrollView>
+            ))
+          )}
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
@@ -70,8 +75,6 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 20,
     marginBottom: 20,
-    marginRight: 20,
-    borderRadius: 20,
     color: '#faf5f5',
   },
   scrollContainer: {
