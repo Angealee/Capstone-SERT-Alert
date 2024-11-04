@@ -39,12 +39,8 @@ const LearningModules = () => {
               </View>
 
             </View>
-            
-            <View className="justify-center items-center mb-2">
-                <SearchInput />
-            </View>
 
-            <View className=" bg-yellow-100 p-6 rounded-3xl shadow-lg mt-5 mb-2">
+            <View className=" bg-yellow-100 p-6 rounded-3xl shadow-lg mt-10 mb-2">
               <Text className="text-black-100 text-lg font-pregular mb-3">
                 Learning Materials
               </Text>
