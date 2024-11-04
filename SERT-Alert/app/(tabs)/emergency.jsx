@@ -96,7 +96,7 @@ const Emergency = () => {
     }
 
     try {
-      const apiUrl = "https://jsonplaceholder.typicode.com/posts"; //sample API
+      const apiUrl = "https://jsonplaceholder.typicode.com/posts"; //my API: const apiUrl = "https://localhost:7296/api/AddReport"; my sample API https://jsonplaceholder.typicode.com/posts
       const timestamp = new Date().toISOString();
       //req body
       const bodyData = {
