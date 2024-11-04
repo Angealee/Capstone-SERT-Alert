@@ -22,14 +22,15 @@ const Emergency = () => {
   const [FloorLocation, setFloorLocation] = useState([]);
   const [isFloorLocationEnabled, setIsFloorLocationEnabled] = useState(false);
   const [isWithinPremises, setIsWithinPremises] = useState(false);
+  const [currentLocation, setCurrentLocation] = useState(null);
   const [locationInfo, setLocationInfo] = useState({
+    
     latitude: null,
     longitude: null,
-    barangay: 'Unknown',
     city: 'Unknown',
     province: 'Unknown',
   });
-
+  const [refreshing, setRefreshing] = useState(false); //refresh
   const navigation = useNavigation();
 
   // Location boundaries for Dominican College of Tarlac
@@ -45,6 +46,9 @@ const Emergency = () => {
       let location = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = location.coords;
 
+      // Set the current location to display on the screen
+      setCurrentLocation({ latitude, longitude });
+      
       // Reverse geocoding to get the location name
       const reverseGeocode = await Location.reverseGeocodeAsync({
         latitude,
@@ -53,33 +57,38 @@ const Emergency = () => {
 
       // Check if reverse geocoding returned a result and retrieve details
       const locationDetails = reverseGeocode[0] || {};
-      const barangay = locationDetails.district || 'Unknown';
-      const municipality = locationDetails.city || 'Unknown'
-      const province = locationDetails.region || 'Unknown'
+      const municipality = locationDetails.city || '???'
+      const province = locationDetails.region || '???'
       console.log("Reverse geocode details:", reverseGeocode);
 
       // Replace with the actual lat/long bounds of the college
-      const withinLatBounds = latitude >= 15.5 && latitude <= 15.6;
-      const withinLongBounds = longitude >= 120.5 && longitude <= 120.6;
-
+      const withinLatBounds = latitude >= 15.195664 && latitude <= 15.2;
+      const withinLongBounds = longitude >= 120.352184 && longitude <= 119;
+      console.log("Lat and Long Details:", latitude, longitude);
       // Set location data and check if within premises
       setIsWithinPremises(withinLatBounds && withinLongBounds);
       setLocationInfo({
         latitude,
         longitude,
-        barangay,
         municipality,
         province,
       });
     } catch (error) {
       console.error("Error checking location:", error);
       setIsWithinPremises(false);
+    } finally {
+      setRefreshing(false); // Stop the refresh indicator
     }
   };
 
   useEffect(() => {
     checkLocation();
   }, []);
+  // Function to handle pull-to-refresh action
+  const onRefresh = () => {
+    setRefreshing(true);
+    checkLocation();
+  };
 
   // Location Handler
   const handleLocationChange = (Building) => {
@@ -190,6 +199,8 @@ const Emergency = () => {
     } finally {
       setIsSubmitting(false);
     }
+
+    
   };
 
   return (
@@ -207,7 +218,11 @@ const Emergency = () => {
             </View>
           </View>
         </Modal>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+      >
         <View className="bg-white p-6 rounded-3xl shadow-lg mt-10 mb-6">
           <Image
             source={images.SERTlogo}
@@ -330,7 +345,7 @@ const Emergency = () => {
               style={{
                 width: '100%',
                 paddingVertical: 25,
-                backgroundColor: isWithinPremises ? '#ff6347' : 'gray',
+                backgroundColor: isWithinPremises ? '#EF2A39' : 'gray',
                 borderRadius: 10,
                 alignItems: 'center',
                 marginTop: 5,              }}
@@ -342,17 +357,20 @@ const Emergency = () => {
           
             {/* Location Info */}
             {!isWithinPremises && (
-                <Text style={{ color: 'red', fontSize: 14, marginTop: 10 }}>
-                  You are not currently in the Dominican College of Tarlac premises, you are not eligible for reporting.
-                </Text>
-              )}
-            <View style={{ marginTop: 10, alignItems: 'center' }}>
-              <Text style={{ color: '#333', fontSize: 16, fontWeight: 10 }}>Your current location:</Text>
-                <Text className="text-black-600 font-semibold">Barangay: {locationInfo.barangay} </Text>
-                <Text className="text-black-600 font-semibold">Municipality: {locationInfo.municipality}</Text>
-                <Text className="text-black-600 font-semibold">Province/City: {locationInfo.province}</Text>
-            </View>
-
+                <View style={{ marginTop: 10, alignItems: 'center' }}>
+                  <Text style={{ color: 'red', fontSize: 14, marginTop: 10 }}>
+                        You are not currently in the Dominican College of Tarlac premises, you are not eligible for reporting.
+                  </Text>
+                    <Text style={{ color: '#333', fontSize: 16, fontWeight: 10 }}>Your current location:</Text>
+                      <Text className="text-black-600 font-semibold"> {locationInfo.municipality}, {locationInfo.province}</Text>
+                      
+                        {currentLocation && (
+                          <Text style={{ color: 'black', textAlign: 'center', fontSize: 11 }}>
+                            Latitude: {currentLocation.latitude} | Longitude: {currentLocation.longitude}
+                          </Text>
+                        )}
+                </View>
+            )}
           </View>
         </View>
       </ScrollView>
