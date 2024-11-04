@@ -15,7 +15,7 @@ const handleNavigate = (info) => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-orange-500 p-2">
+    <SafeAreaView className="flex-1 bg-red-500 p-2">
       <ScrollView>
         <View className="bg-white rounded-xl justify-center px-10 pb-10 mt-40">
           <View className="w-full justify-center h-full[85vh] px-4 my-6">

@@ -18,6 +18,7 @@ import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
 import book from "../assets/icons/book.png";
 import serticon from "../assets/icons/serticon.png";
+import logs from "../assets/icons/logs.png";
 
 export default {
   play,
@@ -40,4 +41,5 @@ export default {
   eyeHide,
   eye,
   serticon,
+  logs,
 };

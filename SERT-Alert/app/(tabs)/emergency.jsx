@@ -62,8 +62,8 @@ const Emergency = () => {
       console.log("Reverse geocode details:", reverseGeocode);
 
       // Replace with the actual lat/long bounds of the college
-      const withinLatBounds = latitude >= 15.195664 && latitude <= 15.2;
-      const withinLongBounds = longitude >= 120.352184 && longitude <= 119;
+      const withinLatBounds = latitude >= 15.331507 && latitude <= 15.6; //DCT 15.195664
+      const withinLongBounds = longitude >= 120.5886811 && longitude <= 121; //DCT 120.352184
       console.log("Lat and Long Details:", latitude, longitude);
       // Set location data and check if within premises
       setIsWithinPremises(withinLatBounds && withinLongBounds);
@@ -369,6 +369,8 @@ const Emergency = () => {
                             Latitude: {currentLocation.latitude} | Longitude: {currentLocation.longitude}
                           </Text>
                         )}
+                  
+                  <Text style={{ color: '#333', fontSize: 16, fontWeight: 10, marginTop: 20 }}>Swipe Up to refresh!</Text>
                 </View>
             )}
           </View>
