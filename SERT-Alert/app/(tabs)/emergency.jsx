@@ -54,8 +54,9 @@ const Emergency = () => {
       // Check if reverse geocoding returned a result and retrieve details
       const locationDetails = reverseGeocode[0] || {};
       const barangay = locationDetails.district || 'Unknown';
-      const city = locationDetails.city || 'Unknown'
+      const municipality = locationDetails.city || 'Unknown'
       const province = locationDetails.region || 'Unknown'
+      console.log("Reverse geocode details:", reverseGeocode);
 
       // Replace with the actual lat/long bounds of the college
       const withinLatBounds = latitude >= 15.5 && latitude <= 15.6;
@@ -67,7 +68,7 @@ const Emergency = () => {
         latitude,
         longitude,
         barangay,
-        city,
+        municipality,
         province,
       });
     } catch (error) {
@@ -348,8 +349,8 @@ const Emergency = () => {
             <View style={{ marginTop: 10, alignItems: 'center' }}>
               <Text style={{ color: '#333', fontSize: 16, fontWeight: 10 }}>Your current location:</Text>
                 <Text className="text-black-600 font-semibold">Barangay: {locationInfo.barangay} </Text>
-                <Text className="text-black-600 font-semibold">City: {locationInfo.city}</Text>
-                <Text className="text-black-600 font-semibold">Province: {locationInfo.province}</Text>
+                <Text className="text-black-600 font-semibold">Municipality: {locationInfo.municipality}</Text>
+                <Text className="text-black-600 font-semibold">Province/City: {locationInfo.province}</Text>
             </View>
 
           </View>
