@@ -358,10 +358,10 @@ const Emergency = () => {
             {/* Location Info */}
             {!isWithinPremises && (
                 <View style={{ marginTop: 10, alignItems: 'center' }}>
-                  <Text style={{ color: 'red', fontSize: 14, marginTop: 10 }}>
+                  <Text style={{ color: 'red', fontSize: 14, marginTop: 5 }}>
                         You are not currently in the Dominican College of Tarlac premises, you are not eligible for reporting.
                   </Text>
-                    <Text style={{ color: '#333', fontSize: 16, fontWeight: 10 }}>Your current location:</Text>
+                    <Text style={{ color: '#333', fontSize: 16, fontWeight: 10, marginTop: 3 }}>Your current location:</Text>
                       <Text className="text-black-600 font-semibold"> {locationInfo.municipality}, {locationInfo.province}</Text>
                       
                         {currentLocation && (
@@ -369,8 +369,8 @@ const Emergency = () => {
                             Latitude: {currentLocation.latitude} | Longitude: {currentLocation.longitude}
                           </Text>
                         )}
-                  
-                  <Text style={{ color: '#333', fontSize: 16, fontWeight: 10, marginTop: 20 }}>Swipe Up to refresh!</Text>
+
+                    <Text style={{ color: '#333', fontSize: 16, fontWeight: 50, marginTop: 20 }}>Swipe Up to refresh!</Text>
                 </View>
             )}
           </View>
