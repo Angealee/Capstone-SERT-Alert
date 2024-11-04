@@ -3,6 +3,7 @@ import { View, Text, SafeAreaView, ScrollView, Image, Alert, TouchableOpacity, P
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
+import * as Location from 'expo-location';
 import { images } from '../../constants';
 import { icons } from '../../constants';
 import RNPickerSelect from 'react-native-picker-select';  // Imported RNPickerSelect
