@@ -9,8 +9,10 @@ const SignIn = () => {
     username: '',
     password: ''
   });
+  // State to simulate logged-in status (for demo purposes)
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true); // Set to true to simulate User2 being logged in
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  
   const submit = async () => {
     if (!form.username || !form.password) {
       Alert.alert('Error', 'Please fill in all the fields!');
@@ -80,11 +82,14 @@ const SignIn = () => {
             secureTextEntry // Hide password input
           />
 
-            <CustomButton 
-              title="Login"
-              handlePress={() => router.push('/SERTemergency')}//submit //() => router.push('/menu')}
-              containerStyles="mt-7"
-            />
+          <CustomButton 
+            title="Login"
+            handlePress={() => {
+              router.push('/SERTemergency'); // Redirect to SERTemergency
+              setIsUserLoggedIn(true);       // Set the login state to true
+            }}
+            containerStyles="mt-7"
+          />
 
           <CustomButton
             title="Back"

@@ -1,7 +1,5 @@
-import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
-import React from 'react'
-
-import { images } from '../../constants';
+import { View, Text, SafeAreaView, ScrollView, Button, Image } from 'react-native'
+import React, { useState } from 'react';
 import { Redirect, router } from 'expo-router';
 import CustomButton from '../../components/CustomButton';
 import { Picker } from '@react-native-picker/picker';
