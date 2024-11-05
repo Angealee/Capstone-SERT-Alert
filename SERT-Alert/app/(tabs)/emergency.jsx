@@ -24,12 +24,12 @@ const Emergency = () => {
   const [isWithinPremises, setIsWithinPremises] = useState(false);
   const [currentLocation, setCurrentLocation] = useState(null);
   const [locationInfo, setLocationInfo] = useState({
-    
     latitude: null,
     longitude: null,
     municipality: 'Locating',
     province: 'Locating',
   });
+
   const [refreshing, setRefreshing] = useState(false); //refresh
   const navigation = useNavigation();
 
@@ -59,12 +59,12 @@ const Emergency = () => {
       const locationDetails = reverseGeocode[0] || {};
       const municipality = locationDetails.city || '???';
       const province = locationDetails.region || '???';
-      console.log("Reverse geocode details:", reverseGeocode);
+      // console.log("Reverse geocode details:", reverseGeocode);
 
       // Replace with the actual lat/long bounds of the college
-      const withinLatBounds = latitude >= 15.332148 && latitude <= 15.332652; 
-      const withinLongBounds = longitude >= 120.589229 && longitude <= 120.590496; 
-      console.log("Lat and Long Details:", latitude, longitude);
+      const withinLatBounds = latitude >= 15.332148 && latitude <= 15.332652; //15.332148
+      const withinLongBounds = longitude >= 120.589229 && longitude <= 120.590496; //120.589229
+      // console.log("Lat and Long Details:", latitude, longitude);
 
       // Set location data and check if within premises
       setIsWithinPremises(withinLatBounds && withinLongBounds);
@@ -85,6 +85,7 @@ const Emergency = () => {
   useEffect(() => {
     checkLocation();
   }, []);
+
   // Function to handle pull-to-refresh action
   const onRefresh = () => {
     setRefreshing(true);
@@ -143,7 +144,8 @@ const Emergency = () => {
         const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, {
           encoding: FileSystem.EncodingType.Base64,
         });
-        setForm({ ...form, image: base64 });
+        // Setting the form state with Base64 image data prefixed with URI scheme
+        setForm({ ...form, image: `data:image/jpeg;base64,${base64}` });
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to pick image. Please try again.');
@@ -161,14 +163,16 @@ const Emergency = () => {
       return;
     }
 
-    try {
-      const apiUrl = "https://jsonplaceholder.typicode.com/posts"; //sample API https://jsonplaceholder.typicode.com/posts
+      try {
+      const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // Replace with your actual API endpoint
       const timestamp = new Date().toISOString();
       const bodyData = {
         building: form.Building,
         floorLocation: form.FloorLocation,
         context: form.context,
-        image: form.image,
+        image: form.image.substring(0, 50), // Base64 encoded image data
+        filename: "report_image.jpg", // Replace with the actual filename if available
+        filetype: "image/jpeg", // Adjust based on the actual file type
         timestamp: timestamp,
       };
 
@@ -184,6 +188,7 @@ const Emergency = () => {
       if (response.ok) {
         Alert.alert('Success', 'Emergency reported successfully!');
         console.log('Response data:', result);
+        console.log('form.image content:', form.image.substring(0, 50));
         setForm({
           Building: '',
           FloorLocation: '',
