@@ -62,9 +62,9 @@ const Emergency = () => {
       // console.log("Reverse geocode details:", reverseGeocode);
 
       // Replace with the actual lat/long bounds of the college
-      const withinLatBounds = latitude >= 15.332148 && latitude <= 15.332652; //15.332148
-      const withinLongBounds = longitude >= 120.589229 && longitude <= 120.590496; //120.589229
-      // console.log("Lat and Long Details:", latitude, longitude);
+      const withinLatBounds = latitude >= 15.0 && latitude <= 15.332652; //15.332148
+      const withinLongBounds = longitude >= 120.0 && longitude <= 120.590496; //120.589229
+      console.log("Lat and Long Details:", latitude, longitude);
 
       // Set location data and check if within premises
       setIsWithinPremises(withinLatBounds && withinLongBounds);
@@ -137,15 +137,12 @@ const Emergency = () => {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: false,
         aspect: [4, 3],
-        quality: 1,
+        quality: 0.5,
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
-        const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, {
-          encoding: FileSystem.EncodingType.Base64,
-        });
-        // Setting the form state with Base64 image data prefixed with URI scheme
-        setForm({ ...form, image: `data:image/jpeg;base64,${base64}` });
+        // Save the URI of the image and not the base64 encoding yet
+        setForm({ ...form, image: result.assets[0].uri });
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to pick image. Please try again.');
@@ -164,14 +161,18 @@ const Emergency = () => {
     }
 
       try {
+        // Load the image data as base64 right before submission
+      const base64Image = await FileSystem.readAsStringAsync(form.image, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
       const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // Replace with your actual API endpoint
       const timestamp = new Date().toISOString();
       const bodyData = {
         building: form.Building,
         floorLocation: form.FloorLocation,
         context: form.context,
-        image: form.image.substring(0, 50), // Base64 encoded image data
-        filename: "report_image.jpg", // Replace with the actual filename if available
+        image: `data:image/jpeg;base64,${base64Image}`, // Encoding dynamically here .substring(0, 50), git commit -m "v1.0.3.4: Image data to base64 conversion success!"
+        filename: "report_image.jpg", // Replace with the actual filename if available 
         filetype: "image/jpeg", // Adjust based on the actual file type
         timestamp: timestamp,
       };
@@ -188,7 +189,8 @@ const Emergency = () => {
       if (response.ok) {
         Alert.alert('Success', 'Emergency reported successfully!');
         console.log('Response data:', result);
-        console.log('form.image content:', form.image.substring(0, 50));
+        console.log('form.image content:', form.image.substring(0, 100));
+        console.log("Base64 image data:", `data:image/jpeg;base64,${base64Image}`.substring(0, 100));
         setForm({
           Building: '',
           FloorLocation: '',
@@ -205,8 +207,6 @@ const Emergency = () => {
     } finally {
       setIsSubmitting(false);
     }
-
-    
   };
 
   return (
