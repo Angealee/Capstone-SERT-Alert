@@ -27,8 +27,8 @@ const Emergency = () => {
     
     latitude: null,
     longitude: null,
-    city: 'Unknown',
-    province: 'Unknown',
+    municipality: 'Locating',
+    province: 'Locating',
   });
   const [refreshing, setRefreshing] = useState(false); //refresh
   const navigation = useNavigation();
@@ -57,14 +57,15 @@ const Emergency = () => {
 
       // Check if reverse geocoding returned a result and retrieve details
       const locationDetails = reverseGeocode[0] || {};
-      const municipality = locationDetails.city || '???'
-      const province = locationDetails.region || '???'
+      const municipality = locationDetails.city || '???';
+      const province = locationDetails.region || '???';
       console.log("Reverse geocode details:", reverseGeocode);
 
       // Replace with the actual lat/long bounds of the college
-      const withinLatBounds = latitude >= 15.331507 && latitude <= 15.6; //DCT 15.195664
-      const withinLongBounds = longitude >= 120.5886811 && longitude <= 121; //DCT 120.352184
+      const withinLatBounds = latitude >= 15.332148 && latitude <= 15.332652; 
+      const withinLongBounds = longitude >= 120.589229 && longitude <= 120.590496; 
       console.log("Lat and Long Details:", latitude, longitude);
+
       // Set location data and check if within premises
       setIsWithinPremises(withinLatBounds && withinLongBounds);
       setLocationInfo({
@@ -142,7 +143,7 @@ const Emergency = () => {
         const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, {
           encoding: FileSystem.EncodingType.Base64,
         });
-        setForm({ ...form, image: `data:image/jpeg;base64,${base64}` });
+        setForm({ ...form, image: base64 });
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to pick image. Please try again.');
@@ -161,7 +162,7 @@ const Emergency = () => {
     }
 
     try {
-      const apiUrl = "https://jsonplaceholder.typicode.com/posts"; //sample API
+      const apiUrl = "https://jsonplaceholder.typicode.com/posts"; //sample API https://jsonplaceholder.typicode.com/posts
       const timestamp = new Date().toISOString();
       const bodyData = {
         building: form.Building,
@@ -364,15 +365,16 @@ const Emergency = () => {
                     <Text style={{ color: '#333', fontSize: 16, fontWeight: 10, marginTop: 3 }}>Your current location:</Text>
                       <Text className="text-black-600 font-semibold"> {locationInfo.municipality}, {locationInfo.province}</Text>
                       
-                        {currentLocation && (
-                          <Text style={{ color: 'black', textAlign: 'center', fontSize: 11 }}>
-                            Latitude: {currentLocation.latitude} | Longitude: {currentLocation.longitude}
-                          </Text>
-                        )}
+                        
 
                     <Text style={{ color: '#333', fontSize: 16, fontWeight: 50, marginTop: 20 }}>Swipe Up to refresh!</Text>
                 </View>
             )}
+            {currentLocation && (
+                          <Text style={{ color: 'black', textAlign: 'center', fontSize: 11 }}>
+                            Latitude: {currentLocation.latitude} | Longitude: {currentLocation.longitude}
+                          </Text>
+                        )}
           </View>
         </View>
       </ScrollView>

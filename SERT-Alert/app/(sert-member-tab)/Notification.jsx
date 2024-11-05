@@ -1,34 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Notification = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchNotifications = async () => {
+    try {
+      const apiUrl = "http://10.0.2.2:5117/api/GetReportList"; // API URL
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setNotifications(data); // Update state with fetched notifications
+    } catch (error) {
+      Alert.alert("Error", "Failed to load notifications");
+      console.error("Fetch error:", error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false); // Stop refreshing after fetch completes
+    }
+  };
 
   useEffect(() => {
-    // Fetch notifications
-    const fetchNotifications = async () => {
-      try {
-        const apiUrl = "https://192.168.0.15:7296/api/GetReportList"; // API URL
-        const response = await fetch(apiUrl, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await response.json();
-        setNotifications(data); // Update state with fetched notifications
-      } catch (error) {
-        Alert.alert("Error", "Failed to load notifications");
-        console.error("Fetch error:", error);
-      } finally {
-        setLoading(false); // Set loading to false after fetch completes
-      }
-    };
-
     fetchNotifications();
   }, []);
+
+  const onRefresh = () => {
+    setRefreshing(true); // Show refresh spinner
+    fetchNotifications(); // Refetch data
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -38,7 +44,10 @@ const Notification = () => {
       {loading ? (
         <ActivityIndicator size="large" color="#fff" />
       ) : (
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        >
           {notifications.length === 0 ? (
             <Text style={styles.noNotifications}>Things are still quite quiet . . .</Text>
           ) : (
@@ -48,9 +57,9 @@ const Notification = () => {
 
                 {/* Context and location display */}
                 <View style={styles.notificationContent}>
-                  <Text style={styles.contextText}>{notification.title}</Text>
+                  <Text style={styles.contextText}>{notification.context}</Text>
                   <Text style={styles.subText}>
-                    {notification.id} | {notification.userId}
+                    {notification.building} | {notification.floorlocation}
                   </Text>
                 </View>
               </View>

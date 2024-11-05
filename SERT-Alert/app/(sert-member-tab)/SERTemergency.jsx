@@ -27,8 +27,8 @@ const SERTemergency = () => {
     
     latitude: null,
     longitude: null,
-    city: 'Unknown',
-    province: 'Unknown',
+    city: 'Locating',
+    province: 'Locating',
   });
   const [refreshing, setRefreshing] = useState(false); //refresh
   const navigation = useNavigation();
@@ -57,8 +57,8 @@ const SERTemergency = () => {
 
       // Check if reverse geocoding returned a result and retrieve details
       const locationDetails = reverseGeocode[0] || {};
-      const municipality = locationDetails.city || '???'
-      const province = locationDetails.region || '???'
+      const municipality = locationDetails.city || '???';
+      const province = locationDetails.region || '???';
       console.log("Reverse geocode details:", reverseGeocode);
 
       // Replace with the actual lat/long bounds of the college

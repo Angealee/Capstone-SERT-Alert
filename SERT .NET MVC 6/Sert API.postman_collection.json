@@ -12,7 +12,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:7296/api/GetReportList",
+					"raw": "http://localhost:5117/api/GetReportList",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -70,7 +70,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5117/api/AddReport",
+					"raw": "http://localhost:5117//api/AddReport",
 					"protocol": "https",
 					"host": [
 						"localhost"
