@@ -10,7 +10,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
 import CaptureButton from '../../components/CaptureButton';
-
+//heads up notification initial commit
 const SERTemergency = () => {
   const [form, setForm] = useState({
     Building: '',
