@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import * as Location from 'expo-location';
+import * as ImageManipulator from 'expo-image-manipulator';
 import { images } from '../../constants';
 import { icons } from '../../constants';
 import RNPickerSelect from 'react-native-picker-select';
@@ -126,13 +127,21 @@ const Emergency = () => {
       let result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: false,
-        aspect: [1, 1],
-        quality: 0.10,
+        aspect: [4, 3],
+        quality: 0.8,
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
+        const originalUri = result.assets[0].uri;
+
+        // Resize the image using expo-image-manipulator
+        const resizedImage = await ImageManipulator.manipulateAsync(
+          originalUri,
+          [{ resize: { width: 800, height: 800 } }],
+          { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG }
+        );
         //Save the URI of the image and not the base64 encoding yet
-        setForm({ ...form, image: result.assets[0].uri });
+        setForm({ ...form, image: resizedImage.uri });
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to pick image. Please try again.');
@@ -140,18 +149,18 @@ const Emergency = () => {
     }
   };
 
-  // Function to copy the Base64 string to the clipboard
-const copyBase64ToClipboard = async (base64String) => {
-  await Clipboard.setStringAsync(base64String);
+// Function to copy the Base64 string to the clipboard
+// const copyBase64ToClipboard = async (base64String) => {
+//   await Clipboard.setStringAsync(base64String);
 
-  // Verify by retrieving the copied content from the clipboard
-  const copiedData = await Clipboard.getStringAsync();
-  if (copiedData.length === base64String.length) {
-    Alert.alert("Copy Success", "The full Base64 image data has been copied to clipboard.");
-  } else {
-    Alert.alert("Copy Incomplete", "The clipboard data is truncated. Original length: " + base64String.length + ", Copied length: " + copiedData.length);
-  }
-};
+//   // Verify by retrieving the copied content from the clipboard
+//   const copiedData = await Clipboard.getStringAsync();
+//   if (copiedData.length === base64String.length) {
+//     Alert.alert("Copy Success", "The full Base64 image data has been copied to clipboard.");
+//   } else {
+//     Alert.alert("Copy Incomplete", "The clipboard data is truncated. Original length: " + base64String.length + ", Copied length: " + copiedData.length);
+//   }
+// };
 
   const submit = async () => {
     setIsSubmitting(true);
@@ -167,7 +176,7 @@ const copyBase64ToClipboard = async (base64String) => {
       const base64Image = await FileSystem.readAsStringAsync(form.image, {
         encoding: FileSystem.EncodingType.Base64,
       });
-      copyBase64ToClipboard(base64Image); // Automatically copy Base64 to clipboard
+      // copyBase64ToClipboard(base64Image); // Automatically copy Base64 to clipboard
       
       const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // Replace with your actual API endpoint
       const timestamp = new Date().toISOString();
