@@ -70,6 +70,7 @@ const SignIn = () => {
             title="Username"
             value={form.username}
             handleChangeText={(e) => setForm({ ...form, username: e })}
+            style={{height: 48}}
             otherStyles="mt-7"
           />
           <FormField 

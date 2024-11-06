@@ -305,31 +305,33 @@ const Emergency = () => {
             <View className={`w-full h-16 px-4 rounded-2xl items-center flex-row ${
               isFloorLocationEnabled
                 ? 'border-2 border-red-500 bg-white-100'
-                : 'bg-gray-200'
+                : 'border-2 border-red-500 bg-gray-200'
             }`}>
-              <RNPickerSelect
-                onValueChange={(value) => setForm({ ...form, FloorLocation: value })}
-                value={form.FloorLocation}
-                items={FloorLocation.map(option => ({ label: option, value: option }))}
-                disabled={!isFloorLocationEnabled}
-                style={{
-                  inputIOS: { 
-                    color: isFloorLocationEnabled ? '#000' : '#888', 
-                    fontSize: 19,
-                    textAlign: 'center',
-                    marginTop: 15,
-                    marginLeft: 30
-                  },
-                  inputAndroid: { 
-                    color: isFloorLocationEnabled ? '#000' : '#888',
-                    fontSize: 17,
-                    textAlign: 'center',
-                    marginLeft: 20
-                  },
-                }}
-                useNativeAndroidPickerStyle={false}
-              />
+              <TouchableOpacity style={{ flex: 1 }}>
+                <RNPickerSelect
+                  onValueChange={(value) => setForm({ ...form, FloorLocation: value })}
+                  value={form.FloorLocation}
+                  items={FloorLocation.map(option => ({ label: option, value: option }))}
+                  disabled={!isFloorLocationEnabled}
+                  style={{
+                    inputIOS: { 
+                      color: isFloorLocationEnabled ? '#000' : '#888', 
+                      fontSize: 19,
+                      textAlign: 'center',
+                      marginTop: 15,
+                      marginLeft: 30
+                    },
+                    inputAndroid: { 
+                      color: isFloorLocationEnabled ? '#000' : '#888',
+                      fontSize: 17,
+                      textAlign: 'center',
+                    },
+                  }}
+                  useNativeAndroidPickerStyle={true}
+                />
+              </TouchableOpacity>
             </View>
+            
 
             <View className="mb-4">
                 <FormField
@@ -358,6 +360,9 @@ const Emergency = () => {
               handlePress={pickImage}
               containerStyles="mt-3 mb-5"
               icon={icons.camera}
+              style={{
+                height: 48
+              }}
             />
             
             <TouchableOpacity

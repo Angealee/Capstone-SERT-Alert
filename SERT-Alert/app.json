@@ -3,7 +3,7 @@
     "name": "SERT Alert",
     "slug": "SERT-Alert",
     "scheme": "com.casptone.sertalert",
-    "version": "1.0.3.4",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "..app/assets/icons/serticon.png",
     "userInterfaceStyle": "light",
@@ -13,7 +13,6 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "package": "com.casptone.sertalert",
       "supportsTablet": true,
       "bundleIdentifier": "com.capstone.sertalert",
       "infoPlist": {
