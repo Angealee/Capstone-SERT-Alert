@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, ScrollView, Image, Alert, TouchableOpacity, Platform, ActivityIndicator, Modal, RefreshControl  } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, Image, Alert, TouchableOpacity, Platform, ActivityIndicator, Modal, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
@@ -8,6 +8,7 @@ import { images } from '../../constants';
 import { icons } from '../../constants';
 import RNPickerSelect from 'react-native-picker-select';
 import FormField from '../../components/FormField';
+import * as Clipboard from 'expo-clipboard';
 import CustomButton from '../../components/CustomButton';
 import CaptureButton from '../../components/CaptureButton';
 
@@ -30,7 +31,7 @@ const Emergency = () => {
     province: 'Locating',
   });
 
-  const [refreshing, setRefreshing] = useState(false); //refresh
+  const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
 
   // Location boundaries for Dominican College of Tarlac
@@ -42,28 +43,17 @@ const Emergency = () => {
         return;
       }
 
-      // Get the current position
       let location = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = location.coords;
-
-      // Set the current location to display on the screen
       setCurrentLocation({ latitude, longitude });
-      
-      // Reverse geocoding to get the location name
-      const reverseGeocode = await Location.reverseGeocodeAsync({
-        latitude,
-        longitude,
-      });
 
-      // Check if reverse geocoding returned a result and retrieve details
+      const reverseGeocode = await Location.reverseGeocodeAsync({ latitude, longitude });
       const locationDetails = reverseGeocode[0] || {};
       const municipality = locationDetails.city || '???';
       const province = locationDetails.region || '???';
-      // console.log("Reverse geocode details:", reverseGeocode);
 
-      // Replace with the actual lat/long bounds of the college
-      const withinLatBounds = latitude >= 15.0 && latitude <= 15.332652; //15.332148
-      const withinLongBounds = longitude >= 120.0 && longitude <= 120.590496; //120.589229
+      const withinLatBounds = latitude >= 15.3310759 && latitude <= 15.33321109;
+      const withinLongBounds = longitude >= 120.5808391 && longitude <= 120.5906055;
       console.log("Lat and Long Details:", latitude, longitude);
 
       // Set location data and check if within premises
@@ -78,7 +68,7 @@ const Emergency = () => {
       console.error("Error checking location:", error);
       setIsWithinPremises(false);
     } finally {
-      setRefreshing(false); // Stop the refresh indicator
+      setRefreshing(false);
     }
   };
 
@@ -92,7 +82,7 @@ const Emergency = () => {
     checkLocation();
   };
 
-  // Location Handler
+  //location handler
   const handleLocationChange = (Building) => {
     let options = [];
     let enableFloorLocation = true;
@@ -123,7 +113,7 @@ const Emergency = () => {
     setIsFloorLocationEnabled(enableFloorLocation);
   };
 
-  // Image picker handler
+  //image picker handler
   const pickImage = async () => {
     try {
       const { status: cameraStatus } = await ImagePicker.requestCameraPermissionsAsync();
@@ -136,12 +126,12 @@ const Emergency = () => {
       let result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: false,
-        aspect: [4, 3],
-        quality: 0.5,
+        aspect: [1, 1],
+        quality: 0.10,
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
-        // Save the URI of the image and not the base64 encoding yet
+        //Save the URI of the image and not the base64 encoding yet
         setForm({ ...form, image: result.assets[0].uri });
       }
     } catch (error) {
@@ -150,7 +140,19 @@ const Emergency = () => {
     }
   };
 
-  // Submit handler with POST request
+  // Function to copy the Base64 string to the clipboard
+const copyBase64ToClipboard = async (base64String) => {
+  await Clipboard.setStringAsync(base64String);
+
+  // Verify by retrieving the copied content from the clipboard
+  const copiedData = await Clipboard.getStringAsync();
+  if (copiedData.length === base64String.length) {
+    Alert.alert("Copy Success", "The full Base64 image data has been copied to clipboard.");
+  } else {
+    Alert.alert("Copy Incomplete", "The clipboard data is truncated. Original length: " + base64String.length + ", Copied length: " + copiedData.length);
+  }
+};
+
   const submit = async () => {
     setIsSubmitting(true);
 
@@ -160,20 +162,22 @@ const Emergency = () => {
       return;
     }
 
-      try {
-        // Load the image data as base64 right before submission
+    try {
+      //load the image data as base64 right before submission
       const base64Image = await FileSystem.readAsStringAsync(form.image, {
         encoding: FileSystem.EncodingType.Base64,
       });
+      copyBase64ToClipboard(base64Image); // Automatically copy Base64 to clipboard
+      
       const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // Replace with your actual API endpoint
       const timestamp = new Date().toISOString();
       const bodyData = {
         building: form.Building,
         floorLocation: form.FloorLocation,
         context: form.context,
-        image: `data:image/jpeg;base64,${base64Image}`, // Encoding dynamically here .substring(0, 50), git commit -m "v1.0.3.4: Image data to base64 conversion success!"
-        filename: "report_image.jpg", // Replace with the actual filename if available 
-        filetype: "image/jpeg", // Adjust based on the actual file type
+        image: `data:image/jpeg;base64,${base64Image}`, //.substring(0, 50)
+        filename: "report_image.jpg",
+        filetype: "image/jpeg",
         timestamp: timestamp,
       };
 
@@ -188,9 +192,9 @@ const Emergency = () => {
       const result = await response.json();
       if (response.ok) {
         Alert.alert('Success', 'Emergency reported successfully!');
-        console.log('Response data:', result);
+        // console.log('Response data:', result);
         console.log('form.image content:', form.image.substring(0, 100));
-        console.log("Base64 image data:", `data:image/jpeg;base64,${base64Image}`.substring(0, 100));
+        // console.log("Base64 image data:", `data:image/jpeg;base64,${base64Image}`.substring(0, 100));
         setForm({
           Building: '',
           FloorLocation: '',
@@ -199,7 +203,6 @@ const Emergency = () => {
         });
       } else {
         Alert.alert('Error', 'Failed to report emergency.');
-        console.error('Error response:', result);
       }
     } catch (error) {
       Alert.alert('Error', 'Something went wrong. Please try again.');
@@ -208,6 +211,7 @@ const Emergency = () => {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <SafeAreaView className="flex-1 bg-orange-500 p-2">
