@@ -5,7 +5,7 @@
     "scheme": "com.casptone.sertalert",
     "version": "1.0.4",
     "orientation": "portrait",
-    "icon": "..app/assets/icons/serticon.png",
+    "icon": ".assets/icons/serticon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
