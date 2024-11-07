@@ -13,7 +13,6 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "package": "com.casptone.sertalert",
       "supportsTablet": true,
       "bundleIdentifier": "com.capstone.sertalert",
       "infoPlist": {
