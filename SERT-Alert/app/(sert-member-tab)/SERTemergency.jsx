@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, ScrollView, Image, Alert, TouchableOpacity, Platform, ActivityIndicator, Modal, RefreshControl  } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, Image, Alert, TouchableOpacity, Platform, ActivityIndicator, Modal, RefreshControl, Button  } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
@@ -18,6 +18,8 @@ const SERTemergency = () => {
     context: '',
     image: null,
   });
+  const [showModal, setShowModal] = useState(false);  // State for modal visibility
+  const [submittedData, setSubmittedData] = useState(null); // State for storing submitted data
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [FloorLocation, setFloorLocation] = useState([]);
   const [isFloorLocationEnabled, setIsFloorLocationEnabled] = useState(false);
@@ -181,8 +183,14 @@ const SERTemergency = () => {
 
       const result = await response.json();
       if (response.ok) {
-        Alert.alert('Success', 'Emergency reported successfully!');
-        console.log('Response data:', result);
+        setSubmittedData({
+          building: form.Building,
+          floorLocation: form.FloorLocation,
+          context: form.context,
+          image: `data:image/jpeg;base64,${base64Image}`,
+        });
+        setShowModal(true); // Show modal after successful submission
+
         setForm({
           Building: '',
           FloorLocation: '',
@@ -198,26 +206,78 @@ const SERTemergency = () => {
       console.error("Error in submit:", error);
     } finally {
       setIsSubmitting(false);
-    }
-
-    
+    }   
   };
 
   return (
     <SafeAreaView className="flex-1 bg-red-500 p-2">
+      {/* For Modals */}
       <Modal
           transparent={true}
           animationType="fade"
           visible={isSubmitting}
           onRequestClose={() => {}}
         >
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+          <View style={{ flex: 1, 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
             <View style={{ padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center' }}>
               <ActivityIndicator size="large" color="#ff6347" />
               <Text style={{ marginTop: 10, color: '#333' }}>Submitting Report, Please wait...</Text>
             </View>
           </View>
         </Modal>
+
+      {/* Modal for displaying submission details */}
+      <Modal
+        transparent={true}
+        animationType="fade"
+        visible={showModal}
+        onRequestClose={() => setShowModal(false)}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <View style={{ 
+            width: 300, 
+            padding: 20, 
+            backgroundColor: 'white', 
+            borderRadius: 20, 
+          }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Report Submitted Successfully</Text>
+            {submittedData && (
+              <>
+                <Text style={{ marginTop: 20 }}>Building Location: {submittedData.building}</Text>
+                <Text>Floor Location: {submittedData.floorLocation}</Text>
+                <Text>Context: {submittedData.context}</Text>
+                <View style={{alignItems:'center'}}>
+                {submittedData.image && (
+                  <Image
+                    source={{ uri: submittedData.image }}
+                    style={{ width: 300,
+                      height: 300,
+                      marginTop: 30,
+                      marginBottom: 40,
+                      alignItems: 'center' }}
+                    resizeMode="contain"
+                  />
+                )}
+                </View>
+              </>
+            )}
+            <Button
+             title="Okay"
+             onPress={() => setShowModal(false)} />
+            </View>
+        </View>
+      </Modal>
+
       <ScrollView
         refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />

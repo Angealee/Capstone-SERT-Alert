@@ -1,4 +1,3 @@
-// app/components/NotificationHandler.js
 import * as Notifications from 'expo-notifications';
 import { useEffect, useState } from 'react';
 
@@ -53,9 +52,10 @@ export const sendEmergencyNotification = async (isUserLoggedIn) => {
     content: {
       title: "Emergency Report 🚨",
       body: "An emergency has been reported! Tap to view details.",
-      sound: 'default',                           // Default notification sound
-      priority: Notifications.AndroidNotificationPriority.MAX, // High priority for heads-up
-      vibrate: [0, 250, 250, 250],                // Custom vibration pattern
+      content: "Sample Content",
+      sound: 'default',// Default notification sound
+      priority: Notifications.AndroidNotificationPriority.MAX, //set priority heads-up
+      vibrate: [250, 400, 400, 400],//vibration pattern
     },
     trigger: null, // Trigger immediately
   });

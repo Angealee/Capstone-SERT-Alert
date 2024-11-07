@@ -1,6 +1,4 @@
 import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
-import React from 'react'
-
 import { images } from '../../constants';
 import { Redirect, router } from 'expo-router';
 import CustomButton from '../../components/CustomButton';
@@ -9,7 +7,6 @@ import FormField from '../../components/FormField';
 
 //initial commit
 const menu = () => {
-  
 const handleNavigate = (info) => {
   router.push(`/aboutInfo/${info}`);
   };
