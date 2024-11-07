@@ -10,7 +10,6 @@ import { icons } from '../../constants';
 import RNPickerSelect from 'react-native-picker-select';
 import FormField from '../../components/FormField';
 import * as Clipboard from 'expo-clipboard';
-import CustomButton from '../../components/CustomButton';
 import CaptureButton from '../../components/CaptureButton';
 import CustomButton from '../../components/CustomButton';
 
@@ -483,7 +482,7 @@ const Emergency = () => {
                           <Text style={{ color: 'black', textAlign: 'center', fontSize: 11 }}>
                             Latitude: {currentLocation.latitude} | Longitude: {currentLocation.longitude}
                           </Text>
-                        )}
+            )}
           </View>
         </View>
       </ScrollView>
