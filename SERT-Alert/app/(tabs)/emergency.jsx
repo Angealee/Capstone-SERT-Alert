@@ -4,11 +4,13 @@ import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import * as Location from 'expo-location';
+import * as ImageManipulator from 'expo-image-manipulator';
 import { images } from '../../constants';
 import { icons } from '../../constants';
 import RNPickerSelect from 'react-native-picker-select';
 import FormField from '../../components/FormField';
-import AgreeCustomButton from '../../components/AgreeCustomButton';
+import * as Clipboard from 'expo-clipboard';
+import CustomButton from '../../components/CustomButton';
 import CaptureButton from '../../components/CaptureButton';
 import CustomButton from '../../components/CustomButton';
 
@@ -33,7 +35,7 @@ const Emergency = () => {
     province: 'Locating',
   });
 
-  const [refreshing, setRefreshing] = useState(false); //refresh
+  const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
 
   // Location boundaries for Dominican College of Tarlac
@@ -45,28 +47,17 @@ const Emergency = () => {
         return;
       }
 
-      // Get the current position
       let location = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = location.coords;
-
-      // Set the current location to display on the screen
       setCurrentLocation({ latitude, longitude });
-      
-      // Reverse geocoding to get the location name
-      const reverseGeocode = await Location.reverseGeocodeAsync({
-        latitude,
-        longitude,
-      });
 
-      // Check if reverse geocoding returned a result and retrieve details
+      const reverseGeocode = await Location.reverseGeocodeAsync({ latitude, longitude });
       const locationDetails = reverseGeocode[0] || {};
       const municipality = locationDetails.city || '???';
       const province = locationDetails.region || '???';
-      // console.log("Reverse geocode details:", reverseGeocode);
 
-      // Replace with the actual lat/long bounds of the college
-      const withinLatBounds = latitude >= 15.0 && latitude <= 15.332652; //15.332148
-      const withinLongBounds = longitude >= 120.0 && longitude <= 120.590496; //120.589229
+      const withinLatBounds = latitude >= 15.3310759 && latitude <= 15.33321109;
+      const withinLongBounds = longitude >= 120.5808391 && longitude <= 120.5906055;
       console.log("Lat and Long Details:", latitude, longitude);
 
       // Set location data and check if within premises
@@ -81,7 +72,7 @@ const Emergency = () => {
       console.error("Error checking location:", error);
       setIsWithinPremises(false);
     } finally {
-      setRefreshing(false); // Stop the refresh indicator
+      setRefreshing(false);
     }
   };
 
@@ -95,7 +86,7 @@ const Emergency = () => {
     checkLocation();
   };
 
-  // Location Handler
+  //location handler
   const handleLocationChange = (Building) => {
     let options = [];
     let enableFloorLocation = true;
@@ -126,7 +117,7 @@ const Emergency = () => {
     setIsFloorLocationEnabled(enableFloorLocation);
   };
 
-  // Image picker handler
+  //image picker handler
   const pickImage = async () => {
     try {
       const { status: cameraStatus } = await ImagePicker.requestCameraPermissionsAsync();
@@ -140,12 +131,20 @@ const Emergency = () => {
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: false,
         aspect: [4, 3],
-        quality: 0.5,
+        quality: 0.8,
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
-        // Save the URI of the image and not the base64 encoding yet
-        setForm({ ...form, image: result.assets[0].uri });
+        const originalUri = result.assets[0].uri;
+
+        // Resize the image using expo-image-manipulator
+        const resizedImage = await ImageManipulator.manipulateAsync(
+          originalUri,
+          [{ resize: { width: 800, height: 800 } }],
+          { compress: 0.5, format: ImageManipulator.SaveFormat.JPEG }
+        );
+        //Save the URI of the image and not the base64 encoding yet
+        setForm({ ...form, image: resizedImage.uri });
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to pick image. Please try again.');
@@ -153,7 +152,19 @@ const Emergency = () => {
     }
   };
 
-  // Submit handler with POST request
+// Function to copy the Base64 string to the clipboard
+// const copyBase64ToClipboard = async (base64String) => {
+//   await Clipboard.setStringAsync(base64String);
+
+//   // Verify by retrieving the copied content from the clipboard
+//   const copiedData = await Clipboard.getStringAsync();
+//   if (copiedData.length === base64String.length) {
+//     Alert.alert("Copy Success", "The full Base64 image data has been copied to clipboard.");
+//   } else {
+//     Alert.alert("Copy Incomplete", "The clipboard data is truncated. Original length: " + base64String.length + ", Copied length: " + copiedData.length);
+//   }
+// };
+
   const submit = async () => {
     setIsSubmitting(true);
 
@@ -163,20 +174,22 @@ const Emergency = () => {
       return;
     }
 
-      try {
-        // Load the image data as base64 right before submission
+    try {
+      //load the image data as base64 right before submission
       const base64Image = await FileSystem.readAsStringAsync(form.image, {
         encoding: FileSystem.EncodingType.Base64,
       });
+      // copyBase64ToClipboard(base64Image); // Automatically copy Base64 to clipboard
+      
       const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // Replace with your actual API endpoint
       const timestamp = new Date().toISOString();
       const bodyData = {
         building: form.Building,
         floorLocation: form.FloorLocation,
         context: form.context,
-        image: `data:image/jpeg;base64,${base64Image}`, // Encoding dynamically here .substring(0, 50), git commit -m "v1.0.3.4: Image data to base64 conversion success!"
-        filename: "report_image.jpg", // Replace with the actual filename if available 
-        filetype: "image/jpeg", // Adjust based on the actual file type
+        image: `data:image/jpeg;base64,${base64Image}`, //.substring(0, 50)
+        filename: "report_image.jpg",
+        filetype: "image/jpeg",
         timestamp: timestamp,
       };
 
@@ -211,7 +224,6 @@ const Emergency = () => {
         });
       } else {
         Alert.alert('Error', 'Failed to report emergency.');
-        console.error('Error response:', result);
       }
     } catch (error) {
       Alert.alert('Error', 'Something went wrong. Please try again.');
@@ -220,6 +232,7 @@ const Emergency = () => {
       setIsSubmitting(false);
     }
   };
+
 
   return (
     <SafeAreaView className="flex-1 bg-orange-500 p-2">
@@ -378,31 +391,33 @@ const Emergency = () => {
             <View className={`w-full h-16 px-4 rounded-2xl items-center flex-row ${
               isFloorLocationEnabled
                 ? 'border-2 border-red-500 bg-white-100'
-                : 'bg-gray-200'
+                : 'border-2 border-red-500 bg-gray-200'
             }`}>
-              <RNPickerSelect
-                onValueChange={(value) => setForm({ ...form, FloorLocation: value })}
-                value={form.FloorLocation}
-                items={FloorLocation.map(option => ({ label: option, value: option }))}
-                disabled={!isFloorLocationEnabled}
-                style={{
-                  inputIOS: { 
-                    color: isFloorLocationEnabled ? '#000' : '#888', 
-                    fontSize: 19,
-                    textAlign: 'center',
-                    marginTop: 15,
-                    marginLeft: 30
-                  },
-                  inputAndroid: { 
-                    color: isFloorLocationEnabled ? '#000' : '#888',
-                    fontSize: 17,
-                    textAlign: 'center',
-                    marginLeft: 20
-                  },
-                }}
-                useNativeAndroidPickerStyle={false}
-              />
+              <TouchableOpacity style={{ flex: 1 }}>
+                <RNPickerSelect
+                  onValueChange={(value) => setForm({ ...form, FloorLocation: value })}
+                  value={form.FloorLocation}
+                  items={FloorLocation.map(option => ({ label: option, value: option }))}
+                  disabled={!isFloorLocationEnabled}
+                  style={{
+                    inputIOS: { 
+                      color: isFloorLocationEnabled ? '#000' : '#888', 
+                      fontSize: 19,
+                      textAlign: 'center',
+                      marginTop: 15,
+                      marginLeft: 30
+                    },
+                    inputAndroid: { 
+                      color: isFloorLocationEnabled ? '#000' : '#888',
+                      fontSize: 17,
+                      textAlign: 'center',
+                    },
+                  }}
+                  useNativeAndroidPickerStyle={true}
+                />
+              </TouchableOpacity>
             </View>
+            
 
             <View className="mb-4">
                 <FormField
@@ -431,6 +446,9 @@ const Emergency = () => {
               handlePress={pickImage}
               containerStyles="mt-3 mb-5"
               icon={icons.camera}
+              style={{
+                height: 48
+              }}
             />
             
             <TouchableOpacity
