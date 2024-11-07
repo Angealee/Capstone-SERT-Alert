@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, ScrollView, Image, Alert, TouchableOpacity, Platform, ActivityIndicator, Modal, RefreshControl } from 'react-native';
+import { View, Text, SafeAreaView, ScrollView, Image, Alert, TouchableOpacity, Platform, ActivityIndicator, Modal, RefreshControl, Button  } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
@@ -12,6 +12,7 @@ import FormField from '../../components/FormField';
 import * as Clipboard from 'expo-clipboard';
 import CustomButton from '../../components/CustomButton';
 import CaptureButton from '../../components/CaptureButton';
+import CustomButton from '../../components/CustomButton';
 
 const Emergency = () => {
   const [form, setForm] = useState({
@@ -20,6 +21,8 @@ const Emergency = () => {
     context: '',
     image: null,
   });
+  const [showModal, setShowModal] = useState(false);  // State for modal visibility
+  const [submittedData, setSubmittedData] = useState(null); // State for storing submitted data
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [FloorLocation, setFloorLocation] = useState([]);
   const [isFloorLocationEnabled, setIsFloorLocationEnabled] = useState(false);
@@ -166,7 +169,7 @@ const Emergency = () => {
     setIsSubmitting(true);
 
     if (!form.Building || !form.context || !form.image) {
-      Alert.alert('Error', 'All fields are required.');
+      Alert.alert('Try again!', 'All fields are required.');
       setIsSubmitting(false);
       return;
     }
@@ -200,9 +203,18 @@ const Emergency = () => {
 
       const result = await response.json();
       if (response.ok) {
-        Alert.alert('Success', 'Emergency reported successfully!');
+        // Alert.alert('Success', 'Emergency reported successfully!');
+        // Display the submitted data in the modal
+        setSubmittedData({
+          building: form.Building,
+          floorLocation: form.FloorLocation,
+          context: form.context,
+          image: `data:image/jpeg;base64,${base64Image}`,
+        });
+        setShowModal(true); // Show modal after successful submission
+
         // console.log('Response data:', result);
-        console.log('form.image content:', form.image.substring(0, 100));
+        // console.log('form.image content:', form.image.substring(0, 100));
         // console.log("Base64 image data:", `data:image/jpeg;base64,${base64Image}`.substring(0, 100));
         setForm({
           Building: '',
@@ -224,19 +236,93 @@ const Emergency = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-orange-500 p-2">
+      {/* For Modals */}
       <Modal
           transparent={true}
           animationType="fade"
           visible={isSubmitting}
           onRequestClose={() => {}}
         >
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+          <View style={{ 
+            flex: 1, 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            backgroundColor: 'rgba(0, 0, 0, 0.5)'
+            }}>
             <View style={{ padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center' }}>
               <ActivityIndicator size="large" color="#ff6347" />
               <Text style={{ marginTop: 10, color: '#333' }}>Submitting Report, Please wait...</Text>
             </View>
           </View>
         </Modal>
+        
+      {/* Modal for displaying submission details */}
+      <Modal
+        transparent={true}
+        animationType="fade"
+        visible={showModal}
+        onRequestClose={() => setShowModal(false)}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <View style={{ 
+            width: 350, 
+            padding: 20, 
+            backgroundColor: 'white', 
+            borderRadius: 20, 
+          }}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Report Submitted Successfully</Text>
+            {submittedData && (
+              <>
+                <Text style={{ marginTop: 20}}>Building:</Text>
+                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{submittedData.building}</Text>
+
+                <Text style={{marginTop:10}}>Floor Location:</Text>
+                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{submittedData.floorLocation}</Text>
+
+                <Text style={{marginTop:10}}>Context:</Text>
+                <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{submittedData.context}</Text>
+                <View style={{alignItems:'center'}}>
+                {submittedData.image && (
+                  <Image
+                    source={{ uri: submittedData.image }}
+                    style={{ width: 300,
+                      height: 300,
+                      borderColor: '#EF2B39',
+                      marginTop: 20,
+                      marginBottom: 20,
+                      alignItems: 'center' }}
+                    resizeMode="contain"
+                  />
+                )}
+                </View>
+              </>
+            )}
+              <View style={{alignItems: 'center'}}>
+                <TouchableOpacity
+                  style={{
+                    width: '40%',
+                    paddingVertical: 8,
+                    backgroundColor:'#FA7017',
+                    borderRadius: 20,
+                    alignItems: 'center',
+                    marginTop: 1,              
+                  }}
+                  onPress={() => setShowModal(false)}
+                >
+                  <Text style={{ color: 'white', fontSize: 18 }}>Got it!</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+        </View>
+      </Modal>
+
       <ScrollView
         refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
