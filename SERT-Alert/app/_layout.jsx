@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
+import { AuthProvider } from '../hooks/useAuth';
 import { SplashScreen, Slot, Stack } from 'expo-router';
 import { useFonts } from 'expo-font'
 import { useEffect } from 'react';
@@ -25,12 +26,14 @@ const RootLayout = () => {
   if(!fontsLoaded && !error) return null;
 
   return (
+  <AuthProvider>
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" options={{headerShown: false}} />
       <Stack.Screen name="(auth)" options={{headerShown: false}} />
       <Stack.Screen name="(tabs)" options={{headerShown: false}} />
       <Stack.Screen name="(sert-member-tab)" options={{headerShown: false}} />
     </Stack>
+  </AuthProvider>
   )
 }
 
