@@ -5,10 +5,10 @@
     "scheme": "com.casptone.sertalert",
     "version": "1.0.4.2",
     "orientation": "portrait",
-    "icon": ".assets/icons/serticon.png",
+    "icon": "./assets/icons/serticon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icons/serticon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -52,4 +52,3 @@
     }
   }
 }
-//initial commit dependency fix
