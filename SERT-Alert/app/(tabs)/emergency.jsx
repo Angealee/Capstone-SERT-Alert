@@ -97,11 +97,20 @@ const Emergency = () => {
       case 'St. Catherine of Siena BLDG':
         options = ['1st Floor', '2nd Floor', '3rd Floor', '4th Floor'];
         break;
+      case 'St. Lorenzo Ruiz BLDG':
+        options = ['1st Floor', '2nd Floor', '3rd Floor', '4th Floor'];
+        break;
       case 'Holy Rosary BLDG':
         options = ['1st Floor', '2nd Floor', '3rd Floor', '4th Floor'];
         break;
+      case 'Our Lady of Fatima BLDG':
+        options = ['1st Floor', '2nd Floor', '3rd Floor', '4th Floor'];
+        break;
+      case 'Our Lady of Peace BLDG':
+        options = ['1st Floor', '2nd Floor', '3rd Floor', '4th Floor'];
+        break;
       case 'Others':
-        options = ['Covered Court', 'Canteen', 'Parking Lot', 'DCT Front Gate'];
+        options = ['BP. J.JCovered Court', 'Canteen', 'Student Lounge', 'Parking Lot', 'DCT Front Gate', 'Resurrection Chapel', 'School Clinic', 'RPQA', 'Accounting Office', 'Registrar Office'];
         break;
       case '':
         enableFloorLocation = false;
@@ -349,7 +358,10 @@ const Emergency = () => {
                     items={[
                       { label: "St. Dominic BLDG", value: "St. Dominic BLDG" },
                       { label: "St. Catherine of Siena BLDG", value: "St. Catherine of Siena BLDG" },
+                      { label: "St. Lorenzo Ruiz BLDG", value: "St. Lorenzo Ruiz BLDG" },
                       { label: "Holy Rosary BLDG", value: "Holy Rosary BLDG" },
+                      { label: "Our Lady of Fatima BLDG", value: "Our Lady of Fatima BLDG" },
+                      { label: "Our Lady of Peace BLDG", value: "Our Lady of Peace BLDG" },
                       { label: "Others", value: "Others" }
                     ]}
                     style={{
