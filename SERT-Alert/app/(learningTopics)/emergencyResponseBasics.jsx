@@ -23,7 +23,7 @@ const EmergencyResponseBasics = () => {
   };
 
   return (
-    <SafeAreaView className="bg-white h-full">
+    <SafeAreaView className="bg-orange-80 h-full">
       <ScrollView ref={scrollViewRef}>
         <View ref={backToTopRef} className="p-4">
           <Image 

@@ -28,5 +28,14 @@ import burnTreatment from "../assets/images/burnTreatment.jpg";
 import choking from "../assets/images/choking.jpeg";
 import fracture from "../assets/images/fracture.jpg";
 import firstAidHeader from "../assets/images/firstAidHeader.jpg";
+import placeTheHeel from "../assets/images/placeTheHeel.png";
+import placeHand from "../assets/images/placeHand.jpg";
+import straightHand from "../assets/images/straightHand.png";
+import pushDown from "../assets/images/pushDown.jpg";
+import paceCompression from "../assets/images/paceCompression.png";
+import cleanCloth from "../assets/images/cleanCloth.jpg";
+import stopBleeding from "../assets/images/stopBleeding.png";
+import addCloth from "../assets/images/addCloth.png";
+import presstillStop from "../assets/images/presstillStop.jpg";
 
-export default { profile, charldrinBello, kiokiSerrano, luisMagdangal, riskAssessment, emergencyResponseHeader, kobyMacale, SERTpicture, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster, callforhelp, basicSupport, keepCalm, takeInEmergency, bleedControl, cpr, burnTreatment, choking, fracture, firstAidHeader };
+export default { profile, charldrinBello, kiokiSerrano, luisMagdangal, riskAssessment, emergencyResponseHeader, kobyMacale, SERTpicture, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster, callforhelp, basicSupport, keepCalm, takeInEmergency, bleedControl, cpr, burnTreatment, choking, fracture, firstAidHeader, placeTheHeel, placeHand, straightHand, pushDown, paceCompression, cleanCloth, stopBleeding, addCloth, presstillStop };
