@@ -18,5 +18,15 @@ import kiokiSerrano from "../assets/images/kiokiSerrano.jpg";
 import luisMagdangal from "../assets/images/luisMagdangal.jpg";
 import emergencyResponseHeader from "../assets/images/emergencyResponseHeader.png";
 import riskAssessment from "../assets/images/riskAssessment.jpg";
+import callforhelp from "../assets/images/callforhelp.jpg";
+import basicSupport from "../assets/images/basicSupport.jpg";
+import keepCalm from "../assets/images/keepCalm.jpg";
+import takeInEmergency from "../assets/images/takeInEmergency.jpg";
+import bleedControl from "../assets/images/bleedControl.jpeg";
+import cpr from "../assets/images/cpr.jpeg";
+import burnTreatment from "../assets/images/burnTreatment.jpg";
+import choking from "../assets/images/choking.jpeg";
+import fracture from "../assets/images/fracture.jpg";
+import firstAidHeader from "../assets/images/firstAidHeader.jpg";
 
-export default { profile, charldrinBello, kiokiSerrano, luisMagdangal, riskAssessment, emergencyResponseHeader, kobyMacale, SERTpicture, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster };
+export default { profile, charldrinBello, kiokiSerrano, luisMagdangal, riskAssessment, emergencyResponseHeader, kobyMacale, SERTpicture, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster, callforhelp, basicSupport, keepCalm, takeInEmergency, bleedControl, cpr, burnTreatment, choking, fracture, firstAidHeader };
