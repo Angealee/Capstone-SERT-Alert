@@ -37,5 +37,9 @@ import cleanCloth from "../assets/images/cleanCloth.jpg";
 import stopBleeding from "../assets/images/stopBleeding.png";
 import addCloth from "../assets/images/addCloth.png";
 import presstillStop from "../assets/images/presstillStop.jpg";
+import afterBleeding from "../assets/images/afterBleeding.jpg";
+import wrapSnugly from "../assets/images/wrapSnugly.jpeg";
+import secureBandage from "../assets/images/secureBandage.jpeg";
+import torniquet from "../assets/images/torniquet.jpg";
 
-export default { profile, charldrinBello, kiokiSerrano, luisMagdangal, riskAssessment, emergencyResponseHeader, kobyMacale, SERTpicture, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster, callforhelp, basicSupport, keepCalm, takeInEmergency, bleedControl, cpr, burnTreatment, choking, fracture, firstAidHeader, placeTheHeel, placeHand, straightHand, pushDown, paceCompression, cleanCloth, stopBleeding, addCloth, presstillStop };
+export default { profile, charldrinBello, kiokiSerrano, luisMagdangal, riskAssessment, emergencyResponseHeader, kobyMacale, SERTpicture, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster, callforhelp, basicSupport, keepCalm, takeInEmergency, bleedControl, cpr, burnTreatment, choking, fracture, firstAidHeader, placeTheHeel, placeHand, straightHand, pushDown, paceCompression, cleanCloth, stopBleeding, addCloth, presstillStop, afterBleeding, wrapSnugly, secureBandage, torniquet};

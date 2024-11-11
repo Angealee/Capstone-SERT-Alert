@@ -33,13 +33,14 @@ const FirstAidTechniques = () => {
           />
           <Text className="text-2xl font-pbold mb-4">First Aid Techniques</Text>
           <Text className="text-lg mb-2">
-            //input description here
+          First Aid is a set of essential, immediate responses aimed at minimizing injury, preventing further harm, and stabilizing individuals until professional help arrives. In emergency situations, knowing how to apply basic first aid techniques can significantly impact outcomes, potentially saving lives. This section will walk you through fundamental first aid skills such as bleeding control, CPR, burns treatment, choking response, and fracture stabilization, providing both guidance and practical scenarios to illustrate these techniques in action.
+
           </Text>
-          <Text className="text-lg mb-2">This covers the First Aid Techniques until professional help arrives, including:</Text>
+          <Text className="text-lg mb-1">This covers the First Aid Techniques until professional help arrives, including:</Text>
 
           {/* CHANGE THESE INTO THE RESPECTIVE MAIN TOPICS FOR FIRST AID TECHNIQUES */}
           <TouchableOpacity onPress={() => scrollToSection(bleedRef)}>
-            <Text className="text-lg font-bold pl-4 mb-3 mt-4">• Bleed Control</Text>
+            <Text className="text-lg font-bold pl-4 mb-3 mt-1">• Bleed Control</Text>
           </TouchableOpacity>
           
           <TouchableOpacity onPress={() => scrollToSection(cprRef)}>
@@ -119,23 +120,120 @@ const FirstAidTechniques = () => {
 
           <Text className="text-lg font-bold mb-2 pl-4">B. Elevation:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+            Elevating the injured area above the heart level can reduce blood flow to the wound, helping to slow bleeding and encourage clotting. This method works best when combined with direct pressure.
             </Text>
 
           <Text className="text-lg font-bold mb-2 pl-4">C. Use of Bandages:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+            Once initial bleeding is under control, a sterile bandage can be applied to protect the wound from contamination and further injury. Bandaging keeps the wound clean, promotes healing, and can help maintain pressure if done correctly.
             </Text>
+            <View className="pl-8 pt-2 pr-5 mt-2 ml-2 border border-orange-50 rounded-3xl bg-orange-50">
+            <Text className="text-lg font-bold"> 
+            Step-by-Step:
+            </Text> 
+              <View className="p-4">
+                <Text className= "text-lg">
+                1. After bleeding has slowed, carefully wrap a sterile bandage around the wound.
+                </Text>
+                <Image 
+                  source={images.afterBleeding} // Add your image here
+                  className="w-full h-40 rounded-lg mt-2 mb-6"
+                  resizeMode='contain'
+                />
+                <Text className= "text-lg">
+                2. Wrap snugly but not so tight that it restricts blood flow; you should be able to slip a finger under the bandage.
+                </Text>
+                <Image 
+                  source={images.wrapSnugly} // Add your image here
+                  className="w-full h-40 rounded-lg mb-6"
+                  resizeMode='contain'
+                />
+                <Text className= "text-lg mb-2">
+                3. Secure the bandage ends to keep it from shifting
+                </Text>
+                <Image 
+                  source={images.secureBandage} // Add your image here
+                  className="w-full h-40 rounded-lg mb-6"
+                  resizeMode='contain'
+                />
+                <Text className="text-lg font-bold mt-4"> 
+                Tips:
+                </Text> 
+                <Text className= "text-lg mb-2">
+                • Monitor the area for swelling, numbness, or discoloration, which may indicate the bandage is too tight.
+                </Text>
+                <Text className= "text-lg mb-2">
+                • Avoid touching the wound directly, especially with unclean hands, to reduce infection risk.
+                </Text>
+              </View>
+            </View>
 
           <Text className="text-lg font-bold mb-2 pl-4">D. Tourniquet Application:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+            A tourniquet is a device or method used to stop severe bleeding on a limb when other methods (direct pressure, elevation) are ineffective. A tourniquet should be applied as a last resort in life-threatening situations where bleeding cannot be controlled.
             </Text>
 
-          <Text className="text-lg font-bold mb-2 pl-4">E. Recognizing Shock Symptoms:</Text>
+            <View className="pl-8 pt-2 pr-5 mt-2 ml-2 border border-orange-50 rounded-3xl bg-orange-50">
+            <Text className="text-lg font-bold"> 
+            Step-by-Step:
+            </Text> 
+              <View className="p-4">
+                <Text className= "text-lg">
+                1. Place the tourniquet above the wound (closer to the body) and at least a few inches above the injury site.
+                </Text>
+                <Image 
+                  source={images.torniquet} // Add your image here
+                  className="w-full h-40 rounded-lg mt-2 mb-6"
+                  resizeMode='contain'
+                />
+                <Text className= "text-lg mb-6">
+                2. Tighten the tourniquet until the bleeding stops.
+                </Text>
+                <Text className= "text-lg mb-6">
+                3. Note the time of application, as prolonged use can damage tissue.
+                </Text>
+                <Text className= "text-lg mb-6">
+                4. Do not remove the tourniquet once applied; wait for medical professionals to take over.
+                </Text>
+                <Text className="text-lg font-bold mt-4"> 
+                Tips:
+                </Text> 
+                <Text className= "text-lg mb-2">
+                • Use a tourniquet only when bleeding is life-threatening, and you cannot control it with other methods.
+                </Text>
+                <Text className= "text-lg mb-2">
+                • Avoid leaving a tourniquet on for extended periods, as it can cause serious tissue damage.
+                </Text>
+              </View>
+            </View>
+
+          <Text className="text-lg font-bold mb-2 mt-8 pl-4">E. Recognizing Shock Symptoms:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+            Shock is a life-threatening condition that can result from severe blood loss, causing a drop in blood pressure and inadequate blood flow to organs. Recognizing shock symptoms and providing immediate assistance is crucial to stabilize the person until emergency help arrives.
             </Text>
+
+            <View className="pl-8 pt-2 pr-5 mt-2 ml-2 border border-orange-50 rounded-3xl bg-orange-50">
+            <Text className="text-lg font-bold"> 
+            Signs of Shock:
+            </Text> 
+              <View className="p-4">
+                <Text className= "text-lg mb-2">
+                • Pale, clammy skin
+                </Text>
+                <Text className= "text-lg mb-2">
+                • Rapid or weak pulse
+                </Text>
+                <Text className= "text-lg mb-2">
+                • Rapid breathing
+                </Text>
+                <Text className= "text-lg mb-2">
+                • Confusion or disorientation
+                </Text>
+                <Text className= "text-lg mb-2">
+                • Weakness or fainting
+                </Text>
+              </View>
+            </View>
 
             {/* CPR */}
           <View ref={cprRef} className="mb-4 mt-4" >
