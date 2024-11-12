@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
 
 const Notification = () => {
   const [notifications, setNotifications] = useState([]);
@@ -38,6 +39,7 @@ const Notification = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <AnimatedGradientBackground2/>
       <Text style={styles.title}>Report Logs</Text>
 
       {/* Display loading indicator if data is still loading */}

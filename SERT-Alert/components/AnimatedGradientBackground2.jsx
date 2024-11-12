@@ -18,15 +18,15 @@ const AnimatedGradientBackground2 = () => {
   // Interpolate colors
   const backgroundColor = animatedValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['#A1C181', '#619B8A'] // Customize these colors
+    outputRange: ['#FE7F2D', '#C63434'] // Customize these colors
   });
 
   return (
     <Animated.View style={[StyleSheet.absoluteFill, { backgroundColor }]}>
       <LinearGradient
-        colors={['#A1C181', '#619B8A']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
+        colors={['#FE7F2D', '#C63434']}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 0, y: 0 }}
         style={StyleSheet.absoluteFill}
       />
     </Animated.View>

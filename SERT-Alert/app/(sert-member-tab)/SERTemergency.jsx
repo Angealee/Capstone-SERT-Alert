@@ -14,6 +14,7 @@ import CaptureButton from '../../components/CaptureButton';
 import CustomButton from '../../components/CustomButton';
 
 import { useNotificationHandler, sendEmergencyNotification } from '../../components/NotificationHandler';
+import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
 
 const SERTemergency = () => {
   const [form, setForm] = useState({
@@ -253,8 +254,9 @@ const SERTemergency = () => {
 
 
   return (
-    <SafeAreaView className="flex-1 bg-orange-500 p-2">
+    <SafeAreaView className="flex-1 p-5">
       {/* For Modals */}
+      <AnimatedGradientBackground2 />
       <Modal
           transparent={true}
           animationType="fade"

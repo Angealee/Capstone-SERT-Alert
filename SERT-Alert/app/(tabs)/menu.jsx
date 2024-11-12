@@ -1,9 +1,7 @@
-import { View, Text, SafeAreaView, ScrollView, Image } from 'react-native'
-import { images } from '../../constants';
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient';
 import { Redirect, router } from 'expo-router';
 import CustomButton from '../../components/CustomButton';
-import { Picker } from '@react-native-picker/picker';
-import FormField from '../../components/FormField';
 import AnimatedGradientBackground1 from '../../components/AnimatedGradientBackground1';
 
 //initial commit
@@ -13,7 +11,8 @@ const handleNavigate = (info) => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-orange-500 p-2">
+    <SafeAreaView className="flex-1 p-8">
+    
       <AnimatedGradientBackground1/>
         <ScrollView>
           <View className="bg-white rounded-xl justify-center px-10 pb-10 mt-40">
@@ -21,23 +20,72 @@ const handleNavigate = (info) => {
               <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">Menu</Text>
 
             </View>
-          <CustomButton 
-              title="About SERT"
-              handlePress={() => handleNavigate('aboutSERT')}
-              containerStyles="mt-5 align-center"
-            />
-
-            <CustomButton 
-              title="About Dev"
-              handlePress={() => handleNavigate('aboutDev')}
-              containerStyles="mt-5 align-center"
-            />
-
-          <CustomButton 
-              title="Sign In"
-              handlePress={() => router.push('/sign-in')}
-              containerStyles="mt-5 align-center"
-            />
+          
+            <TouchableOpacity 
+              onPress={() => handleNavigate('aboutSERT')}>
+                <LinearGradient
+                  colors={['#233D4D', '#619B8A']}
+                  style={{
+                    width: '100%',
+                    paddingVertical: 15,
+                    borderRadius: 15,
+                    shadowColor: '#EF2A39',
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.3,
+                    shadowRadius: 8,
+                    marginTop: 25,
+                    alignItems: 'center',
+                  }}
+                >
+                <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+                  About SERT
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+                
+            <TouchableOpacity 
+              onPress={() => handleNavigate('aboutDev')}>
+                <LinearGradient
+                  colors={['#233D4D', '#619B8A']}
+                  style={{
+                    width: '100%',
+                    paddingVertical: 15,
+                    borderRadius: 15,
+                    shadowColor: '#EF2A39',
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.3,
+                    shadowRadius: 8,
+                    marginTop: 25,
+                    alignItems: 'center',
+                  }}
+                >
+                <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+                  About DEV
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+            
+            <TouchableOpacity 
+              onPress={() => router.push('/sign-in')}>
+                <LinearGradient
+                  colors={['#233D4D', '#619B8A']}
+                  style={{
+                    width: '100%',
+                    paddingVertical: 15,
+                    borderRadius: 15,
+                    shadowColor: '#EF2A39',
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.3,
+                    shadowRadius: 8,
+                    marginTop: 25,
+                    alignItems: 'center',
+                  }}
+                >
+                <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+                  Sign-in
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
           </View>
         </ScrollView>
     </SafeAreaView>

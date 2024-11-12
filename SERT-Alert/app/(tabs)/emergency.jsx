@@ -325,7 +325,7 @@ const Emergency = () => {
                   style={{
                     width: '40%',
                     paddingVertical: 8,
-                    backgroundColor:'#FA7017',
+                    backgroundColor:'#A1C181',
                     borderRadius: 20,
                     alignItems: 'center',
                     marginTop: 1,              

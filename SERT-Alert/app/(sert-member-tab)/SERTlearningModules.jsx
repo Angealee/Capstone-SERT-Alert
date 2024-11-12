@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { icons, images } from '../../constants';
 import { useRouter } from 'expo-router';
 import SearchInput from '../../components/SearchInput';
+import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
 
 const LearningModules = () => {
   const router = useRouter(); // Initialize router
@@ -22,6 +23,7 @@ const LearningModules = () => {
   });
   return (
     <SafeAreaView className="flex-1 bg-red-500 p-2">
+      <AnimatedGradientBackground2/>
       <ScrollView> 
           <View className="my-5 px-3 space-y-6">
             <View className="justify-between items-center">

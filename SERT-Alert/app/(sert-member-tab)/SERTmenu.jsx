@@ -3,6 +3,7 @@ import { useNotificationHandler, sendEmergencyNotification } from '../../compone
 import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
 import CustomButton from '../../components/CustomButton';
+import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
 
 const SERTmenu = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false); // Track User2 login status via the Switch
@@ -27,6 +28,7 @@ const SERTmenu = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-red-500 p-2">
+      <AnimatedGradientBackground2/>
       <ScrollView>
         <View className="bg-white rounded-xl justify-center px-16 pb-20 mt-40">
           <View className="w-full justify-center h-full[85vh] my-6">

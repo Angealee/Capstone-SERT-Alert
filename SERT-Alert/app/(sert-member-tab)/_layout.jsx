@@ -11,12 +11,11 @@ const TabIcon = ({ icon, color, name, focused }) => {
         source={icon}
         resizeMode="contain"
         tintColor={color}
-        className="w-6 h-5"
+        className="w-5 h-5"
+        style={Platform.OS === 'ios' ? styles.iconIOS : styles.iconDefault}
       />
 
-      {/* to style the text, use this snippet: 
-      style={{ color:color}} */}
-      <Text style={{ color: color }} className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`}>
+      <Text style={{ color: '#FFFFFF' }} className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`}>
         {name}
       </Text>
     </View>
@@ -28,13 +27,22 @@ const TabsLayout = () => {
         <Tabs
           screenOptions={{
             tabBarShowLabel: false,
-            tabBarActiveTintColor: '#ab0505',
-            tabBarInactiveTintColor:'#EF2A39',
-            tabBarStyle:{
-              backgroundColor: '#ECB548',
-              borderTopWidth: 0,
-              borderTopColor: '232553',
-              height: Platform.OS === 'ios' ? 70 : 70, // Increased height for iOS
+            tabBarActiveTintColor: '#A1C181',
+            tabBarInactiveTintColor: '#233D4D',
+            tabBarStyle: {
+              position: 'absolute',
+              bottom: 15,
+              left: 20,
+              right: 20,
+              elevation: 10,
+              backgroundColor: '#619B8A',
+              borderRadius: 30,
+              height: 70,
+              shadowColor: '#000',
+              shadowOpacity: 0.1,
+              shadowOffset: { width: 0, height: 10 },
+              shadowRadius: 20,
+            height: Platform.OS === 'ios' ? 70 : 70, // Increased height for iOS
             },
           }}
         >
