@@ -353,8 +353,11 @@ const SERTemergency = () => {
             className="w-20 h-20 mx-auto mb-4"
           />
 
-          <Text className="text-2xl text-black text-center font-psemibold mt-2 mb-6">
+          <Text className="text-2xl text-black text-center font-psemibold mt-2">
             Report an Emergency!
+          </Text>
+          <Text className="text-l text-black text-center font-psemibold mt-2 mb-6">
+            (SERT Member)
           </Text>
             
           <View className="bg-white rounded-xl justify-center px-5 pb-10 mt-2">
@@ -567,7 +570,7 @@ const SERTemergency = () => {
             </Modal>
 
           </View>
-          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.0.4.1</Text>
+          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.0.6</Text>
         </View>
         
       </ScrollView>

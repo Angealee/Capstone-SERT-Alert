@@ -44,6 +44,7 @@ const LearningModules = () => {
                 Learning Materials
               </Text>
               <View className="flex-row justify-between flex-wrap mt-5 mb-8 ">
+                
                 {/* •	Emergency Response Basics */}
                 <TouchableOpacity 
                   className="bg-white p-4 rounded-2xl mb-4 w-[48%] h-40 border border-gray-300" 
@@ -51,9 +52,9 @@ const LearningModules = () => {
                   style={getShadowStyle()}
                 >
                   <Image 
-                    source={images.emergencyResponse} // Add your thumbnail image here
+                    source={images.basicEmergency} // Add your thumbnail image here
                     className="w-full h-20 rounded-lg"
-                    resizeMode='cover'
+                    resizeMode='contain'
                   />
                   <Text className="text-center text-sm font-psemibold"
                   style={{fontSize: 14}}>
@@ -77,15 +78,15 @@ const LearningModules = () => {
                   </Text>
                 </TouchableOpacity>
 
-                {/* •	Natural Disaster Preparedness */}
-                <TouchableOpacity 
+                 {/* •	Natural Disaster Preparedness */}
+                 <TouchableOpacity 
                   className="bg-white p-4 rounded-2xl mb-4 w-[48%] h-40 border border-gray-300"
                   onPress={() => handleNavigate('naturalDisasterPreparedness')}
                   style={getShadowStyle()}
                 >
                   <Image 
-                    source={images.naturalDisaster} // Add your thumbnail image here
-                    className="w-full h-24 rounded-lg"
+                    source={images.newNaturalDisaster} // Add your thumbnail image here
+                    className="w-full h-20 rounded-lg"
                     resizeMode='contain'
                   />
                   <Text className="text-center mt-1 text-sm font-psemibold">

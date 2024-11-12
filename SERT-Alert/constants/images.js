@@ -46,5 +46,30 @@ import applyGauze from "../assets/images/applyGauze.jpg";
 import leanForward from "../assets/images/leanForward.png";
 import makeFist from "../assets/images/makeFist.jpg";
 import pilay from "../assets/images/pilay.jpg";
+import earthquakeSafety from "../assets/images/earthquakeSafety.jpg";
+import dropCover from "../assets/images/dropCover.jpg";
+import fallenLines from "../assets/images/fallenLines.jpg";
+import fireEvacuation from "../assets/images/fireEvacuation.jpg";
+import exitTwo from "../assets/images/exitTwo.jpeg";
+import smokeDetector from "../assets/images/smokeDetector.jpg";
+import smokeLow from "../assets/images/smokeLow.jpg";
+import flooding from "../assets/images/flooding.png";
+import supplyKit from "../assets/images/supplyKit.jpg";
+import unplugged from "../assets/images/unplugged.jpg";
+import floodedArea from "../assets/images/floodedArea.jpeg";
+import Heatwave from "../assets/images/Heatwave.jpg";
+import heatProtection from "../assets/images/heatProtection.jpg";
+import understandingWater from "../assets/images/understandingWater.jpg";
+import severeWeather from "../assets/images/severeWeather.jpg";
+import rescueStick from "../assets/images/rescueStick.jpg";
+import childPool from "../assets/images/childPool.jpg";
+import float from "../assets/images/float.png";
+import rescueTechniques from "../assets/images/rescueTechniques.jpg";
+import drownPrevention from "../assets/images/drownPrevention.jpg";
+import waterSurvival from "../assets/images/waterSurvival.jpg";
+import basicEmergency from "../assets/images/basicEmergency.png";
+import newNaturalDisaster from "../assets/images/newNaturalDisaster.jpg";
 
-export default { profile, charldrinBello, kiokiSerrano, luisMagdangal, riskAssessment, emergencyResponseHeader, kobyMacale, SERTpicture, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster, callforhelp, basicSupport, keepCalm, takeInEmergency, bleedControl, cpr, burnTreatment, choking, fracture, firstAidHeader, placeTheHeel, placeHand, straightHand, pushDown, paceCompression, cleanCloth, stopBleeding, addCloth, presstillStop, afterBleeding, wrapSnugly, secureBandage, torniquet, washBurn, applyGauze, leanForward, makeFist, pilay};
+
+
+export default { profile, charldrinBello, kiokiSerrano, luisMagdangal, riskAssessment, emergencyResponseHeader, kobyMacale, SERTpicture, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster, callforhelp, basicSupport, keepCalm, takeInEmergency, bleedControl, cpr, burnTreatment, choking, fracture, firstAidHeader, placeTheHeel, placeHand, straightHand, pushDown, paceCompression, cleanCloth, stopBleeding, addCloth, presstillStop, afterBleeding, wrapSnugly, secureBandage, torniquet, washBurn, applyGauze, leanForward, makeFist, pilay, earthquakeSafety, dropCover, fallenLines, fireEvacuation, exitTwo, smokeDetector, smokeLow, flooding, supplyKit, unplugged, floodedArea, Heatwave, heatProtection, understandingWater, severeWeather, rescueStick, childPool, float, rescueTechniques, drownPrevention, waterSurvival, basicEmergency, newNaturalDisaster};

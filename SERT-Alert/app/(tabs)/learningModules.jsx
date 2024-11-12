@@ -52,9 +52,9 @@ const LearningModules = () => {
                   style={getShadowStyle()}
                 >
                   <Image 
-                    source={images.emergencyResponse} // Add your thumbnail image here
+                    source={images.basicEmergency} // Add your thumbnail image here
                     className="w-full h-20 rounded-lg"
-                    resizeMode='cover'
+                    resizeMode='contain'
                   />
                   <Text className="text-center text-sm font-psemibold"
                   style={{fontSize: 14}}>
@@ -85,8 +85,8 @@ const LearningModules = () => {
                   style={getShadowStyle()}
                 >
                   <Image 
-                    source={images.naturalDisaster} // Add your thumbnail image here
-                    className="w-full h-24 rounded-lg"
+                    source={images.newNaturalDisaster} // Add your thumbnail image here
+                    className="w-full h-20 rounded-lg"
                     resizeMode='contain'
                   />
                   <Text className="text-center mt-1 text-sm font-psemibold">
@@ -106,7 +106,7 @@ const LearningModules = () => {
                     resizeMode='cover'
                   />
                   <Text className="text-center mt-1 text-sm font-psemibold">
-                  Swimming & Water Safety
+                  Water Safety
                   </Text>
                 </TouchableOpacity>
               </View>
