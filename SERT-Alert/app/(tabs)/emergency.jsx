@@ -12,6 +12,9 @@ import FormField from '../../components/FormField';
 import * as Clipboard from 'expo-clipboard';
 import CaptureButton from '../../components/CaptureButton';
 import CustomButton from '../../components/CustomButton';
+import { LinearGradient } from 'expo-linear-gradient';
+import AnimatedGradientBackground1 from '../../components/AnimatedGradientBackground1';
+import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
 
 const Emergency = () => {
   const [form, setForm] = useState({
@@ -243,7 +246,12 @@ const Emergency = () => {
 
 
   return (
-    <SafeAreaView className="flex-1 bg-orange-500 p-2">
+    <SafeAreaView className="flex-1 p-5"
+    style={{
+      backgroundColor: '#FE7F2D'
+    }}>
+      <AnimatedGradientBackground1 />
+      
       {/* For Modals */}
       <Modal
           transparent={true}
@@ -336,7 +344,7 @@ const Emergency = () => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
       >
-        <View className="bg-white p-6 rounded-3xl shadow-lg mt-10 mb-6">
+        <View className="bg-white pl-2 pr-2 pb-2 rounded-3xl shadow-lg mt-10 mb-6">
           <Image
             source={images.SERTlogo}
             resizeMode='contain'
@@ -347,7 +355,7 @@ const Emergency = () => {
             Report an Emergency!
           </Text>
 
-          <View className="bg-white rounded-xl justify-center px-5 pb-10 mt-2">
+          <View className="rounded-xl justify-center px-5 pb-10 mt-2">
             <Text className="text-black-600 font-semibold mt-5 mb-2">Building:</Text>
             <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
               {Platform.OS === 'android' ? (
@@ -462,18 +470,25 @@ const Emergency = () => {
               }}
             />
             
-            <TouchableOpacity
-              style={{
-                width: '100%',
-                paddingVertical: 25,
-                backgroundColor: isWithinPremises ? '#EF2A39' : 'gray',
-                borderRadius: 10,
-                alignItems: 'center',
-                marginTop: 5,              }}
-              onPress={submit}
-              disabled={!isWithinPremises}
-            >
-              <Text style={{ color: 'white', fontSize: 18 }}>Submit Report</Text>
+            <TouchableOpacity onPress={submit}>
+              <LinearGradient
+                colors={['#EF2A39', '#FA7017']}
+                style={{
+                  width: '100%',
+                  paddingVertical: 25,
+                  borderRadius: 20,
+                  shadowColor: '#EF2A39',
+                  shadowOffset: { width: 0, height: 4 },
+                  shadowOpacity: 0.3,
+                  shadowRadius: 8,
+                  alignItems: 'center',
+                }}
+                disabled={!isWithinPremises}
+              >
+                <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
+                  Submit Report
+                </Text>
+              </LinearGradient>
             </TouchableOpacity>
           
             {/* Location Info */}

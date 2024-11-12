@@ -15,7 +15,7 @@ const TabIcon = ({ icon, color, name, focused }) => {
         style={Platform.OS === 'ios' ? styles.iconIOS : styles.iconDefault}
       />
 
-      <Text style={{ color: color }} className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`}>
+      <Text style={{ color: '#FFFFFF' }} className={`${focused ? 'font-psemibold' : 'font-pregular'} text-xs`}>
         {name}
       </Text>
     </View>
@@ -28,13 +28,22 @@ const TabsLayout = () => {
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
-          tabBarActiveTintColor: '#ab0505',
-          tabBarInactiveTintColor: '#EF2A39',
+          tabBarActiveTintColor: '#C63434',
+          tabBarInactiveTintColor: '#233D4D',
           tabBarStyle: {
-            backgroundColor: '#ECB548',
-            borderTopWidth: 0,
-            borderTopColor: '232553',
-            height: Platform.OS === 'ios' ? 70 : 70, // Increased height for iOS
+            position: 'absolute',
+            bottom: 15,
+            left: 20,
+            right: 20,
+            elevation: 10,
+            backgroundColor: '#619B8A',
+            borderRadius: 30,
+            height: 70,
+            shadowColor: '#000',
+            shadowOpacity: 0.1,
+            shadowOffset: { width: 0, height: 10 },
+            shadowRadius: 20,
+          height: Platform.OS === 'ios' ? 70 : 70, // Increased height for iOS
           },
         }}
       >

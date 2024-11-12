@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { icons, images } from '../../constants';
 import { useRouter } from 'expo-router';
 import SearchInput from '../../components/SearchInput';
+import AnimatedGradientBackground1 from '../../components/AnimatedGradientBackground1';
 
 const LearningModules = () => {
   const router = useRouter(); // Initialize router
@@ -22,100 +23,101 @@ const LearningModules = () => {
   });
   return (
     <SafeAreaView className="flex-1 bg-orange-500 p-2">
-      <ScrollView> 
-          <View className="my-5 px-3 space-y-6">
-            <View className="justify-between items-center">
-            <View className="">
-                <Image 
-                  source={icons.book}
-                  className="w-20 h-20 ml-2"
-                  resizeMode='contain'
-                />
+      <AnimatedGradientBackground1/>
+        <ScrollView> 
+            <View className="my-5 px-3 space-y-6">
+              <View className="justify-between items-center">
+              <View className="">
+                  <Image 
+                    source={icons.book}
+                    className="w-20 h-20 ml-2"
+                    resizeMode='contain'
+                  />
+                </View>
+                <View>
+                  <Text className="text-2xl font-psemibold text-white mt-2">
+                    SERT Alert Learning!
+                  </Text>
+                </View>
+
               </View>
-              <View>
-                <Text className="text-2xl font-psemibold text-white mt-2">
-                  SERT Alert Learning!
+
+              <View className=" bg-yellow-100 p-6 rounded-3xl shadow-lg mt-10 mb-2">
+                <Text className="text-black-100 text-lg font-pregular mb-3">
+                  Learning Materials
                 </Text>
-              </View>
+                <View className="flex-row justify-between flex-wrap mt-5 mb-8 ">
+                  {/* •	Emergency Response Basics */}
+                  <TouchableOpacity 
+                    className="bg-white p-4 rounded-2xl mb-4 w-[48%] h-40 border border-gray-300" 
+                    onPress={() => handleNavigate('emergencyResponseBasics')}
+                    style={getShadowStyle()}
+                  >
+                    <Image 
+                      source={images.basicEmergency} // Add your thumbnail image here
+                      className="w-full h-20 rounded-lg"
+                      resizeMode='contain'
+                    />
+                    <Text className="text-center text-sm font-psemibold"
+                    style={{fontSize: 14}}>
+                      Basic Emergency Response
+                    </Text>
+                  </TouchableOpacity>
 
+                  {/* •	First Aid Techniques */}
+                  <TouchableOpacity 
+                    className="bg-white p-4 rounded-2xl mb-4 w-[48%] h-40 border border-gray-300"
+                    onPress={() => handleNavigate('firstAidTechniques')}
+                    style={getShadowStyle()}
+                  >
+                    <Image 
+                      source={images.firstAid} // Add your thumbnail image here
+                      className="w-full h-24 rounded-lg"
+                      resizeMode='contain'
+                    />
+                    <Text className="text-center mt-1 text-sm font-psemibold">
+                      First Aid Techniques
+                    </Text>
+                  </TouchableOpacity>
+
+                  {/* •	Natural Disaster Preparedness */}
+                  <TouchableOpacity 
+                    className="bg-white p-4 rounded-2xl mb-4 w-[48%] h-40 border border-gray-300"
+                    onPress={() => handleNavigate('naturalDisasterPreparedness')}
+                    style={getShadowStyle()}
+                  >
+                    <Image 
+                      source={images.newNaturalDisaster} // Add your thumbnail image here
+                      className="w-full h-20 rounded-lg"
+                      resizeMode='contain'
+                    />
+                    <Text className="text-center mt-1 text-sm font-psemibold">
+                    Natural Disaster Preparedness
+                    </Text>
+                  </TouchableOpacity>
+
+                  {/* •	Swimming and Water Safety */}
+                  <TouchableOpacity 
+                    className="bg-white p-4 rounded-2xl mb-4 w-[48%] h-40 border border-gray-300"
+                    onPress={() => handleNavigate('swimmingWaterSafety')}
+                    style={getShadowStyle()}
+                  >
+                    <Image 
+                      source={images.waterSafety} // Add your thumbnail image here
+                      className="w-full h-24 rounded-lg"
+                      resizeMode='cover'
+                    />
+                    <Text className="text-center mt-1 text-sm font-psemibold">
+                    Water Safety
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                
+              </View>
             </View>
 
-            <View className=" bg-yellow-100 p-6 rounded-3xl shadow-lg mt-10 mb-2">
-              <Text className="text-black-100 text-lg font-pregular mb-3">
-                Learning Materials
-              </Text>
-              <View className="flex-row justify-between flex-wrap mt-5 mb-8 ">
-                {/* •	Emergency Response Basics */}
-                <TouchableOpacity 
-                  className="bg-white p-4 rounded-2xl mb-4 w-[48%] h-40 border border-gray-300" 
-                  onPress={() => handleNavigate('emergencyResponseBasics')}
-                  style={getShadowStyle()}
-                >
-                  <Image 
-                    source={images.basicEmergency} // Add your thumbnail image here
-                    className="w-full h-20 rounded-lg"
-                    resizeMode='contain'
-                  />
-                  <Text className="text-center text-sm font-psemibold"
-                  style={{fontSize: 14}}>
-                    Basic Emergency Response
-                  </Text>
-                </TouchableOpacity>
-
-                {/* •	First Aid Techniques */}
-                <TouchableOpacity 
-                  className="bg-white p-4 rounded-2xl mb-4 w-[48%] h-40 border border-gray-300"
-                  onPress={() => handleNavigate('firstAidTechniques')}
-                  style={getShadowStyle()}
-                >
-                  <Image 
-                    source={images.firstAid} // Add your thumbnail image here
-                    className="w-full h-24 rounded-lg"
-                    resizeMode='contain'
-                  />
-                  <Text className="text-center mt-1 text-sm font-psemibold">
-                    First Aid Techniques
-                  </Text>
-                </TouchableOpacity>
-
-                {/* •	Natural Disaster Preparedness */}
-                <TouchableOpacity 
-                  className="bg-white p-4 rounded-2xl mb-4 w-[48%] h-40 border border-gray-300"
-                  onPress={() => handleNavigate('naturalDisasterPreparedness')}
-                  style={getShadowStyle()}
-                >
-                  <Image 
-                    source={images.newNaturalDisaster} // Add your thumbnail image here
-                    className="w-full h-20 rounded-lg"
-                    resizeMode='contain'
-                  />
-                  <Text className="text-center mt-1 text-sm font-psemibold">
-                  Natural Disaster Preparedness
-                  </Text>
-                </TouchableOpacity>
-
-                {/* •	Swimming and Water Safety */}
-                <TouchableOpacity 
-                  className="bg-white p-4 rounded-2xl mb-4 w-[48%] h-40 border border-gray-300"
-                  onPress={() => handleNavigate('swimmingWaterSafety')}
-                  style={getShadowStyle()}
-                >
-                  <Image 
-                    source={images.waterSafety} // Add your thumbnail image here
-                    className="w-full h-24 rounded-lg"
-                    resizeMode='cover'
-                  />
-                  <Text className="text-center mt-1 text-sm font-psemibold">
-                  Water Safety
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              
-            </View>
-          </View>
-
-      {/* /> */}
-      </ScrollView> 
+        {/* /> */}
+        </ScrollView> 
     </SafeAreaView>
   )
 }
