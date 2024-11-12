@@ -386,46 +386,105 @@ const FirstAidTechniques = () => {
           </View>
 
           {/* Burns Treatment */}
-          <View ref={burnRef} className="mb-4 mt-4" >
+          <View ref={burnRef} className="mb-4 mt-4">
             <Text className="text-xl font-pbold mb-2">3. Burns Treatment</Text>
             <Image 
               source={images.burnTreatment} // Add your image here
-              className="w-full h-56 rounded-lg"
+              className="w-full h-56 mb-3 rounded-lg"
               resizeMode='contain'
             />
 
-            <Text className="text-lg mb-2 pl-4 pr-2">
-              //input descriptin here
+            <Text className="text-lg mb-4 pl-4 pr-2">
+              Burns can vary in severity, and providing immediate and correct first aid is essential for reducing pain, preventing infection, and promoting healing. Here are the steps to treat burns effectively.
             </Text>
             
+            {/* A. Cool the Burn */}
             <Text className="text-lg font-bold mb-2 pl-4">A. Cool the Burn:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+              Cooling the burn as soon as possible reduces pain and prevents the burn from worsening. Use cool (not ice-cold) water to calm the area and reduce heat.
             </Text>
+            <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
+              <View className="pl-2 pr-3">
+                <Text className="font-bold text-lg">Step-by-Step</Text>
+                <View className="p-2">
+                  <Text className="text-lg mb-2">• Hold the burned area under cool running water for 10-15 minutes.</Text>
+                    <Image 
+                      source={images.washBurn} // Add your image here
+                      className="w-full h-40 rounded-lg mt-2 mb-6"
+                      resizeMode='contain'
+                    />
+                  <Text className="text-lg mb-2">• If running water isn’t available, use a clean, cool, damp cloth on the burn.</Text>
+                    <Image 
+                      source={images.torniquet} // Add your image here
+                      className="w-full h-40 rounded-lg mt-2 mb-6"
+                      resizeMode='contain'
+                    />
+                  <Text className="text-lg mb-2">• Avoid using ice, as this can cause further skin damage.</Text>
+                </View>
+              </View>
+            </View>
 
+            {/* B. Covering the Burn */}
             <Text className="text-lg font-bold mb-2 pl-4">B. Covering the Burn:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+              After cooling, covering the burn protects it from infection and further injury. Use a sterile, non-stick bandage or a clean cloth to cover the affected area.
             </Text>
+            <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
+              <View className="pl-2 pr-3">
+                <Text className="font-bold text-lg">Step-by-Step</Text>
+                <View className="p-2">
+                  <Text className="text-lg mb-2">• Gently apply a sterile, non-stick bandage or gauze over the burn.</Text>
+                    <Image 
+                      source={images.applyGauze} // Add your image here
+                      className="w-full h-40 rounded-lg mt-2 mb-6"
+                      resizeMode='contain'
+                    />
+                  <Text className="text-lg mb-2">• Secure the dressing without applying too much pressure to avoid pain or damage.</Text>
+                </View>
+              </View>
+            </View>
 
-            <Text className="text-lg font-bold mb-2 pl-4">C. Avoiding Ice:</Text>
+            {/* C. Avoiding Ice */}
+            <Text className="text-lg font-bold mb-2 mt-2 pl-4">C. Avoiding Ice:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+              Never apply ice directly to a burn, as it can restrict blood flow and worsen tissue damage. Instead, rely on cool, running water to lower the burn's temperature safely.
             </Text>
 
-            <Text className="text-lg font-bold mb-2 pl-4">D. Identifying Burn Severity:</Text>
+            {/* D. Identifying Burn Severity */}
+            <Text className="text-lg font-bold mb-2 mt-2 pl-4">D. Identifying Burn Severity:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2"> 
-            //input descriptin here
+              Burns are classified into three levels: first-degree (superficial), second-degree (partial-thickness), and third-degree (full-thickness). Recognizing the severity of a burn is essential for appropriate treatment and knowing when to seek medical help.
             </Text>
+            <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
+              <View className="pl-2 pr-3">
+                <Text className="font-bold text-lg">Step-by-Step</Text>
+                <View className="p-2">
+                  <Text className="text-lg mb-2">• First-degree burns affect only the outer layer of skin and cause redness and pain.</Text>
+                  <Text className="text-lg mb-2">• Second-degree burns affect deeper skin layers and cause blistering, redness, and swelling.</Text>
+                  <Text className="text-lg mb-2">• Third-degree burns penetrate all skin layers and may appear white, charred, or leathery. These require immediate medical attention.</Text>
+                </View>
+              </View>
+            </View>
 
-            <Text className="text-lg font-bold mb-2 pl-4">E. Pain Relief Techniques:</Text>
+            {/* E. Pain Relief Techniques */}
+            <Text className="text-lg font-bold mt-2 mb-2 pl-4">E. Pain Relief Techniques:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2"> 
-            //input descriptin here
+              Pain relief is important in burn care to reduce discomfort and aid recovery. Over-the-counter pain relievers can be used, and some home treatments can also help soothe the burn.
             </Text>
+            <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
+              <View className="pl-2 pr-3">
+                <Text className="font-bold text-lg">Step-by-Step</Text>
+                <View className="p-2">
+                  <Text className="text-lg mb-2">• Take an over-the-counter pain reliever, like ibuprofen or acetaminophen, to manage pain.</Text>
+                  <Text className="text-lg mb-2">• Apply aloe vera gel or a moisturizing lotion after cooling the burn, as this can provide some relief.</Text>
+                </View>
+              </View>
+            </View>
           </View>
 
+
           {/* Choking Response */}
-          <View ref={chokingRef} className="mb-4 mt-4" >
+          <View ref={chokingRef} className="mb-4 mt-4">
             <Text className="text-xl font-pbold mb-2">4. Choking Response</Text>
             <Image 
               source={images.choking} // Add your image here
@@ -434,72 +493,166 @@ const FirstAidTechniques = () => {
             />
 
             <Text className="text-lg mb-2 pl-4 pr-2">
-              //input descriptin here
-            </Text>
-            
-            <Text className="text-lg font-bold mb-2 pl-4">A. Back Blows: </Text>
-            <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+              Choking occurs when an object blocks the airway, preventing breathing. Knowing how to respond quickly and effectively is crucial in a choking emergency. Here are the primary methods for aiding someone who is choking.
             </Text>
 
+            {/* A. Back Blows */}
+            <Text className="text-lg font-bold mb-2 pl-4">A. Back Blows:</Text>
+            <Text className="text-lg mb-2 pl-4 pr-2">
+              Back blows are the first step in relieving choking by helping dislodge the object blocking the airway. Only perform if the person is conscious.
+            </Text>
+            <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
+              <View className="pl-2 pr-3">
+                <Text className="font-bold text-lg">Step-by-Step</Text>
+                <View className="p-2">
+                  <Text className="text-lg mb-2">• Stand to the side and slightly behind the person.</Text>
+                  <Text className="text-lg mb-2">• Support their chest with one hand and lean them forward.</Text>
+                    <Image 
+                      source={images.leanForward} // Add your image here
+                      className="w-full h-40 rounded-lg mt-2 mb-6"
+                      resizeMode='contain'
+                    />
+                  <Text className="text-lg mb-2">• Use the heel of your hand to give up to 5 firm back blows between their shoulder blades.</Text>
+                </View>
+              </View>
+            </View>
+
+            {/* B. Abdominal Thrusts (Heimlich Maneuver) */}
             <Text className="text-lg font-bold mb-2 pl-4">B. Abdominal Thrusts (Heimlich Maneuver):</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+              The Heimlich maneuver uses quick, upward abdominal thrusts to help expel the object. It’s effective if back blows do not relieve the choking.
             </Text>
+            <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
+              <View className="pl-2 pr-3">
+                <Text className="font-bold text-lg">Step-by-Step</Text>
+                <View className="p-2">
+                  <Text className="text-lg mb-2">• Stand behind the person and wrap your arms around their waist.</Text>
+                  <Text className="text-lg mb-2">• Make a fist with one hand, placing it just above their navel.</Text>
+                    <Image 
+                      source={images.makeFist} // Add your image here
+                      className="w-full h-40 rounded-lg mt-2 mb-6"
+                      resizeMode='contain'
+                    />
+                  <Text className="text-lg mb-2">• Grasp your fist with your other hand and perform quick, upward thrusts until the object is expelled.</Text>
+                </View>
+              </View>
+            </View>
 
+            {/* C. Choking in Infants */}
             <Text className="text-lg font-bold mb-2 pl-4">C. Choking in Infants:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+              For infants under one year old, use a combination of back blows and chest thrusts as their smaller size and delicate structure require gentler techniques.
             </Text>
+            <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
+              <View className="pl-2 pr-3">
+                <Text className="font-bold text-lg">Step-by-Step</Text>
+                <View className="p-2">
+                  <Text className="text-lg mb-2">• Place the infant face down on your forearm, supporting their head and neck.</Text>
+                  <Text className="text-lg mb-2">• Deliver 5 gentle but firm back blows between the shoulder blades.</Text>
+                  <Text className="text-lg mb-2">• If not relieved, turn the infant face up and use two fingers to perform 5 gentle chest thrusts in the center of the chest.</Text>
+                </View>
+              </View>
+            </View>
 
+            {/* D. Recognizing Silent Choking */}
             <Text className="text-lg font-bold mb-2 pl-4">D. Recognizing Silent Choking:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+              Silent choking occurs when a person cannot cough, speak, or make noise due to a complete airway obstruction. Recognizing this is critical, as silent choking can quickly lead to unconsciousness.
             </Text>
+            <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
+              <View className="pl-2 pr-3">
+                <Text className="font-bold text-lg">Tips:</Text>
+                <View className="p-2">
+                  <Text className="text-lg mb-2">• Look for hand signals, panic, or inability to speak.</Text>
+                  <Text className="text-lg mb-2">• Act quickly with back blows and abdominal thrusts if the person is unable to respond vocally.</Text>
+                </View>
+              </View>
+            </View>
 
+            {/* E. Aftercare Post-Choking */}
             <Text className="text-lg font-bold mb-2 pl-4">E. Aftercare Post-Choking:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+              After a choking incident, the airway may be sore or irritated. Encourage the person to see a healthcare provider, especially if abdominal thrusts were applied, to rule out any internal injuries.
             </Text>
           </View>
 
+
           {/* Fracture Stabilization */}
-          <View ref={fractureRef} className="mb-4 mt-4" >
-            <Text className="text-xl font-pbold mb-2">5. Fracture Stabilization</Text>
+          <View ref={fractureRef} className="mb-4 mt-4">
+            <Text className="text-xl font-pbold mb-">5. Fracture Stabilization</Text>
             <Image 
               source={images.fracture} // Add your image here
-              className="w-full h-56 rounded-lg"
+              className="w-full h-56 mt-4 mb-4 rounded-lg"
               resizeMode='contain'
             />
 
-            <Text className="text-lg mb-2 pl-4 pr-2">
-            Proper handling of fractures can prevent further injury and alleviate pain. This section explains the methods for immobilizing broken bones until professional help arrives.
+            <Text className="text-lg mb-6 pl-4 pr-2">
+              Proper handling of fractures can prevent further injury and alleviate pain. This section explains the methods for immobilizing broken bones until professional help arrives.
             </Text>
-            
+
+            {/* A. Immobilization Techniques */}
             <Text className="text-lg font-bold mb-2 pl-4">A. Immobilization Techniques:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+              Immobilizing the affected area helps prevent bone movement that could lead to additional injury. Use splints or makeshift materials to secure the fracture site.
             </Text>
+            <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
+              <View className="pl-2 pr-3">
+                <Text className="font-bold text-lg">Step-by-Step</Text>
+                <View className="p-2">
+                  <Text className="text-lg mb-2">• Find a rigid object, such as a board or stick, to serve as a splint.</Text>
+                  <Text className="text-lg mb-2">• Place the splint along the limb, ensuring it extends past the joints above and below the fracture.</Text>
+                  <Image 
+                    source={images.pilay} // Add your image here
+                    className="w-full h-56 rounded-lg"
+                    resizeMode='contain'
+                  />
+                  <Text className="text-lg mb-2">• Secure the splint with cloth, gauze, or other soft materials, ensuring it's tight but not cutting off circulation.</Text>
+                </View>
+              </View>
+            </View>
 
+            {/* B. Avoiding Movement */}
             <Text className="text-lg font-bold mb-2 pl-4">B. Avoiding Movement:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+              Minimize movement of the fractured area as much as possible to prevent further injury or displacement of the bone.
             </Text>
 
+            {/* C. Cold Application */}
             <Text className="text-lg font-bold mb-2 pl-4">C. Cold Application:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+              Applying ice or a cold pack helps reduce swelling and relieve pain. Be sure to avoid direct contact between the ice and skin by wrapping the ice pack in a cloth.
             </Text>
+            <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
+              <View className="pl-2 pr-3">
+                <Text className="font-bold text-lg">Step-by-Step</Text>
+                <View className="p-2">
+                  <Text className="text-lg mb-2">• Wrap ice or a cold pack in a thin cloth.</Text>
+                  <Text className="text-lg mb-2">• Gently place it over the injured area, keeping it there for 15-20 minutes.</Text>
+                  <Text className="text-lg mb-2">• Remove for 20 minutes and reapply as needed.</Text>
+                </View>
+              </View>
+            </View>
 
+            {/* D. Identifying Different Fracture Types */}
             <Text className="text-lg font-bold mb-2 pl-4">D. Identifying Different Fracture Types:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+              Fractures can vary in severity and appearance. Open fractures involve a bone breaking through the skin, while closed fractures remain under the skin. Knowing the type of fracture can aid responders in determining proper treatment.
             </Text>
 
+            {/* E. Elevating the Limb */}
             <Text className="text-lg font-bold mb-2 pl-4">E. Elevating the Limb:</Text>
             <Text className="text-lg mb-2 pl-4 pr-2">
-            //input descriptin here
+              Elevate the fractured limb if possible to help reduce swelling. Ensure it is supported properly and remains as still as possible during elevation.
             </Text>
+            <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
+              <View className="pl-2 pr-3">
+                <Text className="font-bold text-lg">Step-by-Step</Text>
+                <View className="p-2">
+                  <Text className="text-lg mb-2">• Place pillows or other soft supports under the limb to elevate it slightly.</Text>
+                  <Text className="text-lg mb-2">• Ensure the limb remains immobilized while elevated.</Text>
+                </View>
+              </View>
+            </View>
           </View>
 
 
