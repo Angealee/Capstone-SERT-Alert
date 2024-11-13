@@ -59,9 +59,9 @@ const Notification = () => {
 
                 {/* Context and location display */}
                 <View style={styles.notificationContent}>
-                  <Text style={styles.contextText}>{notification.context}</Text>
+                  <Text style={styles.contextText}>{notification.body}</Text>
                   <Text style={styles.subText}>
-                    {notification.building} | {notification.floorlocation}
+                    {notification.id} | {notification.title}
                   </Text>
                 </View>
               </View>

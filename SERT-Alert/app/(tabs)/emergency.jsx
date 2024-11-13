@@ -58,7 +58,7 @@ const Emergency = () => {
       const municipality = locationDetails.city || '???';
       const province = locationDetails.region || '???';
 
-      const withinLatBounds = latitude >= 15.331148 && latitude <= 15.33321109;
+      const withinLatBounds = latitude >= 15.332148 && latitude <= 15.33321109;
       const withinLongBounds = longitude >= 120.5808391 && longitude <= 120.5906055;
       console.log("Lat and Long Details:", latitude, longitude);
 
@@ -470,9 +470,13 @@ const Emergency = () => {
               }}
             />
             
-            <TouchableOpacity onPress={submit}>
+            <TouchableOpacity onPress={submit} disabled={!isWithinPremises}>
               <LinearGradient
-                colors={['#EF2A39', '#FA7017']}
+                colors={
+                  isWithinPremises
+                    ? ['#EF2A39', '#FA7017']  // Active colors
+                    : ['#B0B0B0', '#D3D3D3']  // Disabled colors (gray shades)
+                }
                 style={{
                   width: '100%',
                   paddingVertical: 25,
@@ -483,8 +487,8 @@ const Emergency = () => {
                   shadowRadius: 8,
                   alignItems: 'center',
                 }}
-                disabled={!isWithinPremises}
               >
+              
                 <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
                   Submit Report
                 </Text>
@@ -500,7 +504,6 @@ const Emergency = () => {
                     <Text style={{ color: '#333', fontSize: 16, fontWeight: 10, marginTop: 3 }}>Your current location:</Text>
                       <Text className="text-black-600 font-semibold"> {locationInfo.municipality}, {locationInfo.province}</Text>
                       
-                        
 
                     <Text style={{ color: '#333', fontSize: 16, fontWeight: 50, marginTop: 20 }}>Swipe Up to refresh!</Text>
                 </View>
@@ -511,7 +514,7 @@ const Emergency = () => {
                           </Text>
             )}
           </View>
-          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.0.6</Text>
+          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.1.0</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
