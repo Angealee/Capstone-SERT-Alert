@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);  // Tracks if the user is logged in
   const router = useRouter();
 
-  // // Mock function to simulate API response
+  // Mock function to simulate API response
   // const mockLogin = async (username, password) => {
   //   return new Promise((resolve) => {
   //     setTimeout(() => {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     setIsSubmitting(true);
     try {
-      const response = await fetch('http://192.168.1.14:5117/api/Login', {
+      const response = await fetch('http://192.168.0.15:5117/api/Login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -34,11 +34,10 @@ export const AuthProvider = ({ children }) => {
     
       const data = await response.json();
 
-      // const response = await mockLogin(username, password);
+      // const data = await mockLogin(username, password);
 
       if (data.success) {  // If the login is successful
         setIsAuthenticated(true);  // Update the state to show the user is logged in
-        await AsyncStorage.setItem('token', data.token);  // Store the token in AsyncStorage
         return { success: true };
       } else {
         return { success: false, message: data.message || 'Invalid credentials' };
@@ -47,26 +46,37 @@ export const AuthProvider = ({ children }) => {
       console.error('Login error:', error);
       return { success: false, message: 'Something went wrong. Please try again later.' };
     } finally {
-      setIsSubmitting(false);  // Hide the loading spinner after the login attempt
+      setIsSubmitting(false);  // Hide the loading after the login attempt
     }
   };
 
-  // Logout function that clears the session by removing the token
-  const logout = async () => {
-    await AsyncStorage.removeItem('token');  // Clear the token from AsyncStorage
-    setIsAuthenticated(false);  // Update the state to show the user is logged out
-    router.replace('/auth/sign-in');
-  };
-
-  // Check if a token exists in AsyncStorage when the app initializes, to restore the session
+  //Function to check if the user is currently authenticated based on session data
   const checkAuth = async () => {
-    const token = await AsyncStorage.getItem('token');  // Get the token from storage
-    if (token) setIsAuthenticated(true);  // If a token exists, set the user as logged in
+    try {
+      const response = await fetch('http://192.168.0.15:5117/api/CheckSession', {
+        method: 'GET',
+        credentials: 'include',//cookies to maintain session state
+      });
+      const data = await response.json();
+      setIsAuthenticated(data.isAuthenticated);
+    } catch (error) {
+      console.error('Session check error:', error);
+    }
   };
 
   useEffect(() => {
-    checkAuth();  // Run checkAuth when the app loads
+    checkAuth();
   }, []);
+
+  // Logout function that clears the session
+  const logout = async () => {
+    await fetch('http://192.168.0.15:5117/api/Logout', {
+      method: 'POST',
+      credentials: 'include',
+    });
+    setIsAuthenticated(false);
+    router.replace('/auth/sign-in');
+  };
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, isSubmitting, login, logout }}>
