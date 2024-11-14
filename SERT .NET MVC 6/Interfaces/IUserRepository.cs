@@ -11,6 +11,7 @@ namespace SertWebApp.Interfaces
         List<User> FindAllAdmins(Role currentUserRole);
         User FindByUsername(string username);
         User? FindByUsernameAndPassword(string username, string password);
+        User? FindSertUserByUsernameAndPassword(string username, string password);
         bool IsUserOnline(int id);
         bool IsUserExists(string username);
         void Update(User user);

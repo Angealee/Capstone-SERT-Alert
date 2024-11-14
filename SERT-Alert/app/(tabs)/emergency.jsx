@@ -58,8 +58,8 @@ const Emergency = () => {
       const municipality = locationDetails.city || '???';
       const province = locationDetails.region || '???';
 
-      const withinLatBounds = latitude >= 15.332148 && latitude <= 15.33321109;
-      const withinLongBounds = longitude >= 120.5808391 && longitude <= 120.5906055;
+      const withinLatBounds = latitude >= 15.302148 && latitude <= 15.35321109;
+      const withinLongBounds = longitude >= 119.5808391 && longitude <= 122.5906055;
       console.log("Lat and Long Details:", latitude, longitude);
 
       // Set location data and check if within premises
@@ -192,17 +192,19 @@ const Emergency = () => {
       });
       // copyBase64ToClipboard(base64Image); // Automatically copy Base64 to clipboard
       
-      const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // Replace with your actual API endpoint
+      const apiUrl = "http://192.168.1.14:5117/api/AddReport"; // Replace with your actual API endpoint
       const timestamp = new Date().toISOString();
       const bodyData = {
         building: form.Building,
         floorLocation: form.FloorLocation,
         context: form.context,
-        image: `data:image/jpeg;base64,${base64Image}`, //.substring(0, 50)
+        image: `${base64Image}`, //.substring(0, 50)
         filename: "report_image.jpg",
         filetype: "image/jpeg",
         timestamp: timestamp,
       };
+
+      console.log("Payload being sent:", bodyData);
 
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -266,7 +268,7 @@ const Emergency = () => {
             backgroundColor: 'rgba(0, 0, 0, 0.5)'
             }}>
             <View style={{ padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center' }}>
-              <ActivityIndicator size="large" color="#ff6347" />
+              <ActivityIndicator color="#ff6347" />
               <Text style={{ marginTop: 10, color: '#333' }}>Submitting Report, Please wait...</Text>
             </View>
           </View>

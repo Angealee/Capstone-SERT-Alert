@@ -7,6 +7,7 @@
     "orientation": "portrait",
     "icon": "./assets/icons/serticon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/icons/serticon.png",
       "resizeMode": "contain",

@@ -9,39 +9,39 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);  // Tracks if the user is logged in
   const router = useRouter();
 
-  // Mock function to simulate API response
-  const mockLogin = async (username, password) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        if (username === 'testUser' && password === 'testPass') {
-          resolve({ success: true, token: 'mockToken123' });
-        } else {
-          resolve({ success: false, message: 'Invalid credentials' });
-        }
-      }, 1000); // Simulate network delay
-    });
-  };
+  // // Mock function to simulate API response
+  // const mockLogin = async (username, password) => {
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       if (username === 'testUser' && password === 'testPass') {
+  //         resolve({ success: true, token: 'mockToken123' });
+  //       } else {
+  //         resolve({ success: false, message: 'Invalid credentials' });
+  //       }
+  //     }, 1000); // Simulate network delay
+  //   });
+  // };
 
   // Login function that communicates with the backend to verify credentials
   const login = async (username, password) => {
     setIsSubmitting(true);
     try {
-    //   const response = await fetch('https://192.168.0.15:7296/api/Login', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ username, password }),
-    //   });
+      const response = await fetch('http://192.168.1.14:5117/api/Login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
     
-    //   const data = await response.json();
+      const data = await response.json();
 
-      const response = await mockLogin(username, password);
+      // const response = await mockLogin(username, password);
 
-      if (response.success) {  // If the login is successful
+      if (data.success) {  // If the login is successful
         setIsAuthenticated(true);  // Update the state to show the user is logged in
-        await AsyncStorage.setItem('token', response.token);  // Store the token in AsyncStorage
+        await AsyncStorage.setItem('token', data.token);  // Store the token in AsyncStorage
         return { success: true };
       } else {
-        return { success: false, message: response.message || 'Invalid credentials' };
+        return { success: false, message: data.message || 'Invalid credentials' };
       }
     } catch (error) {
       console.error('Login error:', error);

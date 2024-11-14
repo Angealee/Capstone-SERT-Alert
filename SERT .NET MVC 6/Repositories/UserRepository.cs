@@ -82,6 +82,27 @@ namespace SertWebApp.Repositories
                                     && u.Password == password
                                     && (u.Role == Role.Admin || u.Role == Role.Admin2));
         }
+
+        public User? FindSertUserByUsernameAndPassword(string username, string password)
+        {
+            if (string.IsNullOrEmpty(username) && string.IsNullOrEmpty(password))
+            {
+                return new User { Id = -1 };
+            }
+
+            var usernameExists = FindByUsername(username).Id > 0;
+
+            if (!usernameExists)
+            {
+                return new User { Id = -1 };
+            }
+
+            return _context.Users
+            .FirstOrDefault(u => u.IsActive
+                                    && u.Username.Trim().Equals(username)
+                                    && u.Password == password
+                                    && u.Role == Role.User);
+        }
         #endregion
 
         #region Other Search

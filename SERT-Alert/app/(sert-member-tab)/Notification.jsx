@@ -10,7 +10,7 @@ const Notification = () => {
 
   const fetchNotifications = async () => {
     try {
-      const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // API URL: http://10.0.2.2:5117/api/GetReportList //Sample API url: https://jsonplaceholder.typicode.com/posts
+      const apiUrl = "http://192.168.1.14:5117/api/GetReportList"; // API URL: http://10.0.2.2:5117/api/GetReportList //Sample API url: https://jsonplaceholder.typicode.com/posts
       const response = await fetch(apiUrl, {
         method: 'GET',
         headers: {
@@ -59,9 +59,9 @@ const Notification = () => {
 
                 {/* Context and location display */}
                 <View style={styles.notificationContent}>
-                  <Text style={styles.contextText}>{notification.body}</Text>
+                  <Text style={styles.contextText}>{notification.context}</Text>
                   <Text style={styles.subText}>
-                    {notification.id} | {notification.title}
+                    {notification.building} | {notification.floorLocation}
                   </Text>
                 </View>
               </View>

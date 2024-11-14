@@ -46,7 +46,7 @@ namespace SertWebApp.Managers
             try
             {
                 var encryptedPassword = CryptographyService.EncryptPassword(password);
-                var user = _userRepository.FindByUsernameAndPassword(username, encryptedPassword);
+                var user = _userRepository.FindSertUserByUsernameAndPassword(username, encryptedPassword);
                 return user?.Id > 0;
             }
             catch (Exception ex)
