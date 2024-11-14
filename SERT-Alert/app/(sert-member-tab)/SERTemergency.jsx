@@ -200,13 +200,13 @@ const SERTemergency = () => {
       });
       // copyBase64ToClipboard(base64Image); // Automatically copy Base64 to clipboard
       
-      const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // Replace with your actual API endpoint
+      const apiUrl = "http://192.168.0.15:5117/api/AddReport"; // Replace with your actual API endpoint
       const timestamp = new Date().toISOString();
       const bodyData = {
         building: form.Building,
         floorLocation: form.FloorLocation,
         context: form.context,
-        image: `data:image/jpeg;base64,${base64Image}`, //.substring(0, 50)
+        image: `${base64Image}`, //.substring(0, 50)
         filename: "report_image.jpg",
         filetype: "image/jpeg",
         timestamp: timestamp,

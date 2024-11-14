@@ -10,7 +10,7 @@ const Notification = () => {
 
   const fetchNotifications = async () => {
     try {
-      const apiUrl = "http://192.168.1.14:5117/api/GetReportList"; // API URL: http://10.0.2.2:5117/api/GetReportList //Sample API url: https://jsonplaceholder.typicode.com/posts
+      const apiUrl = "http://192.168.0.15:5117/api/GetReportList"; // API URL: http://10.0.2.2:5117/api/GetReportList //Sample API url: https://jsonplaceholder.typicode.com/posts
       const response = await fetch(apiUrl, {
         method: 'GET',
         headers: {

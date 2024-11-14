@@ -192,7 +192,7 @@ const Emergency = () => {
       });
       // copyBase64ToClipboard(base64Image); // Automatically copy Base64 to clipboard
       
-      const apiUrl = "http://192.168.1.14:5117/api/AddReport"; // Replace with your actual API endpoint
+      const apiUrl = "http://192.168.0.15:5117/api/AddReport"; // Replace with your actual API endpoint
       const timestamp = new Date().toISOString();
       const bodyData = {
         building: form.Building,
@@ -225,10 +225,6 @@ const Emergency = () => {
           image: `data:image/jpeg;base64,${base64Image}`,
         });
         setShowModal(true); // Show modal after successful submission
-
-        // console.log('Response data:', result);
-        // console.log('form.image content:', form.image.substring(0, 100));
-        // console.log("Base64 image data:", `data:image/jpeg;base64,${base64Image}`.substring(0, 100));
         setForm({
           Building: '',
           FloorLocation: '',
