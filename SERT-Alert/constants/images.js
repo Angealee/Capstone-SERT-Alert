@@ -69,7 +69,9 @@ import drownPrevention from "../assets/images/drownPrevention.jpg";
 import waterSurvival from "../assets/images/waterSurvival.jpg";
 import basicEmergency from "../assets/images/basicEmergency.png";
 import newNaturalDisaster from "../assets/images/newNaturalDisaster.jpg";
+import bird from "../assets/images/bird.png";
 
 
 
-export default { profile, charldrinBello, kiokiSerrano, luisMagdangal, riskAssessment, emergencyResponseHeader, kobyMacale, SERTpicture, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster, callforhelp, basicSupport, keepCalm, takeInEmergency, bleedControl, cpr, burnTreatment, choking, fracture, firstAidHeader, placeTheHeel, placeHand, straightHand, pushDown, paceCompression, cleanCloth, stopBleeding, addCloth, presstillStop, afterBleeding, wrapSnugly, secureBandage, torniquet, washBurn, applyGauze, leanForward, makeFist, pilay, earthquakeSafety, dropCover, fallenLines, fireEvacuation, exitTwo, smokeDetector, smokeLow, flooding, supplyKit, unplugged, floodedArea, Heatwave, heatProtection, understandingWater, severeWeather, rescueStick, childPool, float, rescueTechniques, drownPrevention, waterSurvival, basicEmergency, newNaturalDisaster};
+
+export default { profile, charldrinBello, kiokiSerrano, luisMagdangal, riskAssessment, emergencyResponseHeader, kobyMacale, SERTpicture, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster, callforhelp, basicSupport, keepCalm, takeInEmergency, bleedControl, cpr, burnTreatment, choking, fracture, firstAidHeader, placeTheHeel, placeHand, straightHand, pushDown, paceCompression, cleanCloth, stopBleeding, addCloth, presstillStop, afterBleeding, wrapSnugly, secureBandage, torniquet, washBurn, applyGauze, leanForward, makeFist, pilay, earthquakeSafety, dropCover, fallenLines, fireEvacuation, exitTwo, smokeDetector, smokeLow, flooding, supplyKit, unplugged, floodedArea, Heatwave, heatProtection, understandingWater, severeWeather, rescueStick, childPool, float, rescueTechniques, drownPrevention, waterSurvival, basicEmergency, newNaturalDisaster, bird};

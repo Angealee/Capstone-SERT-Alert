@@ -15,7 +15,7 @@ const handleNavigate = (info) => {
     
       <AnimatedGradientBackground1/>
         <ScrollView>
-          <View className="bg-white rounded-xl justify-center px-10 pb-10 mt-40">
+          <View style={{backgroundColor:'#F1F7ED'}}className="rounded-xl justify-center px-10 pb-10 mt-40">
             <View className="w-full justify-center h-full[85vh] px-4 my-6">
               <Text className="text-2xl text-black text-semibold mt-10 font-psemibold">Menu</Text>
 
@@ -24,7 +24,7 @@ const handleNavigate = (info) => {
             <TouchableOpacity 
               onPress={() => handleNavigate('aboutSERT')}>
                 <LinearGradient
-                  colors={['#233D4D', '#619B8A']}
+                  colors={['#233D4D', '#4b543b']}
                   style={{
                     width: '100%',
                     paddingVertical: 15,
@@ -33,7 +33,7 @@ const handleNavigate = (info) => {
                     shadowOffset: { width: 0, height: 4 },
                     shadowOpacity: 0.3,
                     shadowRadius: 8,
-                    marginTop: 25,
+                    marginTop: 15,
                     alignItems: 'center',
                   }}
                 >
@@ -46,7 +46,7 @@ const handleNavigate = (info) => {
             <TouchableOpacity 
               onPress={() => handleNavigate('aboutDev')}>
                 <LinearGradient
-                  colors={['#233D4D', '#619B8A']}
+                  colors={['#233D4D', '#4b543b']}
                   style={{
                     width: '100%',
                     paddingVertical: 15,
@@ -55,7 +55,8 @@ const handleNavigate = (info) => {
                     shadowOffset: { width: 0, height: 4 },
                     shadowOpacity: 0.3,
                     shadowRadius: 8,
-                    marginTop: 25,
+                    marginTop: 15,
+                    marginBottom: 20,
                     alignItems: 'center',
                   }}
                 >
@@ -68,7 +69,7 @@ const handleNavigate = (info) => {
             <TouchableOpacity 
               onPress={() => router.push('/sign-in')}>
                 <LinearGradient
-                  colors={['#233D4D', '#619B8A']}
+                  colors={['#E22D2A', '#D1692D']}
                   style={{
                     width: '100%',
                     paddingVertical: 15,
