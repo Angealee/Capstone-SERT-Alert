@@ -220,14 +220,15 @@ namespace SertWebApp.Controllers
                     allUsers = _userManager.GetAllUsers();
                 }
 
+                var filteredUsers = allUsers;
 
                 // Search Filter
                 if (!string.IsNullOrEmpty(parameters.Search.Value))
                 {
                     var searchValue = parameters.Search.Value.ToLower();
-                    allUsers = allUsers.Where(u => (u.Username != null && u.Username.Contains(searchValue))
-                                                    || (u.Name != null && u.Name.Contains(searchValue))
-                                                    || (u.Email != null && u.Email.Contains(searchValue))
+                    allUsers = allUsers.Where(u => (u.Username != null && u.Username.Contains(searchValue, StringComparison.CurrentCultureIgnoreCase))
+                                                    || (u.Name != null && u.Name.Contains(searchValue, StringComparison.CurrentCultureIgnoreCase))
+                                                    || (u.Email != null && u.Email.Contains(searchValue, StringComparison.CurrentCultureIgnoreCase))
                                                     || (u.Course != null && u.Course.Trim().Contains(searchValue, StringComparison.CurrentCultureIgnoreCase))
                                                     || (u.Section != null && u.Section.Trim().Contains(searchValue, StringComparison.CurrentCultureIgnoreCase))
                                                     || (u.Year != null && u.Year.Trim().Contains(searchValue, StringComparison.CurrentCultureIgnoreCase))
@@ -259,30 +260,26 @@ namespace SertWebApp.Controllers
 
                 // Apply pagination
                 var totalRecords = allUsers.Count;
-                var currentIndex = (((parameters?.Start ?? 0) - 1) * (parameters?.Length ?? 0));
-                if (currentIndex <= 0 || (totalRecords > 0 && currentIndex >= totalRecords))
-                    currentIndex = 0; // safe checking;
-
-                var filteredUsers = allUsers;
+                var pagedUsers = filteredUsers;
 
                 if (parameters?.Length > -1)
                 {
-                    filteredUsers = filteredUsers.Skip(currentIndex).Take(parameters?.Length ?? 0).ToList();
+                    pagedUsers = filteredUsers.Skip(parameters?.Start ?? 0).Take(parameters?.Length ?? 0).ToList();
                 }
 
                 // Order results
                 if (sortDirection.Equals("asc", StringComparison.CurrentCultureIgnoreCase))
-                    filteredUsers = filteredUsers.OrderBy(orderByFunc).ToList();
+                    pagedUsers = pagedUsers.OrderBy(orderByFunc).ToList();
                 else
-                    filteredUsers = filteredUsers.OrderByDescending(orderByFunc).ToList();
+                    pagedUsers = pagedUsers.OrderByDescending(orderByFunc).ToList();
 
-                var data = filteredUsers.Select(ConvertToViewModel).ToList();
+                var data = pagedUsers.Select(ConvertToViewModel).ToList();
 
                 var result = new
                 {
                     draw = parameters?.Draw ?? 0,
-                    recordsTotal = totalRecords,
                     recordsFiltered = filteredUsers.Count,
+                    recordsTotal = totalRecords,
                     data,
                     currentUserRole,
                     currentUserId

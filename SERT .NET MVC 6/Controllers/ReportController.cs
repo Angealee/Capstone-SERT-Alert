@@ -183,14 +183,15 @@ namespace SertWebApp.Controllers
             {
 
                 var allReports = _reportManager.GetAllReports();
+                var filteredReports = allReports;
 
                 // Search Filter
                 if (!string.IsNullOrEmpty(parameters.Search.Value))
                 {
                     var searchValue = parameters.Search.Value.ToLower();
-                    allReports = allReports.Where(u => (u.BuildingName != null && u.BuildingName.Contains(searchValue))
-                                                    || (u.LocationDetail != null && u.LocationDetail.Contains(searchValue))
-                                                    || (u.Content != null && u.Content.Contains(searchValue))).ToList();
+                    filteredReports = allReports.Where(u => (u.BuildingName != null && u.BuildingName.Contains(searchValue, StringComparison.CurrentCultureIgnoreCase))
+                                                    || (u.LocationDetail != null && u.LocationDetail.Contains(searchValue, StringComparison.CurrentCultureIgnoreCase))
+                                                    || (u.Content != null && u.Content.Contains(searchValue, StringComparison.CurrentCultureIgnoreCase))).ToList();
                 }
 
 
@@ -211,30 +212,26 @@ namespace SertWebApp.Controllers
 
                 // Apply pagination
                 var totalRecords = allReports.Count;
-                var currentIndex = (((parameters?.Start ?? 0) - 1) * (parameters?.Length ?? 0));
-                if (currentIndex <= 0 || (totalRecords > 0 && currentIndex >= totalRecords))
-                    currentIndex = 0; // safe checking;
-
-                var filteredReports = allReports;
+                var pagedReports = filteredReports;
 
                 if (parameters?.Length > -1)
                 {
-                    filteredReports = allReports.Skip(currentIndex).Take(parameters?.Length ?? 0).ToList();
+                    pagedReports = filteredReports.Skip(parameters?.Start ?? 0).Take(parameters?.Length ?? 0).ToList();
                 }
 
                 // Order results
                 if (sortDirection.Equals("asc", StringComparison.CurrentCultureIgnoreCase))
-                    filteredReports = filteredReports.OrderBy(orderByFunc).ToList();
+                    pagedReports = pagedReports.OrderBy(orderByFunc).ToList();
                 else
-                    filteredReports = filteredReports.OrderByDescending(orderByFunc).ToList();
+                    pagedReports = pagedReports.OrderByDescending(orderByFunc).ToList();
 
-                var data = filteredReports.Select(ConvertToViewModel).ToList();
+                var data = pagedReports.Select(ConvertToViewModel).ToList();
 
                 var result = new
                 {
                     draw = parameters?.Draw ?? 0,
-                    recordsTotal = totalRecords,
                     recordsFiltered = filteredReports.Count,
+                    recordsTotal = totalRecords,
                     data
                 };
 

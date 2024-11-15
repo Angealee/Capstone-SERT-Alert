@@ -179,7 +179,7 @@ $(() => {
             {
                 targets: 4,
                 data: 'dateCreated',
-                render: DataTable.render.datetime('Do MMM YYYY')
+                render: DataTable.render.datetime('Do MMM YYYY HH:mm:ss')
             },
             {
                 targets: 5,
