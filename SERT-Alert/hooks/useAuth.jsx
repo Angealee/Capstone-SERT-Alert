@@ -31,55 +31,30 @@ export const AuthProvider = ({ children }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-    
-      const data = await response.json();
-
-      // const data = await mockLogin(username, password);
-
-      if (data.success) {  // If the login is successful
-        setIsAuthenticated(true);  // Update the state to show the user is logged in
+  
+      // Since the API returns a boolean as a JSON string, parse it directly.
+      const success = await response.json();
+  
+      if (success) { // If the login is successful
+        setIsAuthenticated(true); // Update the state to logged-in
         return { success: true };
       } else {
-        return { success: false, message: data.message || 'Invalid credentials' };
+        return { success: false, message: 'Invalid credentials' };
       }
     } catch (error) {
       console.error('Login error:', error);
       return { success: false, message: 'Something went wrong. Please try again later.' };
     } finally {
-      setIsSubmitting(false);  // Hide the loading after the login attempt
+      setIsSubmitting(false); // Hide the loading spinner
     }
   };
 
-  //Function to check if the user is currently authenticated based on session data
-  const checkAuth = async () => {
-    try {
-      const response = await fetch('http://192.168.0.15:5117/api/CheckSession', {
-        method: 'GET',
-        credentials: 'include',//cookies to maintain session state
-      });
-      const data = await response.json();
-      setIsAuthenticated(data.isAuthenticated);
-    } catch (error) {
-      console.error('Session check error:', error);
-    }
-  };
-
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  // Logout function that clears the session
-  const logout = async () => {
-    await fetch('http://192.168.0.15:5117/api/Logout', {
-      method: 'POST',
-      credentials: 'include',
-    });
-    setIsAuthenticated(false);
-    router.replace('/auth/sign-in');
-  };
+  // useEffect(() => {
+  //   checkAuth();
+  // }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isSubmitting, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, isSubmitting, login }}>
       {children} 
     </AuthContext.Provider>
   );

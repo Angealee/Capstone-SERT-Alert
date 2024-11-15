@@ -9,12 +9,9 @@ import { images } from '../../constants';
 import { icons } from '../../constants';
 import RNPickerSelect from 'react-native-picker-select';
 import FormField from '../../components/FormField';
-import * as Clipboard from 'expo-clipboard';
 import CaptureButton from '../../components/CaptureButton';
-import CustomButton from '../../components/CustomButton';
 import { LinearGradient } from 'expo-linear-gradient';
 import AnimatedGradientBackground1 from '../../components/AnimatedGradientBackground1';
-import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
 
 const Emergency = () => {
   const [form, setForm] = useState({
@@ -163,19 +160,6 @@ const Emergency = () => {
     }
   };
 
-// Function to copy the Base64 string to the clipboard
-// const copyBase64ToClipboard = async (base64String) => {
-//   await Clipboard.setStringAsync(base64String);
-
-//   // Verify by retrieving the copied content from the clipboard
-//   const copiedData = await Clipboard.getStringAsync();
-//   if (copiedData.length === base64String.length) {
-//     Alert.alert("Copy Success", "The full Base64 image data has been copied to clipboard.");
-//   } else {
-//     Alert.alert("Copy Incomplete", "The clipboard data is truncated. Original length: " + base64String.length + ", Copied length: " + copiedData.length);
-//   }
-// };
-
   const submit = async () => {
     setIsSubmitting(true);
 
@@ -216,8 +200,6 @@ const Emergency = () => {
 
       const result = await response.json();
       if (response.ok) {
-        // Alert.alert('Success', 'Emergency reported successfully!');
-        // Display the submitted data in the modal
         setSubmittedData({
           building: form.Building,
           floorLocation: form.FloorLocation,
@@ -381,10 +363,12 @@ const Emergency = () => {
                   onValueChange={handleLocationChange}
                   value={form.Building}
                   items={[
-                    { label: "Select Bldg.", value: "" },
                     { label: "St. Dominic BLDG", value: "St. Dominic BLDG" },
                     { label: "St. Catherine of Siena BLDG", value: "St. Catherine of Siena BLDG" },
+                    { label: "St. Lorenzo Ruiz BLDG", value: "St. Lorenzo Ruiz BLDG" },
                     { label: "Holy Rosary BLDG", value: "Holy Rosary BLDG" },
+                    { label: "Our Lady of Fatima BLDG", value: "Our Lady of Fatima BLDG" },
+                    { label: "Our Lady of Peace BLDG", value: "Our Lady of Peace BLDG" },
                     { label: "Others", value: "Others" }
                   ]}
                   style={{

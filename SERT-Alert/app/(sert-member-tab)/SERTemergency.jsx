@@ -9,10 +9,9 @@ import { images } from '../../constants';
 import { icons } from '../../constants';
 import RNPickerSelect from 'react-native-picker-select';
 import FormField from '../../components/FormField';
-import * as Clipboard from 'expo-clipboard';
 import CaptureButton from '../../components/CaptureButton';
 import CustomButton from '../../components/CustomButton';
-
+import { LinearGradient } from 'expo-linear-gradient';
 import { useNotificationHandler, sendEmergencyNotification } from '../../components/NotificationHandler';
 import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
 
@@ -117,11 +116,20 @@ const SERTemergency = () => {
       case 'St. Catherine of Siena BLDG':
         options = ['1st Floor', '2nd Floor', '3rd Floor', '4th Floor'];
         break;
+      case 'St. Lorenzo Ruiz BLDG':
+        options = ['1st Floor', '2nd Floor', '3rd Floor', '4th Floor'];
+        break;
       case 'Holy Rosary BLDG':
         options = ['1st Floor', '2nd Floor', '3rd Floor', '4th Floor'];
         break;
+      case 'Our Lady of Fatima BLDG':
+        options = ['1st Floor', '2nd Floor', '3rd Floor', '4th Floor'];
+        break;
+      case 'Our Lady of Peace BLDG':
+        options = ['1st Floor', '2nd Floor', '3rd Floor', '4th Floor'];
+        break;
       case 'Others':
-        options = ['Covered Court', 'Canteen', 'Parking Lot', 'DCT Front Gate'];
+        options = ['BP. J.JCovered Court', 'Canteen', 'Student Lounge', 'Parking Lot', 'DCT Front Gate', 'Resurrection Chapel', 'School Clinic', 'RPQA', 'Accounting Office', 'Registrar Office'];
         break;
       case '':
         enableFloorLocation = false;
@@ -171,19 +179,6 @@ const SERTemergency = () => {
     }
   };
 
-// Function to copy the Base64 string to the clipboard
-// const copyBase64ToClipboard = async (base64String) => {
-//   await Clipboard.setStringAsync(base64String);
-
-//   // Verify by retrieving the copied content from the clipboard
-//   const copiedData = await Clipboard.getStringAsync();
-//   if (copiedData.length === base64String.length) {
-//     Alert.alert("Copy Success", "The full Base64 image data has been copied to clipboard.");
-//   } else {
-//     Alert.alert("Copy Incomplete", "The clipboard data is truncated. Original length: " + base64String.length + ", Copied length: " + copiedData.length);
-//   }
-// };
-
   const submit = async () => {
     setIsSubmitting(true);
 
@@ -222,8 +217,6 @@ const SERTemergency = () => {
 
       const result = await response.json();
       if (response.ok) {
-        // Alert.alert('Success', 'Emergency reported successfully!');
-        // Display the submitted data in the modal
         setSubmittedData({
           building: form.Building,
           floorLocation: form.FloorLocation,
@@ -231,10 +224,6 @@ const SERTemergency = () => {
           image: `data:image/jpeg;base64,${base64Image}`,
         });
         setShowModal(true); // Show modal after successful submission
-
-        // console.log('Response data:', result);
-        // console.log('form.image content:', form.image.substring(0, 100));
-        // console.log("Base64 image data:", `data:image/jpeg;base64,${base64Image}`.substring(0, 100));
         setForm({
           Building: '',
           FloorLocation: '',
@@ -347,6 +336,7 @@ const SERTemergency = () => {
         refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
+        className = "mb-16"
       >
         <View className="bg-white p-6 rounded-3xl justify-center shadow-lg mt-10 mb-6">
           <Image
@@ -363,6 +353,9 @@ const SERTemergency = () => {
           </Text>
             
           <View className="bg-white rounded-xl justify-center px-5 pb-10 mt-2">
+          
+          
+          {/* Temporary */}
           <Text style={{fontSize: 12}}>"NOTE: Online status will only be available for testing purposes, Only and Only for the testing of Heads Up notification apearing and sample UI"</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center'}}>
               <Text style={{
@@ -380,6 +373,8 @@ const SERTemergency = () => {
               />
           </View>
 
+
+
             <Text className="text-black-600 font-semibold mb-2">Building:</Text>
             <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
               {Platform.OS === 'android' ? (
@@ -390,7 +385,10 @@ const SERTemergency = () => {
                     items={[
                       { label: "St. Dominic BLDG", value: "St. Dominic BLDG" },
                       { label: "St. Catherine of Siena BLDG", value: "St. Catherine of Siena BLDG" },
+                      { label: "St. Lorenzo Ruiz BLDG", value: "St. Lorenzo Ruiz BLDG" },
                       { label: "Holy Rosary BLDG", value: "Holy Rosary BLDG" },
+                      { label: "Our Lady of Fatima BLDG", value: "Our Lady of Fatima BLDG" },
+                      { label: "Our Lady of Peace BLDG", value: "Our Lady of Peace BLDG" },
                       { label: "Others", value: "Others" }
                     ]}
                     style={{
@@ -404,10 +402,12 @@ const SERTemergency = () => {
                   onValueChange={handleLocationChange}
                   value={form.Building}
                   items={[
-                    { label: "Select Bldg.", value: "" },
                     { label: "St. Dominic BLDG", value: "St. Dominic BLDG" },
                     { label: "St. Catherine of Siena BLDG", value: "St. Catherine of Siena BLDG" },
+                    { label: "St. Lorenzo Ruiz BLDG", value: "St. Lorenzo Ruiz BLDG" },
                     { label: "Holy Rosary BLDG", value: "Holy Rosary BLDG" },
+                    { label: "Our Lady of Fatima BLDG", value: "Our Lady of Fatima BLDG" },
+                    { label: "Our Lady of Peace BLDG", value: "Our Lady of Peace BLDG" },
                     { label: "Others", value: "Others" }
                   ]}
                   style={{
@@ -492,17 +492,28 @@ const SERTemergency = () => {
             />
             
             <TouchableOpacity
-              style={{
-                width: '100%',
-                paddingVertical: 25,
-                backgroundColor: isWithinPremises ? '#EF2A39' : 'gray',
-                borderRadius: 10,
-                alignItems: 'center',
-                marginTop: 5,              }}
               onPress={submit}
               disabled={!isWithinPremises}
             >
+              <LinearGradient
+                colors={
+                  isWithinPremises
+                    ? ['#EF2A39', '#FA7017']  // Active colors
+                    : ['#B0B0B0', '#D3D3D3']  // Disabled colors (gray shades)
+                }
+                style={{
+                  width: '100%',
+                  paddingVertical: 25,
+                  borderRadius: 20,
+                  shadowColor: '#EF2A39',
+                  shadowOffset: { width: 0, height: 4 },
+                  shadowOpacity: 0.3,
+                  shadowRadius: 8,
+                  alignItems: 'center',
+                }}
+              >
               <Text style={{ color: 'white', fontSize: 18 }}>Submit Report</Text>
+              </LinearGradient>
             </TouchableOpacity>
 
             {/* Location Info */}
@@ -522,7 +533,7 @@ const SERTemergency = () => {
                           </Text>
             )}
             
-            
+            {/* TEMPORARY */}
             {isUserLoggedIn && (
               <TouchableOpacity
                 style={{

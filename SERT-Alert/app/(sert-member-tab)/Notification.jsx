@@ -5,9 +5,12 @@ import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackgr
 
 // Helper function to parse and format timestamps
 const parseTimestamp = (timestamp) => {
+  if (!timestamp) {
+    console.warn("Missing or undefined timestamp:", timestamp);
+    return new Date().toISOString(); // Fallback to current date
+  }
+
   try {
-    // Assuming timestamp might come in a non-ISO format
-    // Example: "DD/MM/YYYY HH:mm:ss" -> Convert to ISO 8601
     if (timestamp.includes("/")) {
       const [date, time] = timestamp.split(" ");
       const [day, month, year] = date.split("/");
@@ -29,7 +32,7 @@ const Notification = () => {
 
   const fetchNotifications = async () => {
     try {
-      const apiUrl = "http://192.168.1.14:5117/api/GetReportList"; // API URL
+      const apiUrl = "http://192.168.0.15:5117/api/GetReportList"; // API URL
       const response = await fetch(apiUrl, {
         method: 'GET',
         headers: {
@@ -39,13 +42,13 @@ const Notification = () => {
       const data = await response.json();
 
       // Parse and sort notifications by timestamp in descending order
-      const sortedData = data
-        .map(notification => ({
-          ...notification,
-          timestamp: parseTimestamp(notification.timestamp),
-        }))
-        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-        
+      const sortedData = data.map(notification => {
+        return {
+          ...notification, // create a new object for each notification
+          timestamp: parseTimestamp(notification.timestamp), // use the parsed timestamp
+        };
+      }).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
       setNotifications(sortedData); // Update state with sorted notifications
     } catch (error) {
       Alert.alert("Error", "Failed to load notifications");
@@ -54,7 +57,7 @@ const Notification = () => {
       setLoading(false);
       setRefreshing(false); // Stop refreshing after fetch completes
     }
-    };
+  };
 
   useEffect(() => {
     fetchNotifications();
@@ -66,25 +69,55 @@ const Notification = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView 
+    style={styles.container}>
       <AnimatedGradientBackground2/>
-      <Text style={styles.title}>Report Logs</Text>
+      <Text 
+      style={styles.title}
+      className="text-2xl font-psemibold text-white mt-2">
+      Report Logs
+      </Text>
 
       {/* Display loading indicator if data is still loading */}
       {loading ? (
         <ActivityIndicator size="large" color="#fff" />
       ) : (
-        <ScrollView
+        <ScrollView 
+          className = "p-7 mb-20 shadow-lg"
+          style={{
+            backgroundColor:'#ECA766', 
+            borderRadius: 30}}
           contentContainerStyle={styles.scrollContainer}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
           {notifications.length === 0 ? (
             <Text style={styles.noNotifications}>Things are still quite quiet . . .</Text>
           ) : (
-            notifications.map((notification) => (
-              <View key={notification.id} style={styles.notificationBox}>
-                <Text style={styles.time}>{new Date(notification.timestamp).toLocaleTimeString()}</Text>
+            notifications.map((notification, index) => (
+              <View key={notification.id || `notification-${index}`} style={styles.notificationBox}>
+                
+                {/* Date display */}
+                <View style={styles.dateTimeContainer}>
+                  <Text style={styles.date}>
+                    {new Date(notification.timestamp).toLocaleDateString(undefined, {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric',
+                    })}
+                  </Text>
+                
 
+                {/* Time DIsplay */}
+                
+                  <Text style={styles.time}>
+                  {new Date(notification.timestamp).toLocaleTimeString(undefined, {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                      // second: '2-digit',
+                    })}
+                  </Text>
+                </View>
+                
                 {/* Context and location display */}
                 <View style={styles.notificationContent}>
                   <Text style={styles.contextText}>{notification.context}</Text>
@@ -114,7 +147,9 @@ const styles = StyleSheet.create({
     padding: 20,
     marginTop: 20,
     marginBottom: 20,
-    color: '#faf5f5',
+    backgroundColor: '#4b543b',
+    borderRadius: 30,
+    alignItems: 'center'
   },
   scrollContainer: {
     flexGrow: 1,
@@ -140,12 +175,21 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#E0E0E0',
   },
+  dateTimeContainer: {
+    flexDirection: 'column',
+    marginRight: 10, // Space between date/time and content
+  },
   time: {
     fontSize: 14,
     color: '#888',
-    marginRight: 10,
+    textAlign: 'right',
     fontWeight: '500',
   },
+  date: {
+    fontSize: 14,
+    color: '#888',
+    marginBottom: 4, // Space between date and notification content
+  },  
   notificationContent: {
     flex: 1,
   },
