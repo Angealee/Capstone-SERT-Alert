@@ -1,19 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, ScrollView, Text, View, Image, StyleSheet } from 'react-native';
-import { router } from 'expo-router';  // Correct import for navigation
-
+import { router } from 'expo-router';
 import { images } from '../constants';
+import AnimatedFrontColor from '../components/AnimatedFrontColor';
 import CustomButton from '../components/CustomButton';
 import 'react-native-url-polyfill/auto';
-
 
 export default function App() {
   return (
     <SafeAreaView style={styles.safeArea}>
+      <AnimatedFrontColor />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.content}>
           {/* Title */}
-          <Text className="text-4xl text-black-200 font-pblack">SERT Alert</Text>
+          <Text style={styles.title} className="font-pblack">SERT Alert</Text>
+          <Text style={styles.subtitle}>Your Campus Emergency Reporting System</Text>
 
           {/* Logo */}
           <Image
@@ -26,7 +27,8 @@ export default function App() {
           <CustomButton 
             title="Report an Emergency!"
             handlePress={() => router.push('/emergency')}
-            containerStyles="w-60 mt-2"
+            containerStyles="w-60"
+            textStyles={styles.buttonText}
           />
         </View> 
       </ScrollView>
@@ -39,8 +41,7 @@ export default function App() {
 
 // StyleSheet for consistent styling
 const styles = StyleSheet.create({
-  safeArea: {
-    backgroundColor: '#f7cdab',
+  safeArea: {    backgroundColor: '#f0f4f8', // Light gradient color
     flex: 1,
   },
   scrollContainer: {
@@ -53,17 +54,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   title: {
-    fontSize: 36,
-    color: '#333',
-    fontWeight: 'bold',
+    fontSize: 42,
+    color: '#0e427e', // Dark blue
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 18,
+    color: '#666',
     marginBottom: 20,
+    fontFamily: 'Roboto', // Subtle contrasting font
   },
   logo: {
-    width: 300,
-    height: 300,
+    width: 280,
+    height: 280,
+    marginBottom: 20,
   },
-  button: {
-    marginTop: 20,
-    width: 240,
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginLeft: 20,
+    marginRight: 20
   },
 });
