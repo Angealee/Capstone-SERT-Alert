@@ -85,7 +85,7 @@ namespace SertWebApp.Controllers
                 var viewModel = new ChangePasswordViewModel()
                 {
                     Id = id,
-                    CurrentPassword = user.Password
+                    //CurrentPassword = user.Password
                 };
 
                 return PartialView("_ChangePasswordPartial", viewModel);
@@ -110,14 +110,14 @@ namespace SertWebApp.Controllers
                         return NotFound();
                     }
 
-                    if (!_userManager.VerifyPassword(viewModel.Id, viewModel.CurrentPassword))
-                    {
-                        return StatusCode(409, "Current password is incorrect.");
-                    }
+                    //if (!_userManager.VerifyPassword(viewModel.Id, viewModel.CurrentPassword))
+                    //{
+                    //    return StatusCode(409, "Current password is incorrect.");
+                    //}
 
                     if (viewModel.NewPassword != viewModel.ConfirmPassword)
                     {
-                        return StatusCode(409, "New password and confirm password does not match.");
+                        return StatusCode(409, "Passwords don't match.");
                     }
 
                     user.Password = viewModel.NewPassword;
