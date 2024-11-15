@@ -3,6 +3,25 @@ import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator, RefreshCo
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
 
+// Helper function to parse and format timestamps
+const parseTimestamp = (timestamp) => {
+  try {
+    // Assuming timestamp might come in a non-ISO format
+    // Example: "DD/MM/YYYY HH:mm:ss" -> Convert to ISO 8601
+    if (timestamp.includes("/")) {
+      const [date, time] = timestamp.split(" ");
+      const [day, month, year] = date.split("/");
+      return new Date(`${year}-${month}-${day}T${time}`).toISOString();
+    }
+    return new Date(timestamp).toISOString(); // Assume it's ISO 8601 if not formatted
+  } catch {
+    console.error("Invalid timestamp format:", timestamp);
+    return new Date().toISOString(); // Fallback to the current date if parsing fails
+  }
+};
+
+
+
 const Notification = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,7 +29,7 @@ const Notification = () => {
 
   const fetchNotifications = async () => {
     try {
-      const apiUrl = "http://192.168.0.15:5117/api/GetReportList"; // API URL: http://10.0.2.2:5117/api/GetReportList //Sample API url: https://jsonplaceholder.typicode.com/posts
+      const apiUrl = "http://192.168.1.14:5117/api/GetReportList"; // API URL
       const response = await fetch(apiUrl, {
         method: 'GET',
         headers: {
@@ -18,7 +37,16 @@ const Notification = () => {
         },
       });
       const data = await response.json();
-      setNotifications(data); // Update state with fetched notifications
+
+      // Parse and sort notifications by timestamp in descending order
+      const sortedData = data
+        .map(notification => ({
+          ...notification,
+          timestamp: parseTimestamp(notification.timestamp),
+        }))
+        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+        
+      setNotifications(sortedData); // Update state with sorted notifications
     } catch (error) {
       Alert.alert("Error", "Failed to load notifications");
       console.error("Fetch error:", error);
@@ -26,7 +54,7 @@ const Notification = () => {
       setLoading(false);
       setRefreshing(false); // Stop refreshing after fetch completes
     }
-  };
+    };
 
   useEffect(() => {
     fetchNotifications();
