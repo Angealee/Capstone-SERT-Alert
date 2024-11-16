@@ -16,5 +16,5 @@ public partial class Report
 
     public DateTime DateCreated { get; set; } = DateTime.Now;
 
-    public DateTime DateModified { get; set; }
+    public DateTime? DateModified { get; set; } = null!;
 }

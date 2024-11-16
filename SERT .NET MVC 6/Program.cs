@@ -7,13 +7,16 @@ using SertWebApp.Services;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-                     ?? throw new ConfigurationErrorsException("Connection string not found");
+var connectionString = builder.Environment.IsDevelopment()
+    ? builder.Configuration.GetConnectionString("DevConnection")
+    : builder.Configuration.GetConnectionString("AzureConnection");
 
 // Add services to the container.
+//builder.Services.AddDbContext<SertSchemaContext>(options =>
+//       options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
+//       mySqlOptions => mySqlOptions.EnableStringComparisonTranslations()));
 builder.Services.AddDbContext<SertSchemaContext>(options =>
-       options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
-       mySqlOptions => mySqlOptions.EnableStringComparisonTranslations()));
+       options.UseSqlServer(connectionString));
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession(options =>
 {
