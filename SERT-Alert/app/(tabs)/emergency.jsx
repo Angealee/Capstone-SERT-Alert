@@ -176,7 +176,7 @@ const Emergency = () => {
       });
       // copyBase64ToClipboard(base64Image); // Automatically copy Base64 to clipboard
       
-      const apiUrl = "http://192.168.0.15:5117/api/AddReport"; // Replace with your actual API endpoint
+      const apiUrl = "http://192.168.1.14:5117/api/AddReport"; // Replace with your actual API endpoint
       const timestamp = new Date().toISOString();
       const bodyData = {
         building: form.Building,
@@ -185,7 +185,7 @@ const Emergency = () => {
         image: `${base64Image}`, //.substring(0, 50)
         filename: "report_image.jpg",
         filetype: "image/jpeg",
-        timestamp: timestamp,
+        Timestamp: timestamp,
       };
 
       console.log("Payload being sent:", bodyData);

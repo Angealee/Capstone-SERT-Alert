@@ -1,62 +1,61 @@
 import * as Notifications from 'expo-notifications';
 import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Custom hook to handle notifications for logged-in User2 (SERT Members)
 export const useNotificationHandler = (isUserLoggedIn) => {
   const [notification, setNotification] = useState(null);
 
   useEffect(() => {
-    if (!isUserLoggedIn) return; // Exit if User2 is not logged in
+    if (!isUserLoggedIn) return;
 
-    // Request permissions on component mount
+    // Request notification permissions
+    const requestPermissions = async () => {
+      const { status } = await Notifications.getPermissionsAsync();
+      console.log("Notification Permission Status:", status); // Log the status
+      if (status !== "granted") {
+        const { status: newStatus } = await Notifications.requestPermissionsAsync();
+        console.log("New Notification Permission Status:", newStatus); // Log after requesting permissions
+      }
+    };
+
     requestPermissions();
 
-    // Set the handler for notification behavior (heads-up alerts, sound, badge)
     Notifications.setNotificationHandler({
       handleNotification: async () => ({
-        shouldShowAlert: true,      // Show heads-up alert
-        shouldPlaySound: true,      // Enable sound
-        shouldSetBadge: true,       // Display badge (optional)
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
       }),
     });
 
-    // Listen for incoming notifications and update state
     const subscription = Notifications.addNotificationReceivedListener((notification) => {
       setNotification(notification);
     });
 
-    // Clean up listener on component unmount
     return () => subscription.remove();
-  }, [isUserLoggedIn]); // Depend on login status
-
-  // Request notification permissions if not already granted
-  const requestPermissions = async () => {
-    const { status } = await Notifications.getPermissionsAsync();
-    if (status !== 'granted') {
-      await Notifications.requestPermissionsAsync();
-    }
-  };
+  }, [isUserLoggedIn]);
 
   return { notification };
 };
 
 // Function to send a notification for emergencies to logged-in User2 (SERT Members)
-export const sendEmergencyNotification = async (isUserLoggedIn) => {
-  if (!isUserLoggedIn) {
-    console.log("User is not logged in. Notification will not be sent.");
-    return;
-  }
+export const sendEmergencyNotification = async () => {
+  const isUserLoggedIn = JSON.parse(await AsyncStorage.getItem('isAuthenticated'));
 
-  // Schedule an immediate notification with heads-up alert properties
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "Emergency Report 🚨",
-      body: "An emergency has been reported! Tap to view details.",
-      content: "Sample Content",
-      sound: 'default',// Default notification sound
-      priority: Notifications.AndroidNotificationPriority.MAX, //set priority heads-up
-      vibrate: [250, 400, 400, 400],//vibration pattern
-    },
-    trigger: null, // Trigger immediately
-  });
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Emergency Report 🚨",
+        body: "An emergency has been reported! Tap to view details.",
+        data: {
+          building: "Mock Building",
+          floor: "Mock Floor",
+          context: "Mock emergency context for presentation purposes.",
+        },
+        sound: 'default',
+        priority: Notifications.AndroidNotificationPriority.MAX,
+        vibrate: [250, 400, 400, 400],
+      },
+      trigger: null,
+    })
 };

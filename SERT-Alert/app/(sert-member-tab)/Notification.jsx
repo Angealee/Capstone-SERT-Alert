@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
+import * as Notifications from "expo-notifications";
 
 // Helper function to parse and format timestamps
 const parseTimestamp = (timestamp) => {
@@ -29,10 +30,12 @@ const Notification = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [currentCount, setCurrentCount] = useState(0); // Current number of notifications
+
 
   const fetchNotifications = async () => {
     try {
-      const apiUrl = "http://192.168.0.15:5117/api/GetReportList"; // API URL
+      const apiUrl = "http://192.168.1.14:5117/api/GetReportList"; // API URL
       const response = await fetch(apiUrl, {
         method: 'GET',
         headers: {
@@ -42,14 +45,21 @@ const Notification = () => {
       const data = await response.json();
 
       // Parse and sort notifications by timestamp in descending order
-      const sortedData = data.map(notification => {
-        return {
-          ...notification, // create a new object for each notification
-          timestamp: parseTimestamp(notification.timestamp), // use the parsed timestamp
-        };
-      }).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      const sortedData = data.map((notification) => ({
+        ...notification, // create a new object for each notification
+        timestamp: parseTimestamp(notification.Timestamp),
+      }))
+      .sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp));
 
-      setNotifications(sortedData); // Update state with sorted notifications
+    setNotifications(sortedData); // Update state with sorted notifications
+
+      // Check for new notifications
+      if (data.length > currentCount) {
+        console.log(`New notifications detected. Current: ${currentCount}, New: ${data.length}`);
+        triggerHeadsUpNotification();
+      }
+      // Update the current count to reflect the new total
+      setCurrentCount(data.length);
     } catch (error) {
       Alert.alert("Error", "Failed to load notifications");
       console.error("Fetch error:", error);
@@ -59,9 +69,23 @@ const Notification = () => {
     }
   };
 
+  const triggerHeadsUpNotification = async () => {
+    console.log("Triggering heads-up notification");
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "New Emergency Report 🚨",
+        body: "A new emergency report has been submitted!",
+        sound: "default",
+      },
+      trigger: null,
+    });
+  };
+
+  // Poll for new notifications every 5 seconds
   useEffect(() => {
-    fetchNotifications();
-  }, []);
+    const interval = setInterval(fetchNotifications, 5000); // Poll every 5 seconds
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, [currentCount]);
 
   const onRefresh = () => {
     setRefreshing(true); // Show refresh spinner
@@ -99,7 +123,7 @@ const Notification = () => {
                 {/* Date display */}
                 <View style={styles.dateTimeContainer}>
                   <Text style={styles.date}>
-                    {new Date(notification.timestamp).toLocaleDateString(undefined, {
+                    {new Date(notification.Timestamp).toLocaleDateString(undefined, {
                       month: 'long',
                       day: 'numeric',
                       year: 'numeric',

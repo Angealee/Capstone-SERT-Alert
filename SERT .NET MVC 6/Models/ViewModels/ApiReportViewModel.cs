@@ -21,5 +21,7 @@ namespace SertWebApp.Models.ViewModels
 
         [JsonProperty("fileType")]
         public string FileType { get; set; } // File types
+
+        public DateTime Timestamp { get; set; } // Add Timestamp property
     }
 }

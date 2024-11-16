@@ -79,7 +79,8 @@ namespace SertWebApp.Controllers
                     Context = report.Content,
                     Image = report.Attachment != null ? Convert.ToBase64String(report.Attachment) : string.Empty,
                     FileName = report.FileName,
-                    FileType = report.FileType
+                    FileType = report.FileType,
+                    Timestamp = report.DateCreated // Map DateCreated to Timestamp
                 });
             }
 
