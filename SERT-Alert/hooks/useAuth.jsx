@@ -9,34 +9,38 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);  // Tracks if the user is logged in
   const router = useRouter();
 
-  // Mock function to simulate API response
-  // const mockLogin = async (username, password) => {
-  //   return new Promise((resolve) => {
-  //     setTimeout(() => {
-  //       if (username === 'testUser' && password === 'testPass') {
-  //         resolve({ success: true, token: 'mockToken123' });
-  //       } else {
-  //         resolve({ success: false, message: 'Invalid credentials' });
-  //       }
-  //     }, 1000); // Simulate network delay
-  //   });
-  // };
+  // Fetch login status from storage on app load
+  useEffect(() => {
+    const loadAuthState = async () => {
+      const storedStatus = await AsyncStorage.getItem('isAuthenticated');
+      if (storedStatus) {
+        setIsAuthenticated(JSON.parse(storedStatus));
+      }
+    };
+    loadAuthState();
+  }, []);
 
   // Login function that communicates with the backend to verify credentials
   const login = async (username, password) => {
     setIsSubmitting(true);
     try {
-      const response = await fetch('http://192.168.0.15:5117/api/Login', {
+      const response = await fetch('http://192.168.1.14:5117/api/Login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
   
-      // Since the API returns a boolean as a JSON string, parse it directly.
       const success = await response.json();
   
-      if (success) { // If the login is successful
-        setIsAuthenticated(true); // Update the state to logged-in
+      if (success) {
+        setIsAuthenticated(true);
+  
+        // Check the "remember me" setting before storing login status
+        const rememberMe = JSON.parse(await AsyncStorage.getItem('rememberMe'));
+        if (rememberMe) {
+          await AsyncStorage.setItem('isAuthenticated', JSON.stringify(true));
+        }
+  
         return { success: true };
       } else {
         return { success: false, message: 'Invalid credentials' };
@@ -45,10 +49,15 @@ export const AuthProvider = ({ children }) => {
       console.error('Login error:', error);
       return { success: false, message: 'Something went wrong. Please try again later.' };
     } finally {
-      setIsSubmitting(false); // Hide the loading spinner
+      setIsSubmitting(false);
     }
   };
-
+  
+  const logout = async () => {
+    setIsAuthenticated(false);
+    await AsyncStorage.removeItem('isAuthenticated');
+    await AsyncStorage.removeItem('rememberMe'); // Clear the remember me preference
+  };
   // useEffect(() => {
   //   checkAuth();
   // }, []);
