@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator, RefreshControl, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRef } from 'react';
 import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
-import * as Notifications from "expo-notifications";
+import { sendEmergencyNotification, useNotificationHandler, requestPermissions } from '../../components/NotificationHandler'; // Import requestPermissions
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Notifications from 'expo-notifications';
 
 // Helper function to parse and format timestamps
 const parseTimestamp = (timestamp) => {
@@ -29,22 +31,31 @@ const Notification = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [currentCount, setCurrentCount] = useState(0); // Current number of notifications
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false); // Track login state
-  let pollingInterval = null;
-
+  const [currentCount, setCurrentCount] = useState(0); 
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const pollingInterval = useRef(null); // Using useRef to keep track of the interval
+  
   useEffect(() => {
-    const requestPermissions = async () => {
-      const { status } = await Notifications.requestPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('Permission required', 'Notification permission is required for heads-up notifications to work.');
+    const checkLoginStatus = async () => {
+      const loggedIn = JSON.parse(await AsyncStorage.getItem('isAuthenticated'));
+      setIsUserLoggedIn(loggedIn);
+      
+      if (loggedIn) {
+        const storedCount = JSON.parse(await AsyncStorage.getItem('lastCheckedCount')) || 0;
+        setCurrentCount(storedCount);
+        pollingInterval.current = setInterval(fetchNotifications, 5000);
       }
     };
-    requestPermissions();
-  }, []);
-  
+    checkLoginStatus();
+
+    return () => {
+      if (pollingInterval.current) clearInterval(pollingInterval.current);
+    };
+  }, [isUserLoggedIn]);
+
   const fetchNotifications = async () => {
     try {
+      const hasPermission = await requestPermissions(); // Fix: Use imported function
       const apiUrl = "http://192.168.1.14:5117/api/GetReportList"; // API URL
       const response = await fetch(apiUrl, {
         method: 'GET',
@@ -69,7 +80,7 @@ const Notification = () => {
       // Check for new notifications only if there's an increase
       if (data.length > storedCount) {
         console.log(`New notifications detected. Current: ${storedCount}, New: ${data.length}`);
-        triggerHeadsUpNotification();
+        await sendEmergencyNotification();
       }
 
       // Update the current count and save it in AsyncStorage
@@ -83,49 +94,7 @@ const Notification = () => {
       setRefreshing(false); // Stop refreshing after fetch completes
     }
   };
-
-  const triggerHeadsUpNotification = async () => {
-    console.log("Triggering heads-up notification");
-    try {
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: "New Emergency Report 🚨",
-          body: "A new emergency report has been submitted!",
-          sound: "default",
-        },
-        trigger: null,
-      });
-      console.log("Notification successfully scheduled");
-    } catch (error) {
-      console.error("Error scheduling notification:", error);
-    }
-  };
-
-  // Polling setup
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      const loggedIn = JSON.parse(await AsyncStorage.getItem('isAuthenticated'));
-      setIsUserLoggedIn(loggedIn);
-      
-      // Retrieve last checked count if logged in
-      if (loggedIn) {
-        const storedCount = JSON.parse(await AsyncStorage.getItem('lastCheckedCount')) || 0;
-        setCurrentCount(storedCount);
-      }
-    };
-    checkLoginStatus();
-
-    if (isUserLoggedIn) {
-      // Start polling when the user is logged in
-      pollingInterval = setInterval(fetchNotifications, 5000); // Poll every 5 seconds
-    } else {
-      // Stop polling when the user logs out
-      clearInterval(pollingInterval);
-    }
-
-    // Clean up the interval on component unmount
-    return () => clearInterval(pollingInterval);
-  }, [isUserLoggedIn]);
+  
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -138,7 +107,7 @@ const Notification = () => {
       <Text style={styles.title} className="text-2xl font-psemibold text-white mt-2">Report Logs</Text>
       
       {/* Test Notification Button */}
-      <Button title="Test Heads-Up Notification" onPress={triggerHeadsUpNotification} color="#4b543b" />
+      <Button title="Test Heads-Up Notification" onPress={sendEmergencyNotification} color="#4b543b" />
 
       {loading ? (
         <ActivityIndicator size="large" color="#fff" />
