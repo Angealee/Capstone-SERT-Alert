@@ -9,25 +9,30 @@ export const useNotificationHandler = (isUserLoggedIn) => {
   useEffect(() => {
     if (!isUserLoggedIn) return;
 
-    // Request notification permissions
     const requestPermissions = async () => {
-      const { status } = await Notifications.getPermissionsAsync();
+      let { status } = await Notifications.getPermissionsAsync();
       console.log("Notification Permission Status:", status); // Log the status
       if (status !== "granted") {
         const { status: newStatus } = await Notifications.requestPermissionsAsync();
-        console.log("New Notification Permission Status:", newStatus); // Log after requesting permissions
+        if (newStatus !== "granted") {
+          console.warn("Notification permissions not granted.");
+          return;
+        }
       }
     };
 
     requestPermissions();
-
-    Notifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: true,
-        shouldSetBadge: true,
-      }),
-    });
+    
+    useEffect(() => {
+      Notifications.setNotificationHandler({
+        handleNotification: async () => ({
+          shouldShowAlert: true,
+          shouldPlaySound: true,
+          shouldSetBadge: true,
+        }),
+      });
+    })
+    
 
     const subscription = Notifications.addNotificationReceivedListener((notification) => {
       setNotification(notification);

@@ -1,26 +1,29 @@
-import { View, Text, SafeAreaView, ScrollView, Image, Modal, Switch, Button } from 'react-native';
-import { useNotificationHandler, sendEmergencyNotification } from '../../components/NotificationHandler';
+import { View, Text, SafeAreaView, ScrollView, Alert, Switch, Button } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
+import { useAuth } from '../../hooks/useAuth';
 import CustomButton from '../../components/CustomButton';
 import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SERTmenu = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false); // Track User2 login status via the Switch
-  const [isModalVisible, setIsModalVisible] = useState(false); // Control modal visibility
-  const { notification } = useNotificationHandler(isUserLoggedIn); // Notification handler
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const { logout } = useAuth();
 
-  // Show the modal when a notification is received
-  useEffect(() => {
-    if (notification) {
-      setIsModalVisible(true);
-    }
-  }, [notification]);
-
-  // Function to send an emergency notification if User2 is logged in
-  const handleSendNotification = async () => {
-    await sendEmergencyNotification(isUserLoggedIn);
+  const handleLogout = async () => {
+    Alert.alert('Logout', 'Are you sure you want to log out?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Log Out',
+        onPress: async () => {
+          await logout();
+          router.replace('/sign-in'); // Navigate to sign-in after logout
+          Alert.alert('Logged Out', 'You have successfully logged out.');
+        },
+      },
+    ]);
   };
+
 
   const handleNavigate = (info) => {
     router.push(`/aboutInfo/${info}`);
@@ -59,7 +62,7 @@ const SERTmenu = () => {
           />
           <CustomButton
             title="Log out"
-            handlePress={() => router.push('/emergency')}
+            handlePress={handleLogout}
             containerStyles="mt-5 align-center"
           />
         </View>

@@ -2,25 +2,29 @@ import React, { useState, useEffect, useContext, createContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 
-const AuthContext = createContext();  // Creating a context for authentication
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);  // Shows loading spinner during login
-  const [isAuthenticated, setIsAuthenticated] = useState(false);  // Tracks if the user is logged in
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
   // Fetch login status from storage on app load
   useEffect(() => {
     const loadAuthState = async () => {
-      const storedStatus = await AsyncStorage.getItem('isAuthenticated');
-      if (storedStatus) {
-        setIsAuthenticated(JSON.parse(storedStatus));
+      try {
+        const storedStatus = await AsyncStorage.getItem('isAuthenticated');
+        if (storedStatus) {
+          setIsAuthenticated(JSON.parse(storedStatus));
+        }
+      } catch (error) {
+        console.error('Error loading auth state:', error);
       }
     };
     loadAuthState();
   }, []);
 
-  // Login function that communicates with the backend to verify credentials
+  // Login function
   const login = async (username, password) => {
     setIsSubmitting(true);
     try {
@@ -29,44 +33,47 @@ export const AuthProvider = ({ children }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-  
+
+      if (!response.ok) {
+        const errorMessage =
+          response.status === 401
+            ? 'Invalid username or password.'
+            : 'Something went wrong. Please try again.';
+        return { success: false, message: errorMessage };
+      }
+
       const success = await response.json();
-  
       if (success) {
         setIsAuthenticated(true);
-  
-        // Check the "remember me" setting before storing login status
-        const rememberMe = JSON.parse(await AsyncStorage.getItem('rememberMe'));
-        if (rememberMe) {
-          await AsyncStorage.setItem('isAuthenticated', JSON.stringify(true));
-        }
-  
+        await AsyncStorage.setItem('isAuthenticated', JSON.stringify(true));
         return { success: true };
       } else {
         return { success: false, message: 'Invalid credentials' };
       }
     } catch (error) {
       console.error('Login error:', error);
-      return { success: false, message: 'Something went wrong. Please try again later.' };
+      return { success: false, message: 'Network error. Please try again later.' };
     } finally {
       setIsSubmitting(false);
     }
   };
-  
+
+  // Logout function
   const logout = async () => {
-    setIsAuthenticated(false);
-    await AsyncStorage.removeItem('isAuthenticated');
-    await AsyncStorage.removeItem('rememberMe'); // Clear the remember me preference
+    try {
+      setIsAuthenticated(false);
+      await AsyncStorage.removeItem('isAuthenticated');
+      router.replace('/sign-in');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
-  // useEffect(() => {
-  //   checkAuth();
-  // }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isSubmitting, login }}>
-      {children} 
+    <AuthContext.Provider value={{ isAuthenticated, isSubmitting, login, logout }}>
+      {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);  // Custom hook to access auth state and functions
+export const useAuth = () => useContext(AuthContext);

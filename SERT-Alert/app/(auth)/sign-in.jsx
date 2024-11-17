@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, SafeAreaView, ScrollView, Alert, ActivityIndicator, Modal, Switch, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, SafeAreaView, ScrollView, Alert, ActivityIndicator, Modal, Switch, TouchableOpacity, BackHandler } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useFocusEffect } from '@react-navigation/native';
 import { router } from 'expo-router';
 import { useAuth } from '../../hooks/useAuth';
 import FormField from '../../components/FormField';
@@ -9,22 +10,69 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const SignIn = () => {
   const [form, setForm] = useState({ username: '', password: '' });
   const [rememberMe, setRememberMe] = useState(false);
-  const { login, isSubmitting } = useAuth();
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const { login, isSubmitting, isAuthenticated } = useAuth();
 
-  const submit = async () => {
-    if (!form.username || !form.password) {
-      Alert.alert('Error', 'Please fill in all the fields!');
-      return;
-    }
-    const result = await login(form.username, form.password);
-    if (result.success) {
-      await AsyncStorage.setItem('rememberMe', JSON.stringify(rememberMe));
-      Alert.alert('Success', 'Login successful!');
+  useEffect(() => {
+    const loadRememberedUser = async () => {
+      const data = await AsyncStorage.getItem('rememberMe');
+      if (data) {
+        const { rememberMe, username } = JSON.parse(data);
+        setRememberMe(rememberMe);
+        if (rememberMe) {
+          setForm((prev) => ({ ...prev, username }));
+        }
+      }
+    };
+
+    loadRememberedUser();
+  }, []);
+
+  useEffect(() => {
+    if (isAuthenticated && !isRedirecting) {
+      setIsRedirecting(true);
       router.replace('/SERTemergency');
-    } else {
-      Alert.alert('Login Failed', result.message);
     }
-  };
+  }, [isAuthenticated, isRedirecting]);
+
+  // Prevent back navigation after login
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        if (isAuthenticated) {
+          return true; // Disable back button behavior
+        }
+        return false; // Allow default back button behavior
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, [isAuthenticated])
+  );
+
+    const submit = async () => {
+      if (!form.username || !form.password) {
+        Alert.alert('Error', 'Please fill in all the fields!');
+        return;
+      }
+  
+      const result = await login(form.username, form.password);
+        if (result.success) {
+          if (rememberMe) {
+            await AsyncStorage.setItem(
+              'rememberMe',
+              JSON.stringify({ rememberMe: true, username: form.username })
+            );
+          } else {
+            await AsyncStorage.removeItem('rememberMe');
+          }
+          Alert.alert('Success', 'Login successful!');
+        } else {
+          Alert.alert('Login Failed', result.message);
+        }
+      };
+
+
 
   return (
     <LinearGradient
@@ -84,7 +132,7 @@ const SignIn = () => {
               >
                 <Text style={{ color: 'white', fontSize: 18 }}>Login</Text>
               </TouchableOpacity>
-
+                  
               <TouchableOpacity
                 style={{
                   width: '70%',
@@ -102,7 +150,7 @@ const SignIn = () => {
             </View>
           </View>
         </ScrollView>
-      </SafeAreaView>
+      </SafeAreaView> 
     </LinearGradient>
   );
 };
