@@ -1,10 +1,11 @@
 import * as Notifications from 'expo-notifications';
 import { useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
+import { useAuth } from '../hooks/useAuth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Function to request notification permissions
-export const requestPermissions = async () => { // Ensure export is added here
+export const requestPermissions = async () => {
   const { status } = await Notifications.getPermissionsAsync();
   if (status !== "granted") {
     const { status: newStatus } = await Notifications.requestPermissionsAsync();
@@ -13,6 +14,7 @@ export const requestPermissions = async () => { // Ensure export is added here
       return false;
     }
   }
+  await configureNotificationChannel();
   return true;
 };
 
@@ -30,12 +32,13 @@ const configureNotificationChannel = async () => {
   }
 };
 
-// Custom hook to handle notifications for logged-in users
-export const useNotificationHandler = (isUserLoggedIn) => {
+// Custom hook to handle notifications
+export const useNotificationHandler = () => {
+  const { isAuthenticated } = useAuth(); // Access login status from context
   const [notification, setNotification] = useState(null);
 
   useEffect(() => {
-    if (!isUserLoggedIn) return;
+    if (!!isAuthenticated) return;
 
     // Set notification handler
     Notifications.setNotificationHandler({
@@ -58,15 +61,15 @@ export const useNotificationHandler = (isUserLoggedIn) => {
     };
 
     setupNotificationListener();
-  }, [isUserLoggedIn]);
+  }, [isAuthenticated]);
 
   return { notification };
 };
 
 // Function to send an emergency notification
 export const sendEmergencyNotification = async () => {
-  const isUserLoggedIn = JSON.parse(await AsyncStorage.getItem('isAuthenticated'));
-  if (!isUserLoggedIn) {
+  const isAuthenticated = JSON.parse(await AsyncStorage.getItem('isAuthenticated'));
+  if (!isAuthenticated) {
     console.warn("User not logged in. Notification will not be sent.");
     return;
   }
@@ -99,8 +102,3 @@ export const sendEmergencyNotification = async () => {
     console.error("Error scheduling notification:", error);
   }
 };
-
-
-
-// Initialize the notification channel
-configureNotificationChannel();

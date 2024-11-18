@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator, RefreshCo
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRef } from 'react';
 import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
-import { sendEmergencyNotification, useNotificationHandler, requestPermissions } from '../../components/NotificationHandler'; // Import requestPermissions
+import { sendEmergencyNotification, requestPermissions } from '../../components/NotificationHandler'; // Import requestPermissions
+import { useAuth } from '../../hooks/useAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Notifications from 'expo-notifications';
 
 // Helper function to parse and format timestamps
 const parseTimestamp = (timestamp) => {
@@ -28,32 +28,45 @@ const parseTimestamp = (timestamp) => {
 };
 
 const Notification = () => {
+  const { isAuthenticated } = useAuth();
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [currentCount, setCurrentCount] = useState(0); 
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  const pollingInterval = useRef(null); // Using useRef to keep track of the interval
+  const pollingInterval = useRef(null);
+  const [isPolling, setIsPolling] = useState(false);
   
+  // Effect to initialize polling when the user is logged in
   useEffect(() => {
-    const checkLoginStatus = async () => {
-      const loggedIn = JSON.parse(await AsyncStorage.getItem('isAuthenticated'));
-      setIsUserLoggedIn(loggedIn);
-      
-      if (loggedIn) {
-        const storedCount = JSON.parse(await AsyncStorage.getItem('lastCheckedCount')) || 0;
-        setCurrentCount(storedCount);
-        pollingInterval.current = setInterval(fetchNotifications, 5000);
-      }
-    };
-    checkLoginStatus();
+    if (isAuthenticated) {
+      initializePolling();
+    } else {
+      cleanupPolling();
+    }
 
-    return () => {
-      if (pollingInterval.current) clearInterval(pollingInterval.current);
-    };
-  }, [isUserLoggedIn]);
+    return cleanupPolling();
+  }, [isAuthenticated]);
+
+  const initializePolling = async () => {
+    try {
+      const storedCount = JSON.parse(await AsyncStorage.getItem('lastCheckedCount')) || 0;
+      setCurrentCount(storedCount);
+      pollingInterval.current = setInterval(fetchNotifications, 5000);
+    } catch (error) {
+      console.error('Failed to initialize polling:', error);
+    }
+  };
+
+  const cleanupPolling = () => {
+    if (pollingInterval.current) {
+      clearInterval(pollingInterval.current);
+      pollingInterval.current = null;
+    }
+  };
 
   const fetchNotifications = async () => {
+    if (isPolling) return;
+      setIsPolling(true);
     try {
       const hasPermission = await requestPermissions(); // Fix: Use imported function
       const apiUrl = "http://192.168.1.14:5117/api/GetReportList"; // API URL
@@ -91,6 +104,7 @@ const Notification = () => {
       console.error("Fetch error:", error);
     } finally {
       setLoading(false);
+      setIsPolling(false);
       setRefreshing(false); // Stop refreshing after fetch completes
     }
   };
@@ -105,10 +119,6 @@ const Notification = () => {
     <SafeAreaView style={styles.container}>
       <AnimatedGradientBackground2/>
       <Text style={styles.title} className="text-2xl font-psemibold text-white mt-2">Report Logs</Text>
-      
-      {/* Test Notification Button */}
-      <Button title="Test Heads-Up Notification" onPress={sendEmergencyNotification} color="#4b543b" />
-
       {loading ? (
         <ActivityIndicator size="large" color="#fff" />
       ) : (
