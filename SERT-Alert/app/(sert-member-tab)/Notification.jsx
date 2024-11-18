@@ -6,6 +6,7 @@ import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackgr
 import { sendEmergencyNotification, requestPermissions } from '../../components/NotificationHandler'; // Import requestPermissions
 import { useAuth } from '../../hooks/useAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import EmergencyModal from '../../components/EmergencyModal';
 
 // Helper function to parse and format timestamps
 const parseTimestamp = (timestamp) => {
@@ -32,10 +33,24 @@ const Notification = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [currentCount, setCurrentCount] = useState(0); 
+  const [currentCount, setCurrentCount] = useState(0);
+  const [emergencyData, setEmergencyData] = useState(null); // State for emergency data 
+  const [modalVisible, setModalVisible] = useState(false); // State to control modal visibility
   const pollingInterval = useRef(null);
   const [isPolling, setIsPolling] = useState(false);
   
+  // Handle "Respond" button action
+  const handleRespond = () => {
+    setModalVisible(false);
+    // Logic to mark the notification as responded or navigate to response screen
+  };
+
+  // Handle "Decline" button action
+  const handleDecline = () => {
+    setModalVisible(false);
+    // Logic to decline the notification or close modal
+  };
+
   // Effect to initialize polling when the user is logged in
   useEffect(() => {
     if (isAuthenticated) {
@@ -94,7 +109,15 @@ const Notification = () => {
       if (data.length > storedCount) {
         console.log(`New notifications detected. Current: ${storedCount}, New: ${data.length}`);
         await sendEmergencyNotification();
-      }
+        const latestNotification = sortedData[0]; // Get the most recent notification
+        setEmergencyData({
+            building: latestNotification.building || "N/A",
+            floorLocation: latestNotification.floorLocation || "N/A",
+            context: latestNotification.context || "N/A",
+            image: latestNotification.image ? `data:image/jpeg;base64,${latestNotification.image}` : null,
+        });
+        setModalVisible(true); // Show modal with emergency data
+    }
 
       // Update the current count and save it in AsyncStorage
       setCurrentCount(data.length);
@@ -159,6 +182,12 @@ const Notification = () => {
           )}
         </ScrollView>
       )}
+      <EmergencyModal
+        visible={modalVisible}
+        emergencyData={emergencyData}
+        onRespond={handleRespond}
+        onDecline={handleDecline}
+      />
     </SafeAreaView>
   );
 };
