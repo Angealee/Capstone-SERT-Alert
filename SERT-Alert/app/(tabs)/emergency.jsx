@@ -490,11 +490,6 @@ const Emergency = () => {
                     <Text style={{ color: '#333', fontSize: 16, fontWeight: 50, marginTop: 20 }}>Swipe Up to refresh!</Text>
                 </View>
             )}
-            {currentLocation && (
-                          <Text style={{ color: 'black', textAlign: 'center', fontSize: 11 }}>
-                            Latitude: {currentLocation.latitude} | Longitude: {currentLocation.longitude}
-                          </Text>
-            )}
           </View>
           <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.1.0</Text>
         </View>

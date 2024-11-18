@@ -34,7 +34,7 @@ const Notification = () => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [currentCount, setCurrentCount] = useState(0);
-  const [emergencyData, setEmergencyData] = useState(null); // State for emergency data 
+  const [emergencyData, setEmergencyData] = useState({}); // State for emergency data 
   const [modalVisible, setModalVisible] = useState(false); // State to control modal visibility
   const pollingInterval = useRef(null);
   const [isPolling, setIsPolling] = useState(false);
@@ -93,33 +93,32 @@ const Notification = () => {
       });
       const data = await response.json();
 
-      // Parse and sort notifications by timestamp in descending order
       const sortedData = data.map((notification) => ({
         ...notification, // create a new object for each notification
         timestamp: parseTimestamp(notification.Timestamp),
       }))
       .sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp));
 
-      setNotifications(sortedData); // Update state with sorted notifications
+      setNotifications(sortedData);
 
-      // Retrieve last checked count from AsyncStorage
       const storedCount = JSON.parse(await AsyncStorage.getItem('lastCheckedCount')) || 0;
 
-      // Check for new notifications only if there's an increase
+      // Check for new notifications
       if (data.length > storedCount) {
-        console.log(`New notifications detected. Current: ${storedCount}, New: ${data.length}`);
         await sendEmergencyNotification();
-        const latestNotification = sortedData[0]; // Get the most recent notification
-        setEmergencyData({
+        
+        const latestNotification = sortedData[0];
+
+        setEmergencyData(
+          {
             building: latestNotification.building || "N/A",
-            floorLocation: latestNotification.floorLocation || "N/A",
+            floorLocation: latestNotification.floorLocation || "another",
             context: latestNotification.context || "N/A",
             image: latestNotification.image ? `data:image/jpeg;base64,${latestNotification.image}` : null,
-        });
-        setModalVisible(true); // Show modal with emergency data
+          }
+      );
+        setModalVisible(true);
     }
-
-      // Update the current count and save it in AsyncStorage
       setCurrentCount(data.length);
       await AsyncStorage.setItem('lastCheckedCount', JSON.stringify(data.length));
     } catch (error) {
@@ -128,7 +127,7 @@ const Notification = () => {
     } finally {
       setLoading(false);
       setIsPolling(false);
-      setRefreshing(false); // Stop refreshing after fetch completes
+      setRefreshing(false);
     }
   };
   
@@ -188,6 +187,7 @@ const Notification = () => {
         onRespond={handleRespond}
         onDecline={handleDecline}
       />
+
     </SafeAreaView>
   );
 };
