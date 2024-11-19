@@ -176,7 +176,7 @@ namespace SertWebApp.Managers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error at UserManager.Delete(...)");
+                _logger.LogError(ex, "Error at UserManager.UpdateStatus(...)");
             }
         }
 

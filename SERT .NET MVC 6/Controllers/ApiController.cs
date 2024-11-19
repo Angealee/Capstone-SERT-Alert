@@ -66,6 +66,36 @@ namespace SertWebApp.Controllers
             }
         }
 
+        [HttpPost]
+        public bool SetUserStatus([FromBody] UserUpdateStatusViewModel data)
+        {
+            try
+            {
+                //var jsonObj = JsonConvert.DeserializeObject(data);
+                //var userId = jsonObj["userId"];
+                //var status = jsonObj["isActive"];
+                //if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(isActive))
+                    //return false;
+
+                //var isSuccess = int.TryParse(userId, out int id);
+
+                //if (!isSuccess)
+                //    return false;
+
+                //isSuccess = bool.TryParse(isActive, out bool status);
+
+                //if (!isSuccess)
+                //    return false;
+
+                _userManager.UpdateStatus(data.UserId, data.IsOnline);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private List<ApiReportViewModel> ConvertToViewModel(List<ReportModel> reports)
         {
             var reportViewModels = new List<ApiReportViewModel>();
