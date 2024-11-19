@@ -92,3 +92,21 @@ VALUES (1,'admin','uSDQqoCng1wVR7EIZB/Y6MgFGDf8X9RJzJndgvqir+E=','Admin','defaul
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2024-10-03 20:24:43
+
+
+-- For SQL Server (Azure)
+SET IDENTITY_INSERT [users] ON;
+
+INSERT INTO [users] ([Id], [Username], [Password], [Name], [Course], [Year], [Section], [Email], [Position], [Role], [IsActive], [IsOnline], [DateCreated], [DateModified])
+VALUES (1,'admin','uSDQqoCng1wVR7EIZB/Y6MgFGDf8X9RJzJndgvqir+E=','Admin','default','default','default','origadmin@mail.com','Admin',1,1,1,GETDATE(),NULL);
+
+SET IDENTITY_INSERT [users] OFF;
+
+-- Need to run this in Azure SQL Database (Not Server)
+-- [sertwebapp] = app-service-name
+-- reference: https://learn.microsoft.com/en-us/azure/azure-sql/database/azure-sql-dotnet-quickstart?view=azuresql&tabs=visual-studio%2Cpasswordless%2Cazure-portal%2Cportal
+CREATE USER [sertwebapp] FROM EXTERNAL PROVIDER;
+ALTER ROLE db_datareader ADD MEMBER [sertwebapp];
+ALTER ROLE db_datawriter ADD MEMBER [sertwebapp];
+ALTER ROLE db_ddladmin ADD MEMBER [sertwebapp];
+GO

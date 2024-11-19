@@ -34,7 +34,7 @@ public partial class User
 
     public bool IsOnline { get; set; }
 
-    public DateTime DateCreated { get; set; }
+    public DateTime DateCreated { get; set; } = DateTime.Now;
 
-    public DateTime? DateModified { get; set; }
+    public DateTime? DateModified { get; set; } = null!;
 }

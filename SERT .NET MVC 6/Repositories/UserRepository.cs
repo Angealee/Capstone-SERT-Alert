@@ -1,5 +1,4 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using SertWebApp.Enums;
+﻿using SertWebApp.Enums;
 using SertWebApp.Interfaces;
 using SertWebApp.Models;
 
