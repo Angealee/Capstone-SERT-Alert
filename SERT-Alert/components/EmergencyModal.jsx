@@ -1,7 +1,6 @@
 // EmergencyModal.jsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, Image, Modal, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
-import { LinearGradient } from 'react-native-svg';
 
 const EmergencyModal = ({ visible, emergencyData, onRespond, onDecline }) => {
 

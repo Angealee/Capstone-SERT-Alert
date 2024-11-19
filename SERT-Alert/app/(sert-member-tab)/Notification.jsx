@@ -112,7 +112,7 @@ const Notification = () => {
         setEmergencyData(
           {
             building: latestNotification.building || "N/A",
-            floorLocation: latestNotification.floorLocation || "another",
+            floorLocation: latestNotification.floorLocation || "N/A",
             context: latestNotification.context || "N/A",
             image: latestNotification.image ? `data:image/jpeg;base64,${latestNotification.image}` : null,
           }

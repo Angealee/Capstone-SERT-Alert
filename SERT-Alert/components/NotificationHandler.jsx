@@ -38,7 +38,7 @@ export const useNotificationHandler = () => {
   const [notification, setNotification] = useState(null);
 
   useEffect(() => {
-    if (!!isAuthenticated) return;
+    if (!isAuthenticated) return;
 
     // Set notification handler
     Notifications.setNotificationHandler({
