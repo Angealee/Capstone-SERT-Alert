@@ -1,10 +1,8 @@
 import * as Notifications from 'expo-notifications';
-import * as Audio from 'expo-av'
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Platform } from 'react-native';
 import { useAuth } from '../hooks/useAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import audio from '../constants/audio';
 
 // Function to request notification permissions
 export const requestPermissions = async () => {
@@ -93,7 +91,7 @@ export const sendEmergencyNotification = async () => {
           floor: "Mock Floor",
           context: "Mock emergency context for testing.",
         },
-        sound: audio.sertAlert,
+        sound: 'default',
         priority: Notifications.AndroidNotificationPriority.MAX,
         vibrate: [250, 400, 400, 400],
       },
