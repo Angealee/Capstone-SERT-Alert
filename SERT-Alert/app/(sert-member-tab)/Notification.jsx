@@ -122,7 +122,7 @@ const Notification = () => {
       setCurrentCount(data.length);
       await AsyncStorage.setItem('lastCheckedCount', JSON.stringify(data.length));
     } catch (error) {
-      Alert.alert("Error", "Failed to load notifications");
+      Alert.alert("Wait", "Notifications are reloading");
       console.error("Fetch error:", error);
     } finally {
       setLoading(false);

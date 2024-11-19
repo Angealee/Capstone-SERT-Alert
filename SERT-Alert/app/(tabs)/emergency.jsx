@@ -376,7 +376,7 @@ const Emergency = () => {
                       color: '#000',
                       fontSize: 19,
                       textAlign: 'center',
-                      marginTop: 15,
+                      marginTop: 17,
                       marginLeft: 30
                     },
                     inputAndroid: { 
@@ -404,8 +404,6 @@ const Emergency = () => {
                     inputIOS: { 
                       color: isFloorLocationEnabled ? '#000' : '#888', 
                       fontSize: 19,
-                      textAlign: 'center',
-                      marginTop: 15,
                       marginLeft: 30
                     },
                     inputAndroid: { 

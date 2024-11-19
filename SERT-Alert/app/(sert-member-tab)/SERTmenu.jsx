@@ -7,8 +7,9 @@ import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackgr
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SERTmenu = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
   const { logout } = useAuth();
+  const [username, setUsername] = useState("")
 
   const handleLogout = async () => {
     Alert.alert('Logout', 'Are you sure you want to log out?', [
@@ -24,6 +25,46 @@ const SERTmenu = () => {
     ]);
   };
 
+  const getCurrentUser = async () => {
+    let j = await AsyncStorage.getItem("username");
+    setUsername(j)
+  }
+
+  const setUserStatus = async (status) => {
+    try {
+      const response = await fetch('http://192.168.1.14:5117/api/SetUserStatus', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, status }),
+      });
+
+      if (!response.ok) {
+        const errorMessage =
+          response.status === 401
+            ? ''
+            : '';
+        return { success: false, message: errorMessage };
+      }
+
+      const success = await response.json();
+      if (success) {
+        setIsUserLoggedIn(status);
+        return { success: true };
+      } else {
+        return { success: false, message: 'Invalid' };
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      return { success: false, message: 'Network error. Please try again later.' };
+    }
+  }
+
+  useEffect(() => {
+    let ignore = false;
+    if (!ignore) getCurrentUser();
+    return () => { ignore = true; }
+  }, []);
+  
 
   const handleNavigate = (info) => {
     router.push(`/aboutInfo/${info}`);
@@ -37,14 +78,19 @@ const SERTmenu = () => {
           <View className="w-full justify-center h-full[85vh] my-6">
             <Text className="text-3xl text-black text-semibold mt-10 font-psemibold">Menu</Text>
           </View>
+          <View>
+            <Text>
+            Logged in as: {username}
+            </Text>
+          </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
             <Text style={{ fontWeight: 'bold', fontSize: 21 }}>Active Status:</Text>
             <Switch
               trackColor={{ false: '#876a59', true: '#37733f' }}
               thumbColor={isUserLoggedIn ? '#4bdb5e' : '#b89581'}
               ios_backgroundColor="#3e3e3e"
-              onValueChange={() => setIsUserLoggedIn((prev) => !prev)} // Toggle login status
               value={isUserLoggedIn}
+              onValueChange={() => setIsUserLoggedIn((prev) => { setUserStatus(!prev); return !prev; })}
               style={{ transform: [{ scaleX: 1 }, { scaleY: 1 }] }}
             />
           </View>

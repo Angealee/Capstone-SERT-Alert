@@ -45,7 +45,9 @@ export const AuthProvider = ({ children }) => {
       const success = await response.json();
       if (success) {
         setIsAuthenticated(true);
+        await AsyncStorage.setItem("username", username);
         await AsyncStorage.setItem('isAuthenticated', JSON.stringify(true));
+        setUserStatus(true);
         return { success: true };
       } else {
         return { success: false, message: 'Invalid credentials' };
@@ -61,13 +63,46 @@ export const AuthProvider = ({ children }) => {
   // Logout function
   const logout = async () => {
     try {
+      setUserStatus(false);
       setIsAuthenticated(false);
+      await AsyncStorage.removeItem('username');
       await AsyncStorage.removeItem('isAuthenticated');
+      
       router.replace('/sign-in');
     } catch (error) {
       console.error('Logout error:', error);
     }
   };
+
+  const setUserStatus = async (status) => {
+    try {
+      let currentUser = await AsyncStorage.getItem("username");
+
+      const response = await fetch('http://192.168.1.14:5117/api/SetUserStatus', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: currentUser, status }),
+      });
+
+      if (!response.ok) {
+        const errorMessage =
+          response.status === 401
+            ? ''
+            : '';
+        return { success: false, message: errorMessage };
+      }
+
+      const success = await response.json();
+      if (success) {
+        return { success: true };
+      } else {
+        return { success: false, message: 'Invalid' };
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      return { success: false, message: 'Network error. Please try again later.' };
+    }
+  }
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, isSubmitting, login, logout }}>
