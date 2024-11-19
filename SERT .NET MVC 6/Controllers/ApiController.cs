@@ -71,23 +71,7 @@ namespace SertWebApp.Controllers
         {
             try
             {
-                //var jsonObj = JsonConvert.DeserializeObject(data);
-                //var userId = jsonObj["userId"];
-                //var status = jsonObj["isActive"];
-                //if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(isActive))
-                    //return false;
-
-                //var isSuccess = int.TryParse(userId, out int id);
-
-                //if (!isSuccess)
-                //    return false;
-
-                //isSuccess = bool.TryParse(isActive, out bool status);
-
-                //if (!isSuccess)
-                //    return false;
-
-                _userManager.UpdateStatus(data.UserId, data.IsOnline);
+                _userManager.UpdateStatus(data.Username, data.IsOnline);
                 return true;
             }
             catch
