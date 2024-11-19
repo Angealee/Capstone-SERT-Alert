@@ -31,10 +31,10 @@ const swimmingWaterSafety = () => {
             resizeMode='cover'
           />
           <Text className="text-2xl font-bold mb-4">Water Safety</Text>
-          <Text className="text-lg mb-2">
+          <Text className="text-lg mb-2" style={{textAlign: 'justify'}}>
           Water-related activities can be enjoyable, but they also come with risks. This module teaches swimming and water safety tips, including how to swim safely in pools, lakes, and oceans. You'll learn about the importance of life jackets, how to recognize and respond to drowning, and the basics of rescue techniques.
           </Text>
-          <Text className="text-lg mb-2">
+          <Text className="text-lg mb-2" style={{textAlign: 'justify'}}>
           Water safety is crucial for preventing accidents and ensuring everyone’s safety around water environments. This section provides essential guidelines for understanding water conditions, rescue techniques, drowning prevention, and water survival skills.
           </Text>
 
@@ -66,7 +66,7 @@ const swimmingWaterSafety = () => {
               resizeMode='contain'
             />
 
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
               Understanding the water conditions before entering is essential to avoid unexpected risks. Recognize currents, water depth, and weather changes that can impact safety.
             </Text>
             <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
@@ -93,7 +93,7 @@ const swimmingWaterSafety = () => {
               className="w-full h-56 mb-3 rounded-lg"
               resizeMode='contain'
             />
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
               Learning basic rescue techniques can be life-saving in water emergencies. These skills are valuable for helping others without putting oneself at risk.
             </Text>
             <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
@@ -121,7 +121,7 @@ const swimmingWaterSafety = () => {
               className="w-full h-56 mb-3 rounded-lg"
               resizeMode='contain'
             />
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
               Drowning can happen quickly and silently. Practicing prevention techniques can minimize risks for children and adults alike.
             </Text>
             <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
@@ -149,7 +149,7 @@ const swimmingWaterSafety = () => {
               className="w-full h-56 mb-3 rounded-lg"
               resizeMode='contain'
             />
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
               Knowing basic water survival skills can greatly increase chances of survival in dangerous situations. These include floating, treading water, and conserving energy.
             </Text>
             <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">

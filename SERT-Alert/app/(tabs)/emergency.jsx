@@ -55,8 +55,8 @@ const Emergency = () => {
       const municipality = locationDetails.city || '???';
       const province = locationDetails.region || '???';
 
-      const withinLatBounds = latitude >= 15.302148 && latitude <= 15.35321109;
-      const withinLongBounds = longitude >= 119.5808391 && longitude <= 122.5906055;
+      const withinLatBounds = latitude >= 15.33129 && latitude <= 15.3334023;
+      const withinLongBounds = longitude >= 120.590091 && longitude <= 120.5905879;
       console.log("Lat and Long Details:", latitude, longitude);
 
       // Set location data and check if within premises
@@ -324,7 +324,8 @@ const Emergency = () => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
       >
-        <View className="bg-white pl-2 pr-2 pb-2 rounded-3xl shadow-lg mt-10 mb-6">
+        <View className="bg-white pl-2 pr-2 pb-2 pt-3 rounded-3xl shadow-lg mt-10 mb-6">
+        <Text style={{fontSize: 9, marginLeft: 10}}>SERT Alert v1.3.0</Text>
           <Image
             source={images.SERTlogo}
             resizeMode='contain'
@@ -481,15 +482,18 @@ const Emergency = () => {
                   <Text style={{ color: 'red', fontSize: 14, marginTop: 5 }}>
                         You are not currently in the Dominican College of Tarlac premises, you are not eligible for reporting.
                   </Text>
-                    <Text style={{ color: '#333', fontSize: 16, fontWeight: 10, marginTop: 3 }}>Your current location:</Text>
-                      <Text className="text-black-600 font-semibold"> {locationInfo.municipality}, {locationInfo.province}</Text>
-                      
-
-                    <Text style={{ color: '#333', fontSize: 16, fontWeight: 50, marginTop: 20 }}>Swipe Up to refresh!</Text>
+                    <Text style={{ color: '#333', fontSize: 16, fontWeight: 50, marginTop: 7 }}>Swipe Up to refresh!</Text>
+                </View>
+            )}
+            {isWithinPremises && (
+              <View style={{ marginTop: 10, alignItems: 'center' }}>
+                  <Text style={{ color: 'black', fontSize: 14, marginTop: 5 }}>
+                       Note: You can only report inside the campus!
+                  </Text>
                 </View>
             )}
           </View>
-          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.2.0</Text>
+          
         </View>
       </ScrollView>
     </SafeAreaView>

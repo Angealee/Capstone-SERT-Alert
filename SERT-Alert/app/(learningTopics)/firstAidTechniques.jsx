@@ -32,7 +32,7 @@ const FirstAidTechniques = () => {
             resizeMode='cover'
           />
           <Text className="text-2xl font-pbold mb-4">First Aid Techniques</Text>
-          <Text className="text-lg mb-2">
+          <Text className="text-lg mb-2" style={{textAlign: 'justify'}}>
           First Aid is a set of essential, immediate responses aimed at minimizing injury, preventing further harm, and stabilizing individuals until professional help arrives. In emergency situations, knowing how to apply basic first aid techniques can significantly impact outcomes, potentially saving lives. This section will walk you through fundamental first aid skills such as bleeding control, CPR, burns treatment, choking response, and fracture stabilization, providing both guidance and practical scenarios to illustrate these techniques in action.
 
           </Text>
@@ -74,7 +74,7 @@ const FirstAidTechniques = () => {
             </Text>
             
             <Text className="text-lg font-bold mb-2 mt-6 pl-4">A. Direct Pressure:</Text>
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
             Direct pressure is a crucial first aid technique for controlling bleeding by applying firm, consistent pressure on the wound. This slows blood flow, allowing natural clotting to begin, which helps prevent significant blood loss.
             </Text>
             <View className="pl-8 pt-2 pr-5 mt-2 ml-2 border border-orange-50 rounded-3xl bg-orange-50">
@@ -119,12 +119,12 @@ const FirstAidTechniques = () => {
           </View>
 
           <Text className="text-lg font-bold mb-2 pl-4">B. Elevation:</Text>
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
             Elevating the injured area above the heart level can reduce blood flow to the wound, helping to slow bleeding and encourage clotting. This method works best when combined with direct pressure.
             </Text>
 
           <Text className="text-lg font-bold mb-2 pl-4">C. Use of Bandages:</Text>
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
             Once initial bleeding is under control, a sterile bandage can be applied to protect the wound from contamination and further injury. Bandaging keeps the wound clean, promotes healing, and can help maintain pressure if done correctly.
             </Text>
             <View className="pl-8 pt-2 pr-5 mt-2 ml-2 border border-orange-50 rounded-3xl bg-orange-50">
@@ -169,7 +169,7 @@ const FirstAidTechniques = () => {
             </View>
 
           <Text className="text-lg font-bold mb-2 pl-4">D. Tourniquet Application:</Text>
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
             A tourniquet is a device or method used to stop severe bleeding on a limb when other methods (direct pressure, elevation) are ineffective. A tourniquet should be applied as a last resort in life-threatening situations where bleeding cannot be controlled.
             </Text>
 
@@ -208,7 +208,7 @@ const FirstAidTechniques = () => {
             </View>
 
           <Text className="text-lg font-bold mb-2 mt-8 pl-4">E. Recognizing Shock Symptoms:</Text>
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
             Shock is a life-threatening condition that can result from severe blood loss, causing a drop in blood pressure and inadequate blood flow to organs. Recognizing shock symptoms and providing immediate assistance is crucial to stabilize the person until emergency help arrives.
             </Text>
 
@@ -244,12 +244,12 @@ const FirstAidTechniques = () => {
               resizeMode='contain'
             />
 
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
             CPR is a lifesaving technique used in cases of cardiac arrest. It helps maintain blood flow and oxygen to the brain and vital organs until professional medical help arrives.
             </Text>
             
             <Text className="text-lg font-bold mb-2 pl-4">A. Chest Compressions::</Text>
-            <Text className="text-lg pl-4 pr-2">
+            <Text className="text-lg pl-4 pr-2" style={{textAlign: 'justify'}}>
             Chest compressions are the core of CPR, acting as an artificial heartbeat. By pressing down hard and fast in the center of the chest, you help pump blood through the heart to vital organs like the brain and lungs, which need oxygen to function.
             </Text>
             <View className="pl-8 pt-2 pr-5 mt-5 border border-orange-50 rounded-3xl bg-orange-50">
@@ -301,7 +301,7 @@ const FirstAidTechniques = () => {
             </View>
             
             <Text className="text-lg font-bold mt-6 mb-2 pl-4">B. Rescue Breaths:</Text>
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
             Rescue breaths provide oxygen directly to the person's lungs, which is crucial if their body cannot breathe independently. Rescue breaths are given in conjunction with chest compressions to maintain circulation and oxygenation.
             </Text>
 
@@ -326,7 +326,7 @@ const FirstAidTechniques = () => {
                   </View>
                   </View>
                   <View className="bg-white-20">
-                    <Text className="text-lg pb-4 pt-5">
+                    <Text className="text-lg pb-4 pt-5" style={{textAlign: 'justify'}}>
                       During a cardiac emergency, a trained responder alternates between 30 compressions and two rescue breaths. The responder tilts the head back, pinches the nose, and delivers two breaths before resuming compressions, keeping the process continuous until medical help arrives.
                     
                     </Text>
@@ -339,12 +339,12 @@ const FirstAidTechniques = () => {
             </Text>
             <Text className="font-bold mt-4 pl-4 pr-2">
             Example Scenario:</Text> 
-            <Text className="text-lg mb-2 pl-7 pr-2">
+            <Text className="text-lg mb-2 pl-7 pr-2" style={{textAlign: 'justify'}}>
               A person collapses in a public place, and a bystander calls 911. Following the dispatcher's instructions, they immediately start hands-only CPR, focusing on compressions. They continue rhythmically pressing on the chest without attempting breaths, as this technique can still maintain blood flow to the brain and heart.
             </Text>
 
             <Text className="text-lg font-bold mb-2 mt-4 pl-4">D. CPR for Children and Infants:</Text>
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
             CPR for children (ages 1-8) and infants requires gentler compressions and breaths because of their smaller body sizes. This modified approach reduces the risk of injury and is tailored to be effective for young individuals in cardiac distress.
             </Text>
             <View className="pl-8 pt-2 pr-5 mt-5 border border-orange-50 rounded-3xl bg-orange-50">
@@ -376,7 +376,7 @@ const FirstAidTechniques = () => {
                   
                   </View>
                   <View className="bg-white-20">
-                    <Text className="text-lg pb-4 pt-5">
+                    <Text className="text-lg pb-4 pt-5" style={{textAlign: 'justify'}}>
                     A caregiver finds a young child unresponsive. After confirming they are not breathing, the caregiver places one hand on the child’s chest, performing gentle compressions. They tilt the head back slightly and give two small breaths after every 30 compressions. For an infant, they would instead use two fingers and perform the steps carefully, paying attention to the infant’s smaller size.
                     </Text>
                 </View>
@@ -446,13 +446,13 @@ const FirstAidTechniques = () => {
 
             {/* C. Avoiding Ice */}
             <Text className="text-lg font-bold mb-2 mt-2 pl-4">C. Avoiding Ice:</Text>
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
               Never apply ice directly to a burn, as it can restrict blood flow and worsen tissue damage. Instead, rely on cool, running water to lower the burn's temperature safely.
             </Text>
 
             {/* D. Identifying Burn Severity */}
             <Text className="text-lg font-bold mb-2 mt-2 pl-4">D. Identifying Burn Severity:</Text>
-            <Text className="text-lg mb-2 pl-4 pr-2"> 
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}> 
               Burns are classified into three levels: first-degree (superficial), second-degree (partial-thickness), and third-degree (full-thickness). Recognizing the severity of a burn is essential for appropriate treatment and knowing when to seek medical help.
             </Text>
             <View className="pl-8 pt-2 pr-5 mt-5 mb-5 border border-orange-50 rounded-3xl bg-orange-50">
@@ -635,7 +635,7 @@ const FirstAidTechniques = () => {
 
             {/* D. Identifying Different Fracture Types */}
             <Text className="text-lg font-bold mb-2 pl-4">D. Identifying Different Fracture Types:</Text>
-            <Text className="text-lg mb-2 pl-4 pr-2">
+            <Text className="text-lg mb-2 pl-4 pr-2" style={{textAlign: 'justify'}}>
               Fractures can vary in severity and appearance. Open fractures involve a bone breaking through the skin, while closed fractures remain under the skin. Knowing the type of fracture can aid responders in determining proper treatment.
             </Text>
 

@@ -74,8 +74,8 @@ const SERTemergency = () => {
       const municipality = locationDetails.city || '???';
       const province = locationDetails.region || '???';
 
-      const withinLatBounds = latitude >= 15 && latitude <= 18;
-      const withinLongBounds = longitude >= 120 && longitude <= 123;
+      const withinLatBounds = latitude >= 15.33129 && latitude <= 15.3334023;
+      const withinLongBounds = longitude >= 120.590091 && longitude <= 120.5905879;
       console.log("Lat and Long Details:", latitude, longitude);
 
       // Set location data and check if within premises
@@ -501,19 +501,19 @@ const SERTemergency = () => {
                   <Text style={{ color: 'red', fontSize: 14, marginTop: 5 }}>
                         You are not currently in the Dominican College of Tarlac premises, you are not eligible for reporting.
                   </Text>
-                    <Text style={{ color: '#333', fontSize: 16, fontWeight: 10, marginTop: 3 }}>Your current location:</Text>
-                      <Text className="text-black-600 font-semibold"> {locationInfo.municipality}, {locationInfo.province}</Text>
                     <Text style={{ color: '#333', fontSize: 16, fontWeight: 50, marginTop: 20 }}>Swipe Up to refresh!</Text>
                 </View>
             )}
-            {currentLocation && (
-                          <Text style={{ color: 'black', textAlign: 'center', fontSize: 11 }}>
-                            Latitude: {currentLocation.latitude} | Longitude: {currentLocation.longitude}
-                          </Text>
+            {isWithinPremises && (
+              <View style={{ marginTop: 10, alignItems: 'center' }}>
+                  <Text style={{ color: 'black', fontSize: 14, marginTop: 5 }}>
+                       Note: You can only report inside the campus!
+                  </Text>
+                </View>
             )}
 
           </View>
-          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.2.0</Text>
+          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.3.0</Text>
         </View>
         
       </ScrollView>

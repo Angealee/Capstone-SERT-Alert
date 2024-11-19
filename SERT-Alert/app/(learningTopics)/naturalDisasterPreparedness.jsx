@@ -31,11 +31,11 @@ const naturalDisasterPreparedness = () => {
             resizeMode='cover'
           />
           <Text className="text-2xl font-bold mb-4">Natural Disaster Preparedness</Text>
-          <Text className="text-lg mb-2">
+          <Text className="text-lg mb-2" style={{textAlign: 'justify'}}>
           Natural disasters can strike at any time, often with little warning, making preparedness essential for safety. Understanding the appropriate safety measures for different types of disasters can greatly improve survival chances and reduce risk. Natural disaster preparedness is the process of planning and preparing for potential natural disasters, such as earthquakes, floods, wildfires, and many more. It involves taking proactive steps to minimize the impact of these events on individuals, families, and communities. 
           </Text>
 
-          <Text className="text-lg mb-1">This covers preparedness for earthquakes, fires, floods, and heatwaves, focusing on proactive steps to take before, during, and after each event to stay as safe as possible.</Text>
+          <Text className="text-lg mb-1" style={{textAlign: 'justify'}}>This covers preparedness for earthquakes, fires, floods, and heatwaves, focusing on proactive steps to take before, during, and after each event to stay as safe as possible.</Text>
 
           {/* CHANGE THESE INTO THE RESPECTIVE MAIN TOPICS FOR FIRST AID TECHNIQUES */}
           <TouchableOpacity onPress={() => scrollToSection(earthquakeRef)}>
@@ -150,7 +150,7 @@ const naturalDisasterPreparedness = () => {
               className="w-full h-56 mb-3 rounded-lg"
               resizeMode='contain'
             />
-            <Text className="text-lg mb-4 pl-4 pr-2">
+            <Text className="text-lg mb-4 pl-4 pr-2" style={{textAlign: 'justify'}}>
               Having a clear and practiced fire evacuation plan can save lives. This section covers essential steps and tips to ensure a safe and orderly evacuation in case of a fire.
             </Text>
 
