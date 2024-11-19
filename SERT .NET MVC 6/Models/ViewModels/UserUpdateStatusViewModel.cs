@@ -5,7 +5,7 @@ namespace SertWebApp.Models.ViewModels
     public class UserUpdateStatusViewModel
     {
         [JsonPropertyName("username")]
-        public int Username { get; set; }
+        public string Username { get; set; }
         [JsonPropertyName("status")]
         public bool IsOnline { get; set; }
     }
