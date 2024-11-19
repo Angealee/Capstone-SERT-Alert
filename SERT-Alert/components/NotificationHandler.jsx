@@ -1,8 +1,10 @@
 import * as Notifications from 'expo-notifications';
-import { useState, useEffect } from 'react';
+import * as Audio from 'expo-av'
+import { useState, useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
 import { useAuth } from '../hooks/useAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import audio from '../constants/audio';
 
 // Function to request notification permissions
 export const requestPermissions = async () => {
@@ -34,7 +36,7 @@ const configureNotificationChannel = async () => {
 
 // Custom hook to handle notifications
 export const useNotificationHandler = () => {
-  const { isAuthenticated } = useAuth(); // Access login status from context
+  const { isAuthenticated } = useAuth();
   const [notification, setNotification] = useState(null);
 
   useEffect(() => {
@@ -91,7 +93,7 @@ export const sendEmergencyNotification = async () => {
           floor: "Mock Floor",
           context: "Mock emergency context for testing.",
         },
-        sound: 'default',
+        sound: audio.sertAlert,
         priority: Notifications.AndroidNotificationPriority.MAX,
         vibrate: [250, 400, 400, 400],
       },

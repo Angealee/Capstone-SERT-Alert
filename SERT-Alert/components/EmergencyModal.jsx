@@ -1,6 +1,7 @@
 // EmergencyModal.jsx
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, Image, Modal, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, Button, Image, Modal, StyleSheet, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { LinearGradient } from 'react-native-svg';
 
 const EmergencyModal = ({ visible, emergencyData, onRespond, onDecline }) => {
 
@@ -11,10 +12,22 @@ const EmergencyModal = ({ visible, emergencyData, onRespond, onDecline }) => {
           <View style={styles.modalContainer}>
               <View style={styles.modalContent}>
                   <Text style={styles.title}>Emergency Alert</Text>
-                  <Text style={styles.detail}>Building: {emergencyData.building || "N/A"}</Text>
-                  <Text style={styles.detail}>Floor: {emergencyData.floorLocation || "testing"}</Text>
-                  <Text style={styles.detail}>Context: {emergencyData.context || "batganon"}</Text>
-                  <Text style={styles.detail}>Image: </Text>
+                  <View style={styles.modalDetailsContainer}>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text>Building:</Text>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold' }}> {emergencyData.building || "N/A"} </Text>
+                    </View>
+                    
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={{ marginTop: 10,  }}>Floor: </Text>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', marginTop: 10 }}> {emergencyData.floorLocation || "testing"}</Text>
+                    </View>
+                    
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={{ marginTop: 10 }}>Context: </Text>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10, marginTop: 9 }}> {emergencyData.context || "batganon"}</Text>
+                    </View>
+                  </View>
                   {emergencyData?.image && (
                       <Image source={{ uri: emergencyData.image }} style={styles.image} />
                   )}
@@ -43,6 +56,11 @@ const styles = StyleSheet.create({
         padding: 20,
         alignItems: 'center',
     },
+    modalDetailsContainer:{
+        width: '80%',
+        padding: 1,
+        alignItems: 'right',
+    },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
@@ -53,8 +71,8 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     image: {
-        width: 200,
-        height: 200,
+        width: 240,
+        height: 240,
         marginVertical: 10,
         borderRadius: 10,
     },
