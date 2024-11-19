@@ -195,7 +195,7 @@ const SERTemergency = () => {
       });
       // copyBase64ToClipboard(base64Image); // Automatically copy Base64 to clipboard
       
-      const apiUrl = "http://192.168.1.14:5117/api/AddReport"; // Replace with your actual API endpoint
+      const apiUrl = "https://sertwebapp-c0hrepa2d9a7afem.southeastasia-01.azurewebsites.net/api/AddReport"; // Replace with your actual API endpoint
       const timestamp = new Date().toISOString();
       const bodyData = {
         building: form.Building,

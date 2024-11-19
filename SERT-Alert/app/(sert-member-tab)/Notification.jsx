@@ -84,7 +84,7 @@ const Notification = () => {
       setIsPolling(true);
     try {
       const hasPermission = await requestPermissions(); // Fix: Use imported function
-      const apiUrl = "http://192.168.1.14:5117/api/GetReportList"; // API URL
+      const apiUrl = "https://sertwebapp-c0hrepa2d9a7afem.southeastasia-01.azurewebsites.net/api/GetReportList"; // API URL: https://sertwebapp-c0hrepa2d9a7afem.southeastasia-01.azurewebsites.net/api/GetReportList
       const response = await fetch(apiUrl, {
         method: 'GET',
         headers: {

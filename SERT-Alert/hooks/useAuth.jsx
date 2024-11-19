@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }) => {
     try {
       let currentUser = await AsyncStorage.getItem("username");
 
-      const response = await fetch('http://192.168.1.14:5117/api/SetUserStatus', {
+      const response = await fetch('https://sertwebapp-c0hrepa2d9a7afem.southeastasia-01.azurewebsites.net/api/Login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: currentUser, status }),
