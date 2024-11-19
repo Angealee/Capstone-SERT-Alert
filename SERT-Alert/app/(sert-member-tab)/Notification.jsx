@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator, RefreshControl } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator, RefreshControl, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRef } from 'react';
 import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
+import { sendEmergencyNotification, requestPermissions } from '../../components/NotificationHandler'; // Import requestPermissions
+import { useAuth } from '../../hooks/useAuth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import EmergencyModal from '../../components/EmergencyModal';
 
 // Helper function to parse and format timestamps
 const parseTimestamp = (timestamp) => {
@@ -23,16 +28,63 @@ const parseTimestamp = (timestamp) => {
   }
 };
 
-
-
 const Notification = () => {
+  const { isAuthenticated } = useAuth();
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [currentCount, setCurrentCount] = useState(0);
+  const [emergencyData, setEmergencyData] = useState({}); // State for emergency data 
+  const [modalVisible, setModalVisible] = useState(false); // State to control modal visibility
+  const pollingInterval = useRef(null);
+  const [isPolling, setIsPolling] = useState(false);
+  
+  // Handle "Respond" button action
+  const handleRespond = () => {
+    setModalVisible(false);
+    // Logic to mark the notification as responded or navigate to response screen
+  };
+
+  // Handle "Decline" button action
+  const handleDecline = () => {
+    setModalVisible(false);
+    // Logic to decline the notification or close modal
+  };
+
+  // Effect to initialize polling when the user is logged in
+  useEffect(() => {
+    if (isAuthenticated) {
+      initializePolling();
+    } else {
+      cleanupPolling();
+    }
+
+    return cleanupPolling();
+  }, [isAuthenticated]);
+
+  const initializePolling = async () => {
+    try {
+      const storedCount = JSON.parse(await AsyncStorage.getItem('lastCheckedCount')) || 0;
+      setCurrentCount(storedCount);
+      pollingInterval.current = setInterval(fetchNotifications, 5000);
+    } catch (error) {
+      console.error('Failed to initialize polling:', error);
+    }
+  };
+
+  const cleanupPolling = () => {
+    if (pollingInterval.current) {
+      clearInterval(pollingInterval.current);
+      pollingInterval.current = null;
+    }
+  };
 
   const fetchNotifications = async () => {
+    if (isPolling) return;
+      setIsPolling(true);
     try {
-      const apiUrl = "http://192.168.0.15:5117/api/GetReportList"; // API URL
+      const hasPermission = await requestPermissions(); // Fix: Use imported function
+      const apiUrl = "http://192.168.1.14:5117/api/GetReportList"; // API URL
       const response = await fetch(apiUrl, {
         method: 'GET',
         headers: {
@@ -41,52 +93,60 @@ const Notification = () => {
       });
       const data = await response.json();
 
-      // Parse and sort notifications by timestamp in descending order
-      const sortedData = data.map(notification => {
-        return {
-          ...notification, // create a new object for each notification
-          timestamp: parseTimestamp(notification.timestamp), // use the parsed timestamp
-        };
-      }).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      const sortedData = data.map((notification) => ({
+        ...notification, // create a new object for each notification
+        timestamp: parseTimestamp(notification.Timestamp),
+      }))
+      .sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp));
 
-      setNotifications(sortedData); // Update state with sorted notifications
+      setNotifications(sortedData);
+
+      const storedCount = JSON.parse(await AsyncStorage.getItem('lastCheckedCount')) || 0;
+
+      // Check for new notifications
+      if (data.length > storedCount) {
+        await sendEmergencyNotification();
+        
+        const latestNotification = sortedData[0];
+
+        setEmergencyData(
+          {
+            building: latestNotification.building || "N/A",
+            floorLocation: latestNotification.floorLocation || "N/A",
+            context: latestNotification.context || "N/A",
+            image: latestNotification.image ? `data:image/jpeg;base64,${latestNotification.image}` : null,
+          }
+      );
+        setModalVisible(true);
+    }
+      setCurrentCount(data.length);
+      await AsyncStorage.setItem('lastCheckedCount', JSON.stringify(data.length));
     } catch (error) {
-      Alert.alert("Error", "Failed to load notifications");
+      Alert.alert("Wait", "Notifications are reloading");
       console.error("Fetch error:", error);
     } finally {
       setLoading(false);
-      setRefreshing(false); // Stop refreshing after fetch completes
+      setIsPolling(false);
+      setRefreshing(false);
     }
   };
-
-  useEffect(() => {
-    fetchNotifications();
-  }, []);
+  
 
   const onRefresh = () => {
-    setRefreshing(true); // Show refresh spinner
-    fetchNotifications(); // Refetch data
+    setRefreshing(true);
+    fetchNotifications();
   };
 
   return (
-    <SafeAreaView 
-    style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <AnimatedGradientBackground2/>
-      <Text 
-      style={styles.title}
-      className="text-2xl font-psemibold text-white mt-2">
-      Report Logs
-      </Text>
-
-      {/* Display loading indicator if data is still loading */}
+      <Text style={styles.title} className="text-2xl font-psemibold text-white mt-2">Report Logs</Text>
       {loading ? (
         <ActivityIndicator size="large" color="#fff" />
       ) : (
         <ScrollView 
-          className = "p-7 mb-20 shadow-lg"
-          style={{
-            backgroundColor:'#ECA766', 
-            borderRadius: 30}}
+          className="p-7 mb-20 shadow-lg"
+          style={{ backgroundColor:'#ECA766', borderRadius: 30 }}
           contentContainerStyle={styles.scrollContainer}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
@@ -95,30 +155,21 @@ const Notification = () => {
           ) : (
             notifications.map((notification, index) => (
               <View key={notification.id || `notification-${index}`} style={styles.notificationBox}>
-                
-                {/* Date display */}
                 <View style={styles.dateTimeContainer}>
                   <Text style={styles.date}>
-                    {new Date(notification.timestamp).toLocaleDateString(undefined, {
+                    {new Date(notification.Timestamp).toLocaleDateString(undefined, {
                       month: 'long',
                       day: 'numeric',
                       year: 'numeric',
                     })}
                   </Text>
-                
-
-                {/* Time DIsplay */}
-                
                   <Text style={styles.time}>
-                  {new Date(notification.timestamp).toLocaleTimeString(undefined, {
+                    {new Date(notification.timestamp).toLocaleTimeString(undefined, {
                       hour: '2-digit',
                       minute: '2-digit',
-                      // second: '2-digit',
                     })}
                   </Text>
                 </View>
-                
-                {/* Context and location display */}
                 <View style={styles.notificationContent}>
                   <Text style={styles.contextText}>{notification.context}</Text>
                   <Text style={styles.subText}>
@@ -130,6 +181,13 @@ const Notification = () => {
           )}
         </ScrollView>
       )}
+      <EmergencyModal
+        visible={modalVisible}
+        emergencyData={emergencyData}
+        onRespond={handleRespond}
+        onDecline={handleDecline}
+      />
+
     </SafeAreaView>
   );
 };
@@ -177,7 +235,7 @@ const styles = StyleSheet.create({
   },
   dateTimeContainer: {
     flexDirection: 'column',
-    marginRight: 10, // Space between date/time and content
+    marginRight: 10,
   },
   time: {
     fontSize: 14,

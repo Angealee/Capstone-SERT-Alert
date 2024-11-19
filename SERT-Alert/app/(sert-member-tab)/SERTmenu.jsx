@@ -1,26 +1,70 @@
-import { View, Text, SafeAreaView, ScrollView, Image, Modal, Switch, Button } from 'react-native';
-import { useNotificationHandler, sendEmergencyNotification } from '../../components/NotificationHandler';
+import { View, Text, SafeAreaView, ScrollView, Alert, Switch, Button } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { router } from 'expo-router';
+import { useAuth } from '../../hooks/useAuth';
 import CustomButton from '../../components/CustomButton';
 import AnimatedGradientBackground2 from '../../components/AnimatedGradientBackground2';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SERTmenu = () => {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false); // Track User2 login status via the Switch
-  const [isModalVisible, setIsModalVisible] = useState(false); // Control modal visibility
-  const { notification } = useNotificationHandler(isUserLoggedIn); // Notification handler
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+  const { logout } = useAuth();
+  const [username, setUsername] = useState("")
 
-  // Show the modal when a notification is received
-  useEffect(() => {
-    if (notification) {
-      setIsModalVisible(true);
-    }
-  }, [notification]);
-
-  // Function to send an emergency notification if User2 is logged in
-  const handleSendNotification = async () => {
-    await sendEmergencyNotification(isUserLoggedIn);
+  const handleLogout = async () => {
+    Alert.alert('Logout', 'Are you sure you want to log out?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Log Out',
+        onPress: async () => {
+          await logout();
+          router.replace('/sign-in'); // Navigate to sign-in after logout
+          Alert.alert('Logged Out', 'You have successfully logged out.');
+        },
+      },
+    ]);
   };
+
+  const getCurrentUser = async () => {
+    let j = await AsyncStorage.getItem("username");
+    setUsername(j)
+  }
+
+  const setUserStatus = async (status) => {
+    try {
+      const response = await fetch('http://192.168.1.14:5117/api/SetUserStatus', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, status }),
+      });
+
+      if (!response.ok) {
+        const errorMessage =
+          response.status === 401
+            ? ''
+            : '';
+        return { success: false, message: errorMessage };
+      }
+
+      const success = await response.json();
+      if (success) {
+        setIsUserLoggedIn(status);
+        return { success: true };
+      } else {
+        return { success: false, message: 'Invalid' };
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      return { success: false, message: 'Network error. Please try again later.' };
+    }
+  }
+
+  useEffect(() => {
+    let ignore = false;
+    if (!ignore) getCurrentUser();
+    return () => { ignore = true; }
+  }, []);
+  
 
   const handleNavigate = (info) => {
     router.push(`/aboutInfo/${info}`);
@@ -34,14 +78,19 @@ const SERTmenu = () => {
           <View className="w-full justify-center h-full[85vh] my-6">
             <Text className="text-3xl text-black text-semibold mt-10 font-psemibold">Menu</Text>
           </View>
+          <View>
+            <Text>
+            Logged in as: {username}
+            </Text>
+          </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
             <Text style={{ fontWeight: 'bold', fontSize: 21 }}>Active Status:</Text>
             <Switch
               trackColor={{ false: '#876a59', true: '#37733f' }}
               thumbColor={isUserLoggedIn ? '#4bdb5e' : '#b89581'}
               ios_backgroundColor="#3e3e3e"
-              onValueChange={() => setIsUserLoggedIn((prev) => !prev)} // Toggle login status
               value={isUserLoggedIn}
+              onValueChange={() => setIsUserLoggedIn((prev) => { setUserStatus(!prev); return !prev; })}
               style={{ transform: [{ scaleX: 1 }, { scaleY: 1 }] }}
             />
           </View>
@@ -59,7 +108,7 @@ const SERTmenu = () => {
           />
           <CustomButton
             title="Log out"
-            handlePress={() => router.push('/emergency')}
+            handlePress={handleLogout}
             containerStyles="mt-5 align-center"
           />
         </View>

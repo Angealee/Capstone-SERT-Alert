@@ -66,6 +66,20 @@ namespace SertWebApp.Controllers
             }
         }
 
+        [HttpPost]
+        public bool SetUserStatus([FromBody] UserUpdateStatusViewModel data)
+        {
+            try
+            {
+                _userManager.UpdateStatus(data.Username, data.IsOnline);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private List<ApiReportViewModel> ConvertToViewModel(List<ReportModel> reports)
         {
             var reportViewModels = new List<ApiReportViewModel>();
@@ -79,7 +93,8 @@ namespace SertWebApp.Controllers
                     Context = report.Content,
                     Image = report.Attachment != null ? Convert.ToBase64String(report.Attachment) : string.Empty,
                     FileName = report.FileName,
-                    FileType = report.FileType
+                    FileType = report.FileType,
+                    Timestamp = report.DateCreated // Map DateCreated to Timestamp
                 });
             }
 

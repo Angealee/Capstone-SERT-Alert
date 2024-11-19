@@ -176,7 +176,7 @@ const Emergency = () => {
       });
       // copyBase64ToClipboard(base64Image); // Automatically copy Base64 to clipboard
       
-      const apiUrl = "http://192.168.0.15:5117/api/AddReport"; // Replace with your actual API endpoint
+      const apiUrl = "http://192.168.1.14:5117/api/AddReport"; // Replace with your actual API endpoint
       const timestamp = new Date().toISOString();
       const bodyData = {
         building: form.Building,
@@ -185,7 +185,7 @@ const Emergency = () => {
         image: `${base64Image}`, //.substring(0, 50)
         filename: "report_image.jpg",
         filetype: "image/jpeg",
-        timestamp: timestamp,
+        Timestamp: timestamp,
       };
 
       console.log("Payload being sent:", bodyData);
@@ -376,7 +376,7 @@ const Emergency = () => {
                       color: '#000',
                       fontSize: 19,
                       textAlign: 'center',
-                      marginTop: 15,
+                      marginTop: 17,
                       marginLeft: 30
                     },
                     inputAndroid: { 
@@ -404,8 +404,6 @@ const Emergency = () => {
                     inputIOS: { 
                       color: isFloorLocationEnabled ? '#000' : '#888', 
                       fontSize: 19,
-                      textAlign: 'center',
-                      marginTop: 15,
                       marginLeft: 30
                     },
                     inputAndroid: { 
@@ -490,13 +488,8 @@ const Emergency = () => {
                     <Text style={{ color: '#333', fontSize: 16, fontWeight: 50, marginTop: 20 }}>Swipe Up to refresh!</Text>
                 </View>
             )}
-            {currentLocation && (
-                          <Text style={{ color: 'black', textAlign: 'center', fontSize: 11 }}>
-                            Latitude: {currentLocation.latitude} | Longitude: {currentLocation.longitude}
-                          </Text>
-            )}
           </View>
-          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.1.0</Text>
+          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.2.0</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

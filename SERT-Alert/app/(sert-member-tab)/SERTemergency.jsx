@@ -74,8 +74,8 @@ const SERTemergency = () => {
       const municipality = locationDetails.city || '???';
       const province = locationDetails.region || '???';
 
-      const withinLatBounds = latitude >= 15.331148 && latitude <= 15.33321109;
-      const withinLongBounds = longitude >= 120.5808391 && longitude <= 120.5906055;
+      const withinLatBounds = latitude >= 15 && latitude <= 18;
+      const withinLongBounds = longitude >= 120 && longitude <= 123;
       console.log("Lat and Long Details:", latitude, longitude);
 
       // Set location data and check if within premises
@@ -195,7 +195,7 @@ const SERTemergency = () => {
       });
       // copyBase64ToClipboard(base64Image); // Automatically copy Base64 to clipboard
       
-      const apiUrl = "http://192.168.0.15:5117/api/AddReport"; // Replace with your actual API endpoint
+      const apiUrl = "http://192.168.1.14:5117/api/AddReport"; // Replace with your actual API endpoint
       const timestamp = new Date().toISOString();
       const bodyData = {
         building: form.Building,
@@ -204,7 +204,7 @@ const SERTemergency = () => {
         image: `${base64Image}`, //.substring(0, 50)
         filename: "report_image.jpg",
         filetype: "image/jpeg",
-        timestamp: timestamp,
+        Timestamp: timestamp,
       };
 
       const response = await fetch(apiUrl, {
@@ -353,27 +353,6 @@ const SERTemergency = () => {
           </Text>
             
           <View className="bg-white rounded-xl justify-center px-5 pb-10 mt-2">
-          
-          
-          {/* Temporary */}
-          <Text style={{fontSize: 12}}>"NOTE: Online status will only be available for testing purposes, Only and Only for the testing of Heads Up notification apearing and sample UI"</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={{
-                fontWeight: 'bold',
-                fontSize: 15,
-              }}>
-                Online Status:
-              </Text>
-              <Switch
-                trackColor={{ false: '#876a59', true: '#37733f' }}
-                thumbColor={isUserLoggedIn ? '#4bdb5e' : '#b89581'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={() => setIsUserLoggedIn((prev) => !prev)} // Toggle login status)
-                value={isUserLoggedIn}
-              />
-          </View>
-
-
 
             <Text className="text-black-600 font-semibold mb-2">Building:</Text>
             <View className="border-2 border-red-500 w-full h-16 px-4 bg-white-100 rounded-2xl focus:border-secondary items-center flex-row">
@@ -532,58 +511,9 @@ const SERTemergency = () => {
                             Latitude: {currentLocation.latitude} | Longitude: {currentLocation.longitude}
                           </Text>
             )}
-            
-            {/* TEMPORARY */}
-            {isUserLoggedIn && (
-              <TouchableOpacity
-                style={{
-                  width: '100%',
-                  paddingVertical: 10,
-                  backgroundColor: '#d6c354',
-                  borderRadius: 50,
-                  alignItems: 'center',
-                  marginTop: 20,
-                }}
-                onPress={handleSendNotification}
-              >
-                <Text style={{ color: 'white', fontSize: 18 }}>Receive Report Notification</Text>
-              </TouchableOpacity>
-            )}
-            
-            {/* Modal for displaying notification content */}
-            <Modal
-              transparent={true}
-              animationType="fade"
-              visible={isModalVisible}
-              onRequestClose={() => setIsModalVisible(false)} // Close modal on request
-            >
-              <View
-                style={{
-                  flex: 1,
-                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <View style={{ width: 300, padding: 20, backgroundColor: 'white', borderRadius: 20 }}>
-                  <Text style={{ fontSize: 22, fontWeight: 'bold' }}>Report Details!</Text>
-                  {notification && (
-                    <>
-                      <Text>Title: {notification.request.content.title}</Text>
-                      <Text>Body: {notification.request.content.body}</Text>
-                    </>
-                  )}
-                  <CustomButton
-                    title="Close"
-                    handlePress={() => setIsModalVisible(false)}
-                    containerStyles="mt-5 align-center"
-                  />
-                </View>
-              </View>
-            </Modal>
 
           </View>
-          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.0.6</Text>
+          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.2.0</Text>
         </View>
         
       </ScrollView>

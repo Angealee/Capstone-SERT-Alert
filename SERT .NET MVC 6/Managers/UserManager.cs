@@ -176,7 +176,29 @@ namespace SertWebApp.Managers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error at UserManager.Delete(...)");
+                _logger.LogError(ex, "Error at UserManager.UpdateStatus(...)");
+            }
+        }
+
+        public void UpdateStatus(string username, bool status)
+        {
+            try
+            {
+                var user = _userRepository.FindByUsername(username);
+
+                if (user is null)
+                {
+                    return;
+                }
+
+                user.IsOnline = status;
+                user.DateModified = DateTime.Now;
+
+                _userRepository.Update(user);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error at UserManager.UpdateStatus(...)");
             }
         }
 

@@ -15,6 +15,7 @@ namespace SertWebApp.Interfaces
         void Delete(int id);
         bool IsUserAlreadyExists(string username);
         void UpdateStatus(int id, bool status);
+        void UpdateStatus(string username, bool status);
         bool VerifyPassword(int id, string storedPasswordHash);
         void ChangePassword(int id, string newPassword);
     }

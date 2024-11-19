@@ -1,28 +1,7 @@
-{
-  "cli": {
-    "version": ">= 12.6.2",
-    "appVersionSource": "remote"
-  },
-  "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal"
-    },
-    "production": {
-      "autoIncrement": true
-    }
-  },
-  "submit": {
-    "production": {}
-  }
-}
-
 // {
 //   "cli": {
 //     "version": ">= 12.6.2",
+//     "requireCommit": true,
 //     "appVersionSource": "remote"
 //   },
 //   "build": {
@@ -34,13 +13,36 @@
 //       "distribution": "internal"
 //     },
 //     "production": {
-//       "autoIncrement": true,
-//       "android": {
-//         "buildType": "apk"
-//       }
+//       "autoIncrement": true
 //     }
 //   },
 //   "submit": {
 //     "production": {}
 //   }
 // }
+
+{
+  "cli": {
+    "version": ">= 12.6.2",
+    "requireCommit": true,
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "autoIncrement": true,
+      "android": {
+        "buildType": "apk"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
