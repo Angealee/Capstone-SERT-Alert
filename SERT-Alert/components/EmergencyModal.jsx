@@ -31,7 +31,7 @@ const EmergencyModal = ({ visible, emergencyData, onRespond, onDecline }) => {
                       <Image source={{ uri: emergencyData.image }} style={styles.image} />
                   )}
                   <View style={styles.buttonContainer}>
-                    <Button title="Decline" onPress={onDecline} color="red" />
+                    <Button title="Ignore" onPress={onDecline} color="red" />
                     <Button title="Respond" onPress={onRespond} />
                   </View>
               </View>

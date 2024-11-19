@@ -511,41 +511,9 @@ const SERTemergency = () => {
                             Latitude: {currentLocation.latitude} | Longitude: {currentLocation.longitude}
                           </Text>
             )}
-            
-            {/* Modal for displaying notification content */}
-            <Modal
-              transparent={true}
-              animationType="fade"
-              visible={isModalVisible}
-              onRequestClose={() => setIsModalVisible(false)} // Close modal on request
-            >
-              <View
-                style={{
-                  flex: 1,
-                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <View style={{ width: 300, padding: 20, backgroundColor: 'white', borderRadius: 20 }}>
-                  <Text style={{ fontSize: 22, fontWeight: 'bold' }}>Report Details!</Text>
-                  {notification && (
-                    <>
-                      <Text>Title: {notification.request.content.title}</Text>
-                      <Text>Body: {notification.request.content.body}</Text>
-                    </>
-                  )}
-                  <CustomButton
-                    title="Close"
-                    handlePress={() => setIsModalVisible(false)}
-                    containerStyles="mt-5 align-center"
-                  />
-                </View>
-              </View>
-            </Modal>
 
           </View>
-          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.0.6</Text>
+          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.2.0</Text>
         </View>
         
       </ScrollView>

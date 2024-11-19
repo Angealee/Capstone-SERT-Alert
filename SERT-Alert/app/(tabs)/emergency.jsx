@@ -491,7 +491,7 @@ const Emergency = () => {
                 </View>
             )}
           </View>
-          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.1.0</Text>
+          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.2.0</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
