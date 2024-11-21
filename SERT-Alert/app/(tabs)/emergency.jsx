@@ -138,8 +138,8 @@ const Emergency = () => {
       let result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: false,
-        aspect: [4, 3],
-        quality: 0.8,
+        aspect: [3, 4],
+        quality: 0.6,
       });
 
       if (!result.canceled && result.assets && result.assets.length > 0) {
@@ -212,6 +212,9 @@ const Emergency = () => {
           FloorLocation: '',
           context: '',
           image: null,
+        });
+        const arduinoResponse = await fetch('http://192.168.100.15/?button1on', {
+          method: 'GET',
         });
       } else {
         Alert.alert('Error', 'Failed to report emergency.');
@@ -325,7 +328,7 @@ const Emergency = () => {
           }
       >
         <View className="bg-white pl-2 pr-2 pb-2 pt-3 rounded-3xl shadow-lg mt-10 mb-6">
-        <Text style={{fontSize: 9, marginLeft: 10}}>SERT Alert v1.3.1</Text>
+        <Text style={{fontSize: 9, marginLeft: 10}}>SERT Alert v1.4.0</Text>
           <Image
             source={images.SERTlogo}
             resizeMode='contain'
