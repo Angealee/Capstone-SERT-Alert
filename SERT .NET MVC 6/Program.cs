@@ -37,6 +37,16 @@ builder.Services.AddScoped<IReportRepository, ReportRepository>(); // Register R
 builder.Services.AddScoped<IUserManager, UserManager>();
 builder.Services.AddScoped<IReportManager, ReportManager>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()  // Allow requests from any origin
+               .AllowAnyMethod()  // Allow any HTTP method (GET, POST, PUT, DELETE, etc.)
+               .AllowAnyHeader(); // Allow any headers
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -52,6 +62,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCors("AllowAll");
 app.UseSession();
 app.UseAuthorization();
 

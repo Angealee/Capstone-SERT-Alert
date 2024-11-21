@@ -76,33 +76,43 @@ export const AuthProvider = ({ children }) => {
 
   const setUserStatus = async (status) => {
     try {
-      let currentUser = await AsyncStorage.getItem("username");
-
+      const currentUser = await AsyncStorage.getItem("username");
+      console.log("Current user:", currentUser);
+      console.log("Status to update:", status);
+  
+      if (!currentUser) {
+        throw new Error("No username found in AsyncStorage.");
+      }
+  
       const response = await fetch('https://sertwebapp-c0hrepa2d9a7afem.southeastasia-01.azurewebsites.net/api/Login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: currentUser, status }),
       });
-
+  
+      console.log("API Response status:", response.status);
+  
       if (!response.ok) {
-        const errorMessage =
-          response.status === 401
-            ? ''
-            : '';
-        return { success: false, message: errorMessage };
+        const errorText = await response.text();
+        throw new Error(
+          `Failed to update status. HTTP Status: ${response.status}, Message: ${errorText}`
+        );
       }
-
+  
       const success = await response.json();
+      console.log("API Response JSON:", success);
+  
       if (success) {
         return { success: true };
       } else {
-        return { success: false, message: 'Invalid' };
+        return { success: false, message: "Invalid response from server." };
       }
     } catch (error) {
-      console.error('Error:', error);
-      return { success: false, message: 'Network error. Please try again later.' };
+      console.error("Network Error Stack Trace:", error);
+      return { success: false, message: error.message || "Unknown error occurred." };
     }
-  }
+  };
+  
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, isSubmitting, login, logout }}>

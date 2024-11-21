@@ -55,8 +55,8 @@ const Emergency = () => {
       const municipality = locationDetails.city || '???';
       const province = locationDetails.region || '???';
 
-      const withinLatBounds = latitude >= 15.33129 && latitude <= 15.3334023;
-      const withinLongBounds = longitude >= 120.590091 && longitude <= 120.5905879;
+      const withinLatBounds = latitude >= 14 && latitude <= 16;
+      const withinLongBounds = longitude >= 119 && longitude <= 120.5905879;
       console.log("Lat and Long Details:", latitude, longitude);
 
       // Set location data and check if within premises
