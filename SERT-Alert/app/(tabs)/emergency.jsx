@@ -325,7 +325,7 @@ const Emergency = () => {
           }
       >
         <View className="bg-white pl-2 pr-2 pb-2 pt-3 rounded-3xl shadow-lg mt-10 mb-6">
-        <Text style={{fontSize: 9, marginLeft: 10}}>SERT Alert v1.3.0</Text>
+        <Text style={{fontSize: 9, marginLeft: 10}}>SERT Alert v1.3.1</Text>
           <Image
             source={images.SERTlogo}
             resizeMode='contain'
