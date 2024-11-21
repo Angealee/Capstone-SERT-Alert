@@ -33,7 +33,8 @@
     "android": {
       "permissions": [
         "CAMERA",
-        "INTERNET"
+        "INTERNET",
+        "ACCESS_NETWORK_STATE"
       ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/icons/serticon.png",

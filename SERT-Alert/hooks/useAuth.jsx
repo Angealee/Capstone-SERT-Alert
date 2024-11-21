@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     setIsSubmitting(true);
     try {
-      const response = await fetch('http://192.168.1.14:5117/api/Login', {
+      const response = await fetch('https://sertwebapp-c0hrepa2d9a7afem.southeastasia-01.azurewebsites.net/api/Login', { //API: https://sertwebapp-c0hrepa2d9a7afem.southeastasia-01.azurewebsites.net/api/Login
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
