@@ -516,7 +516,7 @@ const SERTemergency = () => {
             )}
 
           </View>
-          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.4.0</Text>
+          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.4.1</Text>
         </View>
         
       </ScrollView>
