@@ -230,14 +230,14 @@ const SERTemergency = () => {
           context: '',
           image: null,
         });
-        const arduinoResponse = await fetch('http://192.168.100.15/?button1on', {
+        const arduinoResponse = await fetch('http://192.168.0.114/?button1on', {
           method: 'GET',
         });
       } else {
         Alert.alert('Error', 'Failed to report emergency.');
       }
     } catch (error) {
-      Alert.alert('Error', 'Something went wrong. Please try again.');
+      Alert.alert('Failed to reach IoT Alarm trigger', 'Something went wrong. Please try again.');
       console.error("Error in submit:", error);
     } finally {
       setIsSubmitting(false);

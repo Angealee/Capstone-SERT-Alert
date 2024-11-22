@@ -213,15 +213,15 @@ const Emergency = () => {
           context: '',
           image: null,
         });
-        const arduinoResponse = await fetch('http://192.168.0.114/?button1on', {
+        const arduinoResponse = await fetch('http://192.168.0.114/?button1on', { //http://192.168.0.114/?button1on CCS Office
           method: 'GET',
         });
       } else {
         Alert.alert('Error', 'Failed to report emergency.');
       }
     } catch (error) {
-      Alert.alert('Error', 'Something went wrong. Please try again.');
-      console.error("Error in submit:", error);
+      Alert.alert('Failed to reach IoT Alarm trigger', 'Something went wrong. Please try again.');
+      console.error("Error in submitting IoT alarm request:", error);
     } finally {
       setIsSubmitting(false);
     }
