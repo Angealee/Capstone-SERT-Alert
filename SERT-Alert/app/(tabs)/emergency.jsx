@@ -213,7 +213,7 @@ const Emergency = () => {
           context: '',
           image: null,
         });
-        const arduinoResponse = await fetch('http://192.168.0.114/?button1on', { //http://192.168.0.114/?button1on CCS Office
+        const arduinoResponse = await fetch('http://192.168.100.15/?button1on', { //http://192.168.0.114/?button1on CCS Office
           method: 'GET',
         });
       } else {
