@@ -230,7 +230,7 @@ const SERTemergency = () => {
           context: '',
           image: null,
         });
-        const arduinoResponse = await fetch('http://192.168.0.114/?button1on', {
+        const arduinoResponse = await fetch('http://192.168.137.69:80/?button1on', {
           method: 'GET',
         });
       } else {
