@@ -213,14 +213,14 @@ const Emergency = () => {
           context: '',
           image: null,
         });
-        const arduinoResponse = await fetch('http://192.168.137.69:80/?button1on', { //http://192.168.0.114/?button1on CCS Office
-          method: 'GET',
-        });
+        // const arduinoResponse = await fetch('http://192.168.137.69:80/?button1on', { //http://192.168.0.114/?button1on CCS Office
+        //   method: 'GET',
+        // });
       } else {
         Alert.alert('Error', 'Failed to report emergency.');
       }
     } catch (error) {
-      Alert.alert('Failed to reach IoT Alarm trigger', 'Something went wrong. Please try again.');
+      Alert.alert('Failed to reach IoT Alarm trigger', 'Try again.');
       console.error("Error in submitting IoT alarm request:", error);
     } finally {
       setIsSubmitting(false);
@@ -328,7 +328,7 @@ const Emergency = () => {
           }
       >
         <View className="bg-white pl-2 pr-2 pb-2 pt-3 rounded-3xl shadow-lg mt-10 mb-6">
-        <Text style={{fontSize: 9, marginLeft: 10}}>SERT Alert v1.4.1</Text>
+        <Text style={{fontSize: 9, marginLeft: 10}}>SERT Alert v1.4.2</Text>
           <Image
             source={images.SERTlogo}
             resizeMode='contain'

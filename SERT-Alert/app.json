@@ -3,7 +3,7 @@
     "name": "SERT Alert",
     "slug": "SERT-Alert",
     "scheme": "com.casptone.sertalert",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "orientation": "portrait",
     "icon": "./assets/icons/serticon.png",
     "userInterfaceStyle": "light",

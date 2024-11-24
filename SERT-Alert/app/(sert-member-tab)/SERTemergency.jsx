@@ -230,14 +230,14 @@ const SERTemergency = () => {
           context: '',
           image: null,
         });
-        const arduinoResponse = await fetch('http://192.168.137.69:80/?button1on', {
-          method: 'GET',
-        });
+        // const arduinoResponse = await fetch('http://192.168.137.96/?button1on', {
+        //   method: 'GET',
+        // });
       } else {
         Alert.alert('Error', 'Failed to report emergency.');
       }
     } catch (error) {
-      Alert.alert('Failed to reach IoT Alarm trigger', 'Something went wrong. Please try again.');
+      Alert.alert('Failed to reach IoT Alarm trigger', 'Try again.');
       console.error("Error in submit:", error);
     } finally {
       setIsSubmitting(false);
@@ -516,7 +516,7 @@ const SERTemergency = () => {
             )}
 
           </View>
-          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.4.1</Text>
+          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.4.2</Text>
         </View>
         
       </ScrollView>
