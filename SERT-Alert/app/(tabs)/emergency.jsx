@@ -213,9 +213,9 @@ const Emergency = () => {
           context: '',
           image: null,
         });
-        // const arduinoResponse = await fetch('http://192.168.137.69:80/?button1on', { //http://192.168.0.114/?button1on CCS Office
-        //   method: 'GET',
-        // });
+        const arduinoResponse = await fetch('http://192.168.254.103/?button1on', { //http://192.168.0.114/?button1on CCS Office
+          method: 'GET',
+        });
       } else {
         Alert.alert('Error', 'Failed to report emergency.');
       }
