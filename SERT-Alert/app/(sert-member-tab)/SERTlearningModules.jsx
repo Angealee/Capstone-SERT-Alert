@@ -108,7 +108,7 @@ const LearningModules = () => {
                     resizeMode='cover'
                   />
                   <Text className="text-center mt-1 text-sm font-psemibold">
-                  Swimming & Water Safety
+                  Water Safety
                   </Text>
                 </TouchableOpacity>
               </View>

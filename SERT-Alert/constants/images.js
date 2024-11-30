@@ -71,8 +71,11 @@ import basicEmergency from "../assets/images/basicEmergency.png";
 import newNaturalDisaster from "../assets/images/newNaturalDisaster.jpg";
 import bird from "../assets/images/bird.png";
 import SERT from "../assets/images/SERT.jpg";
+import sertpicture1 from "../assets/images/sertpicture1.jpg";
+import sertpicture2 from "../assets/images/sertpicture2.jpg";
+import sertpicture3 from "../assets/images/sertpicture3.jpg";
 
 
 
 
-export default { profile, charldrinBello, kiokiSerrano, luisMagdangal, riskAssessment, emergencyResponseHeader, kobyMacale, SERTpicture, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster, callforhelp, basicSupport, keepCalm, takeInEmergency, bleedControl, cpr, burnTreatment, choking, fracture, firstAidHeader, placeTheHeel, placeHand, straightHand, pushDown, paceCompression, cleanCloth, stopBleeding, addCloth, presstillStop, afterBleeding, wrapSnugly, secureBandage, torniquet, washBurn, applyGauze, leanForward, makeFist, pilay, earthquakeSafety, dropCover, fallenLines, fireEvacuation, exitTwo, smokeDetector, smokeLow, flooding, supplyKit, unplugged, floodedArea, Heatwave, heatProtection, understandingWater, severeWeather, rescueStick, childPool, float, rescueTechniques, drownPrevention, waterSurvival, basicEmergency, newNaturalDisaster, bird, SERT};
+export default { profile, charldrinBello, kiokiSerrano, luisMagdangal, riskAssessment, emergencyResponseHeader, kobyMacale, SERTpicture, siren, thumbnail, cards, path, SERTlogo, logo, logoSmall, empty, emergencyResponse, firstAid, waterSafety, naturalDisaster, callforhelp, basicSupport, keepCalm, takeInEmergency, bleedControl, cpr, burnTreatment, choking, fracture, firstAidHeader, placeTheHeel, placeHand, straightHand, pushDown, paceCompression, cleanCloth, stopBleeding, addCloth, presstillStop, afterBleeding, wrapSnugly, secureBandage, torniquet, washBurn, applyGauze, leanForward, makeFist, pilay, earthquakeSafety, dropCover, fallenLines, fireEvacuation, exitTwo, smokeDetector, smokeLow, flooding, supplyKit, unplugged, floodedArea, Heatwave, heatProtection, understandingWater, severeWeather, rescueStick, childPool, float, rescueTechniques, drownPrevention, waterSurvival, basicEmergency, newNaturalDisaster, bird, SERT, sertpicture1, sertpicture2, sertpicture3};

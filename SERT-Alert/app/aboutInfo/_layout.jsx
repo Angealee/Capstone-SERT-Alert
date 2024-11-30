@@ -37,7 +37,7 @@ const InfoLayout = () => {
       <Stack.Screen
         name="aboutDev"
         options={{
-          title: 'About Dev',
+          title: 'About Developers',
         }}
       />
 
@@ -56,7 +56,7 @@ const getHeaderTitle = (routeName) => {
     case 'aboutSERT':
       return 'About SERT';
     case 'aboutDev':
-      return 'About Dev';
+      return 'About Developers';
     default:
       return 'Menu';
   }

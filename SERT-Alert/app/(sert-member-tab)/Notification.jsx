@@ -42,7 +42,7 @@ const Notification = () => {
   // Handle "Respond" button action
   const handleRespond = () => {
     setModalVisible(false);
-    const arduinoResponse = fetch('http://192.168.254.103/?button2off', {
+    const arduinoResponse = fetch('http://192.168.254.102/?button2off', { //http://192.168.254.102/?button2off
       method: 'GET',
     });
     // Logic to mark the notification as responded or navigate to response screen

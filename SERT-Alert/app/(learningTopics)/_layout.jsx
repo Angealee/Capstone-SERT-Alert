@@ -49,7 +49,7 @@ const TopicsLayout = () => {
       <Stack.Screen
         name="swimmingWaterSafety"
         options={{
-          title: 'Swimming and Water Safety',
+          title: 'Water Safety',
         }}
       />
       {/* Add more screens as needed */}
@@ -72,7 +72,7 @@ const getHeaderTitle = (routeName) => {
     case 'naturalDisasterPreparedness':
       return 'Natural Disaster Preparedness';
     case 'swimmingWaterSafety':
-      return 'Swimming and Water Safety';
+      return 'Water Safety';
     default:
       return 'Learning Module';
   }

@@ -74,8 +74,8 @@ const SERTemergency = () => {
       const municipality = locationDetails.city || '???';
       const province = locationDetails.region || '???';
 
-      const withinLatBounds = latitude >= 14 && latitude <= 16.3334023;
-      const withinLongBounds = longitude >= 118 && longitude <= 121.5905879;
+      const withinLatBounds = latitude >= 15.332148 && latitude <= 15.333652;
+      const withinLongBounds = longitude >= 119.889229 && longitude <= 120.594496;
       console.log("Lat and Long Details:", latitude, longitude);
 
       // Set location data and check if within premises
@@ -230,9 +230,9 @@ const SERTemergency = () => {
           context: '',
           image: null,
         });
-        // const arduinoResponse = await fetch('http://192.168.137.96/?button1on', {
-        //   method: 'GET',
-        // });
+        const arduinoResponse = await fetch('http://192.168.254.102/?button1on', {
+          method: 'GET',
+        });
       } else {
         Alert.alert('Error', 'Failed to report emergency.');
       }
@@ -351,9 +351,29 @@ const SERTemergency = () => {
           <Text className="text-2xl text-black text-center font-psemibold mt-2">
             Report an Emergency!
           </Text>
-          <Text className="text-l text-black text-center font-psemibold mt-2 mb-6">
+          <Text className="text-l text-black text-center font-psemibold mt-2 mb-2">
             (SERT Member)
           </Text>
+
+          {/* Location Indicator */}
+          <View style={{ 
+            flexDirection: 'row', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            marginBottom: 2 }}>
+            <View
+              style={{
+                width: 7,
+                height: 7,
+                borderRadius: 5,
+                backgroundColor: isWithinPremises ? 'blue' : 'red',
+                marginRight: 8,
+              }}
+            />
+            <Text style={{ color: isWithinPremises ? 'blue' : 'red', fontSize: 12, fontWeight: 'bold' }}>
+              {isWithinPremises ? 'You are in the DCT Vicinity' : 'Not in DCT vicinity'}
+            </Text>
+          </View>
             
           <View className="bg-white rounded-xl justify-center px-5 pb-10 mt-2">
 
@@ -516,7 +536,7 @@ const SERTemergency = () => {
             )}
 
           </View>
-          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.4.2</Text>
+          <Text style={{fontSize: 9, alignItems: 'center'}}>SERT Alert v1.4.3</Text>
         </View>
         
       </ScrollView>

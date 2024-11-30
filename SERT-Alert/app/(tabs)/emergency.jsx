@@ -55,8 +55,8 @@ const Emergency = () => {
       const municipality = locationDetails.city || '???';
       const province = locationDetails.region || '???';
 
-      const withinLatBounds = latitude >= 14 && latitude <= 16;
-      const withinLongBounds = longitude >= 119 && longitude <= 120.5905879;
+      const withinLatBounds = latitude >= 15.332148 && latitude <= 15.333652;
+      const withinLongBounds = longitude >= 119.889229 && longitude <= 120.594496;
       console.log("Lat and Long Details:", latitude, longitude);
 
       // Set location data and check if within premises
@@ -213,7 +213,7 @@ const Emergency = () => {
           context: '',
           image: null,
         });
-        const arduinoResponse = await fetch('http://192.168.254.103/?button1on', { //http://192.168.0.114/?button1on CCS Office
+        const arduinoResponse = await fetch('http://192.168.254.102/?button1on', { //http://192.168.254.102/?button1on CCS Office
           method: 'GET',
         });
       } else {
@@ -229,7 +229,7 @@ const Emergency = () => {
 
 
   return (
-    <SafeAreaView className="flex-1 p-5"
+    <SafeAreaView className="flex-1 p-6"
     style={{
       backgroundColor: '#FE7F2D'
     }}>
@@ -326,18 +326,39 @@ const Emergency = () => {
         refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
+          className = "mb-16"
       >
-        <View className="bg-white pl-2 pr-2 pb-2 pt-3 rounded-3xl shadow-lg mt-10 mb-6">
-        <Text style={{fontSize: 9, marginLeft: 10}}>SERT Alert v1.4.2</Text>
+        <View className="bg-white pl-2 pr-2 pt-3 rounded-3xl shadow-lg mt-10 mb-6">
+        <Text style={{fontSize: 9, marginLeft: 10}}>SERT Alert v1.4.3</Text>
           <Image
             source={images.SERTlogo}
             resizeMode='contain'
             className="w-20 h-20 mx-auto mb-4"
           />
 
-          <Text className="text-2xl text-black text-center font-psemibold mt-2 mb-6">
+          <Text className="text-2xl text-black text-center font-psemibold mt-2 mb-2">
             Report an Emergency!
           </Text>
+
+          {/* Location Indicator */}
+          <View style={{ 
+            flexDirection: 'row', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            marginBottom: 2 }}>
+            <View
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: 5,
+                backgroundColor: isWithinPremises ? 'blue' : 'red',
+                marginRight: 8,
+              }}
+            />
+            <Text style={{ color: isWithinPremises ? 'blue' : 'red', fontSize: 13, fontWeight: 'bold' }}>
+              {isWithinPremises ? 'You are in the DCT Vicinity' : 'Not in DCT vicinity'}
+            </Text>
+          </View>
 
           <View className="rounded-xl justify-center px-5 pb-10 mt-2">
             <Text className="text-black-600 font-semibold mt-5 mb-2">Building:</Text>
@@ -482,7 +503,7 @@ const Emergency = () => {
             {/* Location Info */}
             {!isWithinPremises && (
                 <View style={{ marginTop: 10, alignItems: 'center' }}>
-                  <Text style={{ color: 'red', fontSize: 14, marginTop: 5 }}>
+                  <Text style={{ color: 'red', fontSize: 14, marginTop: 5, marginBottom: 10 }}>
                         You are not currently in the Dominican College of Tarlac premises, you are not eligible for reporting.
                   </Text>
                     <Text style={{ color: '#333', fontSize: 16, fontWeight: 50, marginTop: 7 }}>Swipe Up to refresh!</Text>

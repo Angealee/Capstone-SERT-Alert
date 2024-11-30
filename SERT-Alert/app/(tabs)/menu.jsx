@@ -61,7 +61,7 @@ const handleNavigate = (info) => {
                   }}
                 >
                 <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold' }}>
-                  About DEV
+                  About Developers
                 </Text>
               </LinearGradient>
             </TouchableOpacity>
